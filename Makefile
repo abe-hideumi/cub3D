@@ -1,6 +1,6 @@
 NAME = cub3D
 
-SRCS =	main.c \
+SRCS =	main.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -16,7 +16,7 @@ ifeq ($(UNAME), Linux)
 	MINILIBX_A = $(MINILIBX_DIR)/libmlx.a
 	MLX_FLAGS = -L$(MINILIBX_DIR) -lmlx -lX11 -lXext -lm
 else
-	MINILIBX_DIR = minilibx-macos
+	MINILIBX_DIR = minilibx_mms_20200219
 	MINILIBX_A = $(MINILIBX_DIR)/libmlx.a
 	MLX_FLAGS = -L$(MINILIBX_DIR) -lmlx -framework OpenGL -framework AppKit
 endif
@@ -53,6 +53,7 @@ fclean:
 	@echo "$(RED)Removing executable...$(RESET)"
 	@rm -f $(OBJS) $(NAME)
 	@$(MAKE) -C libft fclean
+	@$(MAKE) -C $(MINILIBX_DIR) clean
 
 re: fclean all
 
