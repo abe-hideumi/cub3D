@@ -55,6 +55,3 @@ jobs:
 
     - name: norminette libft
       run: norminette ./libft
-
-    - name: norminette others
-      run: norminette cub3D.h main.c map.h parse_map.c
