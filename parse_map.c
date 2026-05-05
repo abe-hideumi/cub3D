@@ -6,10 +6,11 @@
 #include "libft/libft.h"
 #include "get_next_line/get_next_line.h"
 
-void	put_error(void)
+void	put_error(char *msg)
 {
-	// ft_putstr_fd("Error\n", 2);
-	printf("error");
+	ft_putstr_fd("Error\n", 2);
+	ft_putstr_fd(msg, 2);
+	ft_putstr_fd("\n", 2);
 	exit(1);
 }
 
@@ -29,23 +30,23 @@ void insert_texture(char **field, char *line)
 
 	printf("1回目:%s|\n", line);
 	if (*field != NULL)
-		put_error();
+		put_error("invalid config: duplicate identifier");
 	line += 3;
 	while (*line == ' ')
 		line++;
 	if (*line == '\0' || *line == '\n')
-		put_error(); // テキスチャーファイルが存在しない
+		put_error("texture path is empty");
 	len = ft_strlen(line);
 	while (len > 0 && (line[len - 1] == '\n' || line[len - 1] == ' '))
 		len--;
 	if (len == 0)
-		put_error();
+		put_error("texture path is empty");
 	*field = ft_substr(line, 0, len);
 	if (*field == NULL)
-		put_error();
+		put_error("malloc failed");
 	fd = open(*field, O_RDONLY);
 	if (fd < 0)
-		put_error(); // テキスチャファイルが指定のルートに存在しない又はopenできない
+		put_error("texture file not found");
 	close(fd);
 	printf("2回目:%s|\n", line);
 }
@@ -81,7 +82,7 @@ void read_file(char *file, t_info *info)
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		put_error();
+		put_error("cannot open file");
 
 	while ((line = get_next_line(fd)))
 	{
