@@ -20,11 +20,11 @@ typedef struct s_config
 
 typedef struct s_info
 {
-	char	**lines;
-	t_map	map_info;
-	char	player_dir;
-	int		player_x;
-	int		player_y;
+	t_map		map_info;
+	t_config 	config;
+	char		player_dir;
+	int			player_x;
+	int			player_y;
 }		t_info;
 
 #endif
