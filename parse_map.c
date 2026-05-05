@@ -77,15 +77,18 @@ void read_file(char *file, t_info *info)
 {
 	int fd;
 	char *line;
-	size_t len;
 	int in_map = 0;
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		put_error("cannot open file");
-
 	while ((line = get_next_line(fd)))
 	{
+		if (line[0] == '\n') 
+		{
+			free(line);
+			continue;
+		}
 		if (!in_map)
 			in_map = parse_config(line, info);
 		// if (in_map)
