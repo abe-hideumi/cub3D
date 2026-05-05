@@ -6,34 +6,6 @@
 #include "libft/libft.h"
 #include "get_next_line/get_next_line.h"
 
-int ft_strlen(char *str)
-{
-	int len = 0;
-	while(str[len])
-		len++;
-	return len;
-}
-
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
-{
-	size_t	i;
-	
-	i = 0;
-	if (n == 0)
-	return (0);
-	while (i < n)
-	{
-		if ((unsigned char)s1[i] != (unsigned char)s2[i])
-		return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		if (s1[i] == '\0')
-		return (0);
-		i++;
-	}
-	return (0);
-}
-// libft 仮置き↑
-
-
 void	put_error(void)
 {
 	// ft_putstr_fd("Error\n", 2);
@@ -55,7 +27,7 @@ void insert_texture(char **field, char *line)
 	size_t	len;
 	int		fd;
 
-	printf("%s\n", line);
+	printf("1回目:%s|\n", line);
 	if (*field != NULL)
 		put_error();
 	line += 3;
@@ -75,22 +47,22 @@ void insert_texture(char **field, char *line)
 	if (fd < 0)
 		put_error(); // テキスチャファイルが指定のルートに存在しない又はopenできない
 	close(fd);
-	printf("%s\n", line);
+	printf("2回目:%s|\n", line);
 }
 
 int parse_config(char *line, t_info *info)
 {
-	if (!strncmp("NO ", line, 3))
+	if (!ft_strncmp("NO ", line, 3))
 		return (insert_texture(&info->config.no, line), 0);
-	if (!strncmp("SO ", line, 3))
+	if (!ft_strncmp("SO ", line, 3))
 		return (insert_texture(&info->config.so, line), 0);
-	if (!strncmp("WE ", line, 3))
+	if (!ft_strncmp("WE ", line, 3))
 		return (insert_texture(&info->config.we, line), 0);
-	if (!strncmp("EA ", line, 3))
+	if (!ft_strncmp("EA ", line, 3))
 		return (insert_texture(&info->config.ea, line), 0);
 	else
 	{
-		printf("未実装\n");
+		printf("未実装map\n");
 		return 0;
 	}
 	
@@ -115,8 +87,8 @@ void read_file(char *file, t_info *info)
 	{
 		if (!in_map)
 			in_map = parse_config(line, info);
-		if (in_map)
-			read_map();
+		// if (in_map)
+		// 	read_map();
 		free(line);
 	}
 	close(fd);
@@ -125,7 +97,18 @@ void read_file(char *file, t_info *info)
 void parse_cub_file(char *file, t_info *info)
 {
 	check_extenstion(file);
+	info->config = (t_config){0};
 	read_file(file, info);
+
+	printf("=== config ===\n");
+	printf("NO: %s|\n", info->config.no ? info->config.no : "(null)");
+	printf("SO: %s|\n", info->config.so ? info->config.so : "(null)");
+	printf("WE: %s|\n", info->config.we ? info->config.we : "(null)");
+	printf("EA: %s|\n", info->config.ea ? info->config.ea : "(null)");
+	printf("F:  %d|\n", info->config.f);
+	printf("C:  %d|\n", info->config.c);
+	printf("==============\n");
+	
 	
 	printf("パース成功\n");
 
