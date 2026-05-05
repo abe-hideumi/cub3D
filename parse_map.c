@@ -1,10 +1,43 @@
 #include <stdio.h>
 #include <fcntl.h>
+#include <stdlib.h>
+#include <unistd.h>
 #include "map.h"
+#include "libft/libft.h"
+#include "get_next_line/get_next_line.h"
+
+int ft_strlen(char *str)
+{
+	int len = 0;
+	while(str[len])
+		len++;
+	return len;
+}
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t	i;
+	
+	i = 0;
+	if (n == 0)
+	return (0);
+	while (i < n)
+	{
+		if ((unsigned char)s1[i] != (unsigned char)s2[i])
+		return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		if (s1[i] == '\0')
+		return (0);
+		i++;
+	}
+	return (0);
+}
+// libft 仮置き↑
+
 
 void	put_error(void)
 {
-	ft_putstr_fd("Error\n", 2);
+	// ft_putstr_fd("Error\n", 2);
+	printf("error");
 	exit(1);
 }
 
@@ -78,7 +111,7 @@ void read_file(char *file, t_info *info)
 	if (fd < 0)
 		put_error();
 
-	while (line = get_next_line(fd))
+	while ((line = get_next_line(fd)))
 	{
 		if (!in_map)
 			in_map = parse_config(line, info);
