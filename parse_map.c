@@ -6,7 +6,7 @@
 #include "libft/libft.h"
 #include "get_next_line/get_next_line.h"
 
-void	put_error(char *msg)
+void put_error(char *msg)
 {
 	ft_putstr_fd("Error\n", 2);
 	ft_putstr_fd(msg, 2);
@@ -14,19 +14,19 @@ void	put_error(char *msg)
 	exit(1);
 }
 
-void	check_extenstion(char *map_name)
+void check_extenstion(char *map_name)
 {
-	size_t	len;
+	size_t len;
 
 	len = ft_strlen(map_name);
 	if (len < 5 || ft_strncmp(".cub", map_name + len - 4, 4))
 		printf("Invalid file extension. Must be .cub\n");
 }
 
-void insert_texture(char **field, char *line)
+void parse_texture_img(char **field, char *line)
 {
-	size_t	len;
-	int		fd;
+	size_t len;
+	int fd;
 
 	printf("1回目:%s|\n", line);
 	if (*field != NULL)
@@ -51,24 +51,42 @@ void insert_texture(char **field, char *line)
 	printf("2回目:%s|\n", line);
 }
 
+void parse_texture_color(int *field, char *line)
+{
+	size_t len;
+	int fd;
+
+	printf("1回目:%s|\n", line);
+	if (*field != -1)
+		put_error("invalid config: duplicate identifier");
+	line += 2;
+	while (*line == ' ')
+		line++;
+	if (*line == '\0' || *line == '\n')
+		put_error("texture path is empty");
+	*field = 8;
+	printf("2回目:%s|\n", line);
+}
+
 int parse_config(char *line, t_info *info)
 {
 	if (!ft_strncmp("NO ", line, 3))
-		return (insert_texture(&info->config.no, line), 0);
+		return (parse_texture_img(&info->config.no, line), 0);
 	if (!ft_strncmp("SO ", line, 3))
-		return (insert_texture(&info->config.so, line), 0);
+		return (parse_texture_img(&info->config.so, line), 0);
 	if (!ft_strncmp("WE ", line, 3))
-		return (insert_texture(&info->config.we, line), 0);
+		return (parse_texture_img(&info->config.we, line), 0);
 	if (!ft_strncmp("EA ", line, 3))
-		return (insert_texture(&info->config.ea, line), 0);
+		return (parse_texture_img(&info->config.ea, line), 0);
+	if (!ft_strncmp("F ", line, 2))
+		return (parse_texture_color(&info->config.f, line), 0);
+	if (!ft_strncmp("C ", line, 2))
+		return (parse_texture_color(&info->config.c, line), 0);
 	else
 	{
 		printf("未実装map\n");
 		return 0;
 	}
-	
-	
-	
 
 	return (1);
 }
@@ -84,7 +102,7 @@ void read_file(char *file, t_info *info)
 		put_error("cannot open file");
 	while ((line = get_next_line(fd)))
 	{
-		if (line[0] == '\n') 
+		if (line[0] == '\n')
 		{
 			free(line);
 			continue;
@@ -101,7 +119,7 @@ void read_file(char *file, t_info *info)
 void parse_cub_file(char *file, t_info *info)
 {
 	check_extenstion(file);
-	info->config = (t_config){0};
+	info->config = (t_config){NULL, NULL, NULL, NULL, -1, -1};
 	read_file(file, info);
 
 	printf("=== config ===\n");
@@ -112,13 +130,8 @@ void parse_cub_file(char *file, t_info *info)
 	printf("F:  %d|\n", info->config.f);
 	printf("C:  %d|\n", info->config.c);
 	printf("==============\n");
-	
-	
 	printf("パース成功\n");
-
-
 }
-
 
 // 仮置きメインファイル
 int main(int ac, char *av[])
@@ -128,10 +141,6 @@ int main(int ac, char *av[])
 	t_info info;
 
 	parse_cub_file(av[1], &info);
-
-
-
-
 
 	return (0);
 }
