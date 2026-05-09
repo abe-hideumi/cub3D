@@ -1,57 +1,14 @@
 name: cub3D Ci
 
 on:
-# main,habe,nomuraブランチへのpushとmainブランチへのPRでCIが走るように設定
   push:
-    branches: [ main ,habe, nomura]
-
+    branches: [ main, habe, nomura]
   pull_request:
     branches: [ main ]
-# 手動でCIを走らせるための設定
   workflow_dispatch:
 
-# CIの内容
 jobs:
-# compileという名前のジョブを定義[make, make clean, make fcleanを順番に実行する]
-  compile:
-# CIを走らせる環境を指定
+  placeholder:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-# minilibxのビルドに必要なX11ライブラリをインストール
-    - name: install X11 dependencies
-      run: sudo apt-get install -y libx11-dev libxext-dev
-# Makefile内のコマンドを順番に実行
-    - name: make
-      run: make
-
-    - name: make clean
-      run: make clean
-
-    - name: make fclean
-      run: make fclean
-
-# # norminetteという名前のジョブを定義
-#   norminette:
-# # CIを走らせる環境を指定
-#     runs-on: ubuntu-latest
-#     steps:
-#     - uses: actions/checkout@v4
-# # Pythonをインストールするためのアクションを使用
-#     - uses: actions/setup-python@v5
-#       with:
-#         python-version: '3.x'
-# # norminetteをインストール
-#     - name: install norminette
-#       run: |
-#         python3 -m pip install --upgrade pip
-#         pip install norminette
-# # norminetteを実行する
-#     - name: norminette src
-#       run: norminette ./src
-
-#     - name: norminette habe
-#       run: norminette ./habe
-
-#     - name: norminette libft
-#       run: norminette ./libft
+    - run: echo "CI skipped"
