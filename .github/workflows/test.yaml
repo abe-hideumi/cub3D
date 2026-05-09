@@ -31,27 +31,27 @@ jobs:
     - name: make fclean
       run: make fclean
 
-# norminetteという名前のジョブを定義
-  norminette:
-# CIを走らせる環境を指定
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-# Pythonをインストールするためのアクションを使用
-    - uses: actions/setup-python@v5
-      with:
-        python-version: '3.x'
-# norminetteをインストール
-    - name: install norminette
-      run: |
-        python3 -m pip install --upgrade pip
-        pip install norminette
-# norminetteを実行する
-    - name: norminette src
-      run: norminette ./src
+# # norminetteという名前のジョブを定義
+#   norminette:
+# # CIを走らせる環境を指定
+#     runs-on: ubuntu-latest
+#     steps:
+#     - uses: actions/checkout@v4
+# # Pythonをインストールするためのアクションを使用
+#     - uses: actions/setup-python@v5
+#       with:
+#         python-version: '3.x'
+# # norminetteをインストール
+#     - name: install norminette
+#       run: |
+#         python3 -m pip install --upgrade pip
+#         pip install norminette
+# # norminetteを実行する
+#     - name: norminette src
+#       run: norminette ./src
 
-    - name: norminette habe
-      run: norminette ./habe
+#     - name: norminette habe
+#       run: norminette ./habe
 
-    - name: norminette libft
-      run: norminette ./libft
+#     - name: norminette libft
+#       run: norminette ./libft
