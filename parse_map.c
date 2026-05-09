@@ -51,6 +51,40 @@ void parse_texture_img(char **field, char *line)
 	printf("2回目:%s|\n", line);
 }
 
+void split_atoi_rgb(char *line, int rgb[])
+{
+	int i = 0;
+
+	
+
+
+}
+int validate_rgb_format(char *line)
+{
+	int comma;
+
+	comma = 0;
+
+	while(*line)
+
+	
+}
+
+int parse_rgb_to_int(char *line)
+{
+	int rgb[3];
+	if (validate_rgb_format(line))
+	{
+		printf("error  \ninvalid color format\n"); // 要修正
+	}
+	split_atoi_rgb(line, rgb);
+	// color code invalid
+	// color code invalid   value 0 ~ 255
+	
+	
+	return (rgb[0] << 16 | rgb[1] << 8 | rgb[2]);
+}
+
 void parse_texture_color(int *field, char *line)
 {
 	size_t len;
@@ -64,7 +98,7 @@ void parse_texture_color(int *field, char *line)
 		line++;
 	if (*line == '\0' || *line == '\n')
 		put_error("texture path is empty");
-	*field = 8;
+	*field = parse_rgb_to_int(line);
 	printf("2回目:%s|\n", line);
 }
 
@@ -84,8 +118,12 @@ int parse_config(char *line, t_info *info)
 		return (parse_texture_color(&info->config.c, line), 0);
 	else
 	{
+
 		printf("未実装map\n");
 		return 0;
+		//  本当はin_mapに入れるためにreturn 1
+		// return 1 する前にconfig の必要データがすべて揃っているか確認
+		// もし揃っていなかったら not enough config  check input（要検討）のエラーを出力した後 exitする
 	}
 
 	return (1);
@@ -111,6 +149,7 @@ void read_file(char *file, t_info *info)
 			in_map = parse_config(line, info);
 		// if (in_map)
 		// 	read_map();
+		//  使用不可な文字列が存在します。
 		free(line);
 	}
 	close(fd);
@@ -137,7 +176,7 @@ void parse_cub_file(char *file, t_info *info)
 int main(int ac, char *av[])
 {
 	if (ac != 2)
-		return (printf("jjj\n"), 1);
+		return (printf("acないよ\n"), 1);
 	t_info info;
 
 	parse_cub_file(av[1], &info);
