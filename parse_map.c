@@ -51,35 +51,41 @@ void parse_texture_img(char **field, char *line)
 	printf("2回目:%s|\n", line);
 }
 
-void split_atoi_rgb(char *line, int rgb[])
-{
-	int i = 0;
-
-	
-
-
-}
 int validate_rgb_format(char *line)
 {
 	int comma;
 
 	comma = 0;
-
+	if (!ft_isdigit(*line))
+		return (-1);
 	while(*line)
-
-	
+	{
+		if (*line == ',')
+		{
+			comma++;
+			if (!ft_isdigit(*(line + 1)))
+				return (-1);
+		}
+		else if (!ft_isdigit(*line))
+			return (-1);
+		line++;
+	}
+	if (comma != 2)
+		return (-1);
+	return (0);
 }
 
 int parse_rgb_to_int(char *line)
 {
 	int rgb[3];
 	if (validate_rgb_format(line))
-	{
-		printf("error  \ninvalid color format\n"); // 要修正
-	}
-	split_atoi_rgb(line, rgb);
-	// color code invalid
-	// color code invalid   value 0 ~ 255
+		put_error("invalid color format");
+	rgb[0] = ft_atoi(line);
+	rgb[1] = ft_atoi(line + 4);
+	rgb[2] = ft_atoi(line + 7);
+	
+	
+	// color code invalid   value 0 ~ 255 22,22,
 	
 	
 	return (rgb[0] << 16 | rgb[1] << 8 | rgb[2]);
@@ -96,8 +102,11 @@ void parse_texture_color(int *field, char *line)
 	line += 2;
 	while (*line == ' ')
 		line++;
-	if (*line == '\0' || *line == '\n')
-		put_error("texture path is empty");
+	len = ft_strlen(line);
+	while (len > 0 && (line[len - 1] == '\n' || line[len - 1] == ' '))
+		line[--len] = '\0';
+	if (len == 0)
+		put_error("color value is empty");
 	*field = parse_rgb_to_int(line);
 	printf("2回目:%s|\n", line);
 }
