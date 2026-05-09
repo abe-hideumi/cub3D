@@ -2,7 +2,8 @@
 #ifndef HABE_H
 # define HABE_H
 
-# include "cub3D.h"
+# include "../cub3D.h"
+# include "../map.h"
 # include "../libft/libft.h"
 
 # define RED 0xFF0000
@@ -46,31 +47,6 @@ typedef struct s_img
 	int		endian;
 }	t_img;
 
-typedef struct s_player
-{
-	double	pos_x;
-	double	pos_y;
-	double	dir_x;
-	double	dir_y;
-	double	plane_x;
-	double	plane_y;
-}	t_player;
-
-typedef struct s_map
-{
-	char	**map;
-	int		width;
-	int		height;
-}	t_map;
-
-// typedef struct s_wall
-// {
-// 	char	*tex_no;
-// 	char	*tex_so;
-// 	char	*tex_we;
-// 	char	*tex_ea;
-// }	t_wall;
-
 typedef struct s_game
 {
 	void		*mlx;
@@ -78,9 +54,7 @@ typedef struct s_game
 	t_img		img;
 	t_player	player;
 	t_map		map;
-	int			floor_color;
-	int			ceiling_color;
-	// t_wall		wall;
+	t_config	config;
 	// t_img		tex[4];
 }	t_game;
 
