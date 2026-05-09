@@ -1,4 +1,6 @@
 *.o
 *libft.a
 *cub3D
-*minilibx-mms_20200219
+*habe.a
+minilibx-linux/
+minilibx_mms_20200219/
