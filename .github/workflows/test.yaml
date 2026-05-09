@@ -1,0 +1,14 @@
+name: cub3D Ci
+
+on:
+  push:
+    branches: [ main, habe, nomura]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  placeholder:
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo "CI skipped"

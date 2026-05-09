@@ -6,12 +6,12 @@
 # include <stdlib.h>
 # include <math.h>
 # include <unistd.h>
+# include "habe/habe.h"
 
-// linuxOS
-# include "minilibx-linux/mlx.h"
-# include "minilibx-linux/mlx_int.h"
-
-// macOS
-# include "minilibx_mms_20200219/mlx.h"
+# ifdef __linux__
+#  include "minilibx-linux/mlx.h"
+# else
+#  include "minilibx_mms_20200219/mlx.h"
+# endif
 
 #endif
