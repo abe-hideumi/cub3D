@@ -75,18 +75,33 @@ int validate_rgb_format(char *line)
 	return (0);
 }
 
+int ft_atoi_rgb(char **s)
+{
+	int n = 0;
+
+	while(ft_isdigit(**s))
+	{
+		n = n * 10 + (**s - '0');
+		(*s)++;
+	}
+	if (**s == ',')
+		(*s)++;
+	if (n < 0 || n > 255)
+		put_error("color code invalid 0 ~ 255");
+	return n;
+}
+
 int parse_rgb_to_int(char *line)
 {
 	int rgb[3];
+	int len = 0;
 	if (validate_rgb_format(line))
 		put_error("invalid color format");
-	rgb[0] = ft_atoi(line);
-	rgb[1] = ft_atoi(line + 4);
-	rgb[2] = ft_atoi(line + 7);
-	
+	rgb[0] = ft_atoi_rgb(&line);
+	rgb[1] = ft_atoi_rgb(&line);
+	rgb[2] = ft_atoi_rgb(&line);
 	
 	// color code invalid   value 0 ~ 255 22,22,
-	
 	
 	return (rgb[0] << 16 | rgb[1] << 8 | rgb[2]);
 }
@@ -94,7 +109,6 @@ int parse_rgb_to_int(char *line)
 void parse_texture_color(int *field, char *line)
 {
 	size_t len;
-	int fd;
 
 	printf("1回目:%s|\n", line);
 	if (*field != -1)
@@ -175,8 +189,8 @@ void parse_cub_file(char *file, t_info *info)
 	printf("SO: %s|\n", info->config.so ? info->config.so : "(null)");
 	printf("WE: %s|\n", info->config.we ? info->config.we : "(null)");
 	printf("EA: %s|\n", info->config.ea ? info->config.ea : "(null)");
-	printf("F:  %d|\n", info->config.f);
-	printf("C:  %d|\n", info->config.c);
+	printf("F:  %x|\n", info->config.f);
+	printf("C:  %x|\n", info->config.c);
 	printf("==============\n");
 	printf("パース成功\n");
 }
