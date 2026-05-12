@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: habe <habe@student.42.fr>                  +#+  +:+       +#+         #
+#    By: habe <habe@student.42tokyo.jp>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 16:21:00 by habe              #+#    #+#              #
-#    Updated: 2025/05/14 18:35:21 by habe             ###   ########.fr        #
+#    Updated: 2026/05/12 18:27:50 by habe             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,29 +63,39 @@ OBJ = $(SRC:.c=.o)
 BONUS_SRC = $(addprefix ft_, $(addsuffix _bonus.c, $(BONUS_SRC_FILES)))
 BONUS_OBJ = $(BONUS_SRC:.c=.o)
 
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
+
+RED = \033[1;31m
+YELLOW = \033[1;33m
+GREEN = \033[1;32m
+RESET = \033[0m
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	ar rcs $(NAME) $(OBJ)
+	@echo "$(GREEN)Compiling libft library...$(RESET)"
+	@ar rcs $(NAME) $(OBJ)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 bonus: .bonus
 
 .bonus: $(OBJ) $(BONUS_OBJ)
-	ar rcs $(NAME) $(OBJ) $(BONUS_OBJ)
+	@echo "$(GREEN)Compiling libft bonus functions...$(RESET)"
+	@ar rcs $(NAME) $(OBJ) $(BONUS_OBJ)
 	@touch .bonus
 
 clean:
-	$(RM) $(OBJ) $(BONUS_OBJ) .bonus
+	@echo "$(YELLOW)Removing libft object files...$(RESET)"
+	@$(RM) $(OBJ) $(BONUS_OBJ) .bonus
 
-fclean: clean
-	$(RM) $(NAME)
+fclean:
+	@echo "$(RED)Removing libft library...$(RESET)"
+	@$(RM) $(OBJ) $(BONUS_OBJ) .bonus
+	@$(RM) $(NAME)
 
 re: fclean all
 

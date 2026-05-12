@@ -5,7 +5,7 @@ SRCS =	main.c
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 
 LIBFT = libft/libft.a
 DISPLAY_A = display/display.a
@@ -34,10 +34,11 @@ RESET = \033[0m
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT) $(DISPLAY_A) $(MINILIBX_A)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -Ldisplay -l:display.a -Llibft -lft $(MLX_FLAGS)
+	@echo "$(GREEN)Linking cub3D executable...$(RESET)"
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -Ldisplay -ldisplay -Llibft -lft $(MLX_FLAGS)
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(LIBFT):
 	$(MAKE) -C libft all
@@ -49,18 +50,22 @@ $(MINILIBX_A):
 	$(MAKE) -C $(MINILIBX_DIR)
 
 norm:
-	@echo "$(GREEN)Checking code style...$(RESET)"
-	@norminette $(SRCS) display/* libft/*.c cub3D.h main.c parse_map.c
+	@output=$$(norminette $(SRCS) display/*.c display/*.h libft/*.c cub3D.h map.h parse_map.c); \
+	if echo "$$output" | grep -q "Error"; then \
+		echo "$$output" | grep "Error"; \
+	else \
+		echo "$(GREEN)Norminette: complete$(RESET)"; \
+	fi
 
 clean:
-	@echo "$(YELLOW)Removing object files...$(RESET)"
+	@echo "$(YELLOW)Removing cub3D object files...$(RESET)"
 	@rm -f $(OBJS)
 	@$(MAKE) -C libft clean
 	@$(MAKE) -C display clean
 	@$(MAKE) -C $(MINILIBX_DIR) clean
 
 fclean:
-	@echo "$(RED)Removing executable...$(RESET)"
+	@echo "$(RED)Removing cub3D executable...$(RESET)"
 	@rm -f $(OBJS) $(NAME)
 	@$(MAKE) -C libft fclean
 	@$(MAKE) -C display fclean
@@ -68,4 +73,4 @@ fclean:
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re norm
