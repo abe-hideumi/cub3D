@@ -6,6 +6,13 @@
 #include "libft/libft.h"
 #include "get_next_line/get_next_line.h"
 
+int ft_is_space(char c)
+{
+	if (c == ' ' || c == '\t')
+		return 1;
+	return 0;
+}
+
 void put_error(char *msg)
 {
 	ft_putstr_fd("Error\n", 2);
@@ -32,12 +39,12 @@ void parse_texture_img(char **field, char *line)
 	if (*field != NULL)
 		put_error("invalid config: duplicate identifier");
 	line += 3;
-	while (*line == ' ')
+	while (ft_is_space(*line))
 		line++;
 	if (*line == '\0' || *line == '\n')
 		put_error("texture path is empty");
 	len = ft_strlen(line);
-	while (len > 0 && (line[len - 1] == '\n' || line[len - 1] == ' '))
+	while (len > 0 && (line[len - 1] == '\n' || ft_is_space(line[len - 1])))
 		len--;
 	if (len == 0)
 		put_error("texture path is empty");
@@ -114,10 +121,10 @@ void parse_texture_color(int *field, char *line)
 	if (*field != -1)
 		put_error("invalid config: duplicate identifier");
 	line += 2;
-	while (*line == ' ')
+	while (ft_is_space(*line))
 		line++;
 	len = ft_strlen(line);
-	while (len > 0 && (line[len - 1] == '\n' || line[len - 1] == ' '))
+	while (len > 0 && (line[len - 1] == '\n' || ft_is_space(line[len - 1])))
 		line[--len] = '\0';
 	if (len == 0)
 		put_error("color value is empty");
@@ -127,6 +134,10 @@ void parse_texture_color(int *field, char *line)
 
 int parse_config(char *line, t_info *info)
 {
+	while (ft_is_space(*line))
+		line++;
+	if (*line == '\n')
+		return (0);
 	if (!ft_strncmp("NO ", line, 3))
 		return (parse_texture_img(&info->config.no, line), 0);
 	if (!ft_strncmp("SO ", line, 3))
@@ -141,15 +152,27 @@ int parse_config(char *line, t_info *info)
 		return (parse_texture_color(&info->config.c, line), 0);
 	else
 	{
-
-		printf("未実装map\n");
-		return 0;
-		//  本当はin_mapに入れるためにreturn 1
+		printf("mapcheck 突入\n");
+		return 1;
+		//  改行でもin_mapに入れるためにreturn 1
 		// return 1 する前にconfig の必要データがすべて揃っているか確認
 		// もし揃っていなかったら not enough config  check input（要検討）のエラーを出力した後 exitする
 	}
+}
 
-	return (1);
+void read_map(char *line, t_info *info)
+{
+	printf("line check: %s\n", line);
+	ssize_t len = ft_strlen(line);
+	if (line[len - 1] == '\n')
+		line[len - 1] = '\0';
+	if (info->map_info.max_width < len)
+		info->map_info.max_width = len;
+	info->map_info.map[info->map_info.max_height] = ft_strdup(line);
+	info->map_info.max_height++;
+	info->map_info.map[info->map_info.max_height] = NULL;
+
+
 }
 
 void read_file(char *file, t_info *info)
@@ -163,15 +186,10 @@ void read_file(char *file, t_info *info)
 		put_error("cannot open file");
 	while ((line = get_next_line(fd)))
 	{
-		if (line[0] == '\n')
-		{
-			free(line);
-			continue;
-		}
 		if (!in_map)
 			in_map = parse_config(line, info);
-		// if (in_map)
-		// 	read_map();
+		if (in_map)
+			read_map(line, info);
 		//  使用不可な文字列が存在します。
 		free(line);
 	}
@@ -182,6 +200,8 @@ void parse_cub_file(char *file, t_info *info)
 {
 	check_extenstion(file);
 	info->config = (t_config){NULL, NULL, NULL, NULL, -1, -1};
+	info->map_info=(t_map){0};
+	info->map_info.map = malloc(sizeof(char *) * 1000);
 	read_file(file, info);
 
 	printf("=== config ===\n");
@@ -192,6 +212,8 @@ void parse_cub_file(char *file, t_info *info)
 	printf("F:  %x|\n", info->config.f);
 	printf("C:  %x|\n", info->config.c);
 	printf("==============\n");
+	for (int i = 0; i < info->map_info.max_height; i++)
+		printf("map : %s\n", info->map_info.map[i]);
 	printf("パース成功\n");
 }
 
@@ -203,6 +225,14 @@ int main(int ac, char *av[])
 	t_info info;
 
 	parse_cub_file(av[1], &info);
+
+	free(info.config.no);
+	free(info.config.so);
+	free(info.config.we);
+	free(info.config.ea);
+	for (int i = 0; i < info.map_info.max_height; i++)
+		free(info.map_info.map[i]);
+	free(info.map_info.map);
 
 	return (0);
 }
