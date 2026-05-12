@@ -1,5 +1,5 @@
 
-NAME = habe.a
+NAME = display.a
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
@@ -36,11 +36,11 @@ $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
-	@echo "$(YELLOW)Removing habe object files...$(RESET)"
+	@echo "$(YELLOW)Removing display object files...$(RESET)"
 	@rm -f $(OBJS)
 
 fclean:
-	@echo "$(RED)Removing habe.a...$(RESET)"
+	@echo "$(RED)Removing display.a...$(RESET)"
 	@rm -f $(OBJS)
 	@rm -f $(NAME)
 

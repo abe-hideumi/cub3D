@@ -6,7 +6,7 @@
 # include <stdlib.h>
 # include <math.h>
 # include <unistd.h>
-# include "habe/habe.h"
+# include "display/display.h"
 
 # ifdef __linux__
 #  include "minilibx-linux/mlx.h"

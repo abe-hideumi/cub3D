@@ -1,5 +1,5 @@
 
-#include "habe.h"
+#include "display.h"
 
 static void	player_init(t_player *player)
 {
@@ -32,8 +32,8 @@ static int	map_init(t_map *map)
 	if (map->map[4] == NULL)
 		return (free(map->map[0]), free(map->map[1]), free(map->map[2]), free(map->map[3]), free(map->map), 1);
 	map->map[5] = NULL;
-	map->width = 6;
-	map->height = 5;
+	map->max_width = 6;
+	map->max_height = 5;
 	return (0);
 }
 
@@ -42,8 +42,8 @@ static int	game_init(t_game *game)
 	player_init(&game->player);
 	if (map_init(&game->map) == 1)
 		return (1);
-	game->ceiling_color = WHITE;
-	game->floor_color = BLACK;
+	game->config.c = WHITE;
+	game->config.f = BLACK;
 	return (0);
 }
 

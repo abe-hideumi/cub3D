@@ -8,7 +8,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 
 LIBFT = libft/libft.a
-HABE = habe/habe.a
+DISPLAY_A = display/display.a
 
 # detect OS
 UNAME = $(shell uname -s)
@@ -33,8 +33,8 @@ RESET = \033[0m
 # rules
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT) $(HABE) $(MINILIBX_A)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -Lhabe -l:habe.a -Llibft -lft $(MLX_FLAGS)
+$(NAME): $(OBJS) $(LIBFT) $(DISPLAY_A) $(MINILIBX_A)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -Ldisplay -l:display.a -Llibft -lft $(MLX_FLAGS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
@@ -42,28 +42,28 @@ $(NAME): $(OBJS) $(LIBFT) $(HABE) $(MINILIBX_A)
 $(LIBFT):
 	$(MAKE) -C libft all
 
-$(HABE):
-	$(MAKE) -C habe all
+$(DISPLAY_A):
+	$(MAKE) -C display all
 
 $(MINILIBX_A):
 	$(MAKE) -C $(MINILIBX_DIR)
 
 norm:
 	@echo "$(GREEN)Checking code style...$(RESET)"
-	@norminette $(SRCS) habe/* libft/*.c cub3D.h main.c parse_map.c
+	@norminette $(SRCS) display/* libft/*.c cub3D.h main.c parse_map.c
 
 clean:
 	@echo "$(YELLOW)Removing object files...$(RESET)"
 	@rm -f $(OBJS)
 	@$(MAKE) -C libft clean
-	@$(MAKE) -C habe clean
+	@$(MAKE) -C display clean
 	@$(MAKE) -C $(MINILIBX_DIR) clean
 
 fclean:
 	@echo "$(RED)Removing executable...$(RESET)"
 	@rm -f $(OBJS) $(NAME)
 	@$(MAKE) -C libft fclean
-	@$(MAKE) -C habe fclean
+	@$(MAKE) -C display fclean
 	@$(MAKE) -C $(MINILIBX_DIR) clean
 
 re: fclean all
