@@ -4,4 +4,6 @@
 *minilibx-mms_20200219
 *a.out
 *habe.a
-minilibx-linux/
+*minilibx-linux/
+display/display.a
+display/minimap_render.c
