@@ -8,7 +8,7 @@ AR = ar rcs
 SRCS = init.c\
 		hooks.c\
 		render.c\
-		minimap_render.c
+		utils.c
 
 OBJS = $(SRCS:.c=.o)
 

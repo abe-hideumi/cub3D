@@ -6,17 +6,24 @@
 # include "../map.h"
 # include "../libft/libft.h"
 
+// colors (後で消す)
 # define RED 0xFF0000
 # define BLUE 0x0000FF
 # define GREEN 0x008000
-# define YELLO 0xFFFF00
+# define YELLOW 0xFFFF00
 # define BLACK 0x000000
 # define WHITE 0xFFFFFF
 # define FOV 90
 
-# define WIDTH 800
-# define HEIGHT 600
+// display size
+# define WIDTH 1600
+# define HEIGHT 1200
 
+// player movement
+# define MOVE_SPEED 0.1
+# define ROT_SPEED 0.05
+
+// event
 # define DESTROY_NOTIFY 17
 
 // keycode
@@ -58,9 +65,24 @@ typedef struct s_game
 	// t_img		tex[4];
 }	t_game;
 
+typedef struct s_ray
+{
+	int		map_x;
+	int		map_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	int		step_x;
+	int		step_y;
+	int		side;
+	double	perp_wall_dist;
+}	t_ray;
+
 int		display_init(t_game *game);
 int		key_hook(int keycode, void *param);
 int		close_hook(t_game *game);
 void	game_render(t_game *game);
+double	multiply(double a, double b);
 
 #endif

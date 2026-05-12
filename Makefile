@@ -16,10 +16,12 @@ ifeq ($(UNAME), Linux)
 	MINILIBX_DIR = minilibx-linux
 	MINILIBX_A = $(MINILIBX_DIR)/libmlx.a
 	MLX_FLAGS = -L$(MINILIBX_DIR) -lmlx -lX11 -lXext -lm
+	DISPLAY_FLAG = -Ldisplay -l:display.a
 else
 	MINILIBX_DIR = minilibx_mms_20200219
 	MINILIBX_A = $(MINILIBX_DIR)/libmlx.a
 	MLX_FLAGS = -L$(MINILIBX_DIR) -lmlx -framework OpenGL -framework AppKit
+	DISPLAY_FLAG = display/display.a
 endif
 
 INCLUDES = -I. -Ilibft -I$(MINILIBX_DIR)
@@ -35,7 +37,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT) $(DISPLAY_A) $(MINILIBX_A)
 	@echo "$(GREEN)Linking cub3D executable...$(RESET)"
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -Ldisplay -ldisplay -Llibft -lft $(MLX_FLAGS)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(DISPLAY_FLAG) -Llibft -lft $(MLX_FLAGS)
 
 %.o: %.c
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
