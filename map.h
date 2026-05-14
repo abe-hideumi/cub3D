@@ -34,8 +34,7 @@ typedef struct s_info
 	t_map		map_info;
 	t_config 	config;
 	char		player_dir;
-	int			player_x;
-	int			player_y;
+	t_player    player;
 }		t_info;
 
 #endif
