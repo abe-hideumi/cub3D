@@ -65,7 +65,7 @@ int validate_rgb_format(char *line)
 	comma = 0;
 	if (!ft_isdigit(*line))
 		return (-1);
-	while(*line)
+	while (*line)
 	{
 		if (*line == ',')
 		{
@@ -86,7 +86,7 @@ int ft_atoi_rgb(char **s)
 {
 	int n = 0;
 
-	while(ft_isdigit(**s))
+	while (ft_isdigit(**s))
 	{
 		n = n * 10 + (**s - '0');
 		(*s)++;
@@ -101,15 +101,14 @@ int ft_atoi_rgb(char **s)
 int parse_rgb_to_int(char *line)
 {
 	int rgb[3];
-	int len = 0;
 	if (validate_rgb_format(line))
 		put_error("invalid color format");
 	rgb[0] = ft_atoi_rgb(&line);
 	rgb[1] = ft_atoi_rgb(&line);
 	rgb[2] = ft_atoi_rgb(&line);
-	
+
 	// color code invalid   value 0 ~ 255 22,22,
-	
+
 	return (rgb[0] << 16 | rgb[1] << 8 | rgb[2]);
 }
 
@@ -164,15 +163,13 @@ void read_map(char *line, t_info *info)
 {
 	printf("line check: %s\n", line);
 	ssize_t len = ft_strlen(line);
-	if (line[len - 1] == '\n')
-		line[len - 1] = '\0';
+	if (len > 0 && line[len - 1] == '\n')
+		line[--len] = '\0';
 	if (info->map_info.max_width < len)
 		info->map_info.max_width = len;
 	info->map_info.map[info->map_info.max_height] = ft_strdup(line);
 	info->map_info.max_height++;
 	info->map_info.map[info->map_info.max_height] = NULL;
-
-
 }
 
 void read_file(char *file, t_info *info)
@@ -196,12 +193,85 @@ void read_file(char *file, t_info *info)
 	close(fd);
 }
 
+int is_valid_map_char(char c)
+{
+	static int player_count = 0;
+	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
+	{
+		return (2);
+	}
+	if (c == '0' || c == '1' || c == ' ')
+		return (1);
+	return (0);
+}
+
+void check_map(t_info *info, char (*map)[info->map_info.max_width])
+{
+	char **raw_map = info->map_info.map;
+	int i = 0;
+	int j;
+
+	while (i < info->map_info.max_height)
+	{
+		j = 0;
+		while (j < info->map_info.max_width)
+		{
+			if (!raw_map[i][j])
+				map[i][j] = ' ';
+			else if (is_valid_map_char(raw_map[i][j]) == -1)
+				put_error("two Player");
+			else if (is_valid_map_char(raw_map[i][j]) == 0)
+				put_error("unallowed char");
+			else if (is_valid_map_char(raw_map[i][j]) == 1)
+				map[i][j] = raw_map[i][j];
+			else if (is_valid_map_char(raw_map[i][j]) == 2)
+			{
+				map[i][j] = raw_map[i][j];
+				info->player_dir = raw_map[i][j];
+			}
+			j++;
+		}
+		i++;
+	}
+	map[i][j] = '\0';
+}
+
+void parse_map(t_info *info)
+{
+	char (*map)[info->map_info.max_width] = ft_calloc((info->map_info.max_height + 1) * (info->map_info.max_width), 0);
+	check_map(info, map);
+
+	printf("=== normalized map ===\n");
+	printf("width: %d  height: %d\n", info->map_info.max_width, info->map_info.max_height);
+	for (int i = 0; i < info->map_info.max_height; i++)
+	{
+		for (int j = 0; j < info->map_info.max_width; j++)
+		{
+			printf("%c", map[i][j]);
+		}
+		printf("|\n");
+	}
+	printf("======================\n");
+
+	for (int i = 0; i < info->map_info.max_height; i++)
+	{
+		printf("%s|\n", map[i]);
+	}
+	printf("%s|\n", map[0]);
+	printf("player: dir=%c\n",
+		   info->player_dir);
+	printf("======================\n");
+	free(map);
+}
+
 void parse_cub_file(char *file, t_info *info)
 {
 	check_extenstion(file);
 	info->config = (t_config){NULL, NULL, NULL, NULL, -1, -1};
-	info->map_info=(t_map){0};
+	info->map_info = (t_map){0};
 	info->map_info.map = malloc(sizeof(char *) * 1000);
+	if (info->map_info.map == NULL)
+		put_error("malloc failed");
 	read_file(file, info);
 
 	printf("=== config ===\n");
@@ -212,9 +282,14 @@ void parse_cub_file(char *file, t_info *info)
 	printf("F:  %x|\n", info->config.f);
 	printf("C:  %x|\n", info->config.c);
 	printf("==============\n");
+	printf("パース成功\n");
 	for (int i = 0; i < info->map_info.max_height; i++)
 		printf("map : %s\n", info->map_info.map[i]);
-	printf("パース成功\n");
+	printf("max width: %d max height: %d\n", info->map_info.max_width, info->map_info.max_height);
+	printf("==============\n");
+
+	// これからマップのパースを行う
+	parse_map(info);
 }
 
 // 仮置きメインファイル

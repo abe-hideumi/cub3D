@@ -6,13 +6,12 @@ SO      ./texture/path_to_the_south_texture
     F 220,100,0      
   		C              255,127,0
 
-EA ./texture/path_to_the_east_texture   
+   EA ./texture/path_to_the_east_texture   
 
-　　111111
-100101
-101001
-1100N1
-111111fdsfds
+
+100000
+100000
 111111
-put_error
-printf
+N11111
+000000
+111111
