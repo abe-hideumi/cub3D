@@ -152,10 +152,10 @@ int parse_config(char *line, t_info *info)
 	else
 	{
 		printf("mapcheck 突入\n");
-		return 1;
-		//  改行でもin_mapに入れるためにreturn 1
+		// if (is_config_complete(info->config))
 		// return 1 する前にconfig の必要データがすべて揃っているか確認
 		// もし揃っていなかったら not enough config  check input（要検討）のエラーを出力した後 exitする
+		return 1;
 	}
 }
 
@@ -205,62 +205,48 @@ int is_valid_map_char(char c)
 	return (0);
 }
 
-void check_map(t_info *info, char (*map)[info->map_info.max_width + 1])
-{
-	char **raw_map = info->map_info.map;
-	int i = 0;
-	int j;
+// void check_map(t_info *info)
+// {
+// 	char **raw_map = info->map_info.map;
+// 	int i = 0;
+// 	int j;
 
-	while (i < info->map_info.max_height)
-	{
-		j = 0;
-		while (j < info->map_info.max_width)
-		{
-			if (!raw_map[i][j])
-				map[i][j] = ' ';
-			else if (is_valid_map_char(raw_map[i][j]) == -1)
-				put_error("two Player");
-			else if (is_valid_map_char(raw_map[i][j]) == 0)
-				put_error("unallowed char");
-			else if (is_valid_map_char(raw_map[i][j]) == 1)
-				map[i][j] = raw_map[i][j];
-			else if (is_valid_map_char(raw_map[i][j]) == 2)
-			{
-				map[i][j] = raw_map[i][j];
-				info->player_dir = raw_map[i][j];
-			}
-			j++;
-		}
-		i++;
-	}
-}
+// 	while (i < info->map_info.max_height)
+// 	{
+// 		j = 0;
+// 		while (j < info->map_info.max_width)
+// 		{
+// 			if (!raw_map[i][j])
+// 				map[i][j] = ' ';
+// 			else if (is_valid_map_char(raw_map[i][j]) == -1)
+// 				put_error("two Player");
+// 			else if (is_valid_map_char(raw_map[i][j]) == 0)
+// 				put_error("unallowed char");
+// 			else if (is_valid_map_char(raw_map[i][j]) == 1)
+// 				map[i][j] = raw_map[i][j];
+// 			else if (is_valid_map_char(raw_map[i][j]) == 2)
+// 			{
+// 				if (info->player_dir)
+// 					put_error("more than 2 player");
+// 				info->player_dir = raw_map[i][j];
+// 				map[i][j] = raw_map[i][j];
+// 			}
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// }
 
 void parse_map(t_info *info)
 {
-	char (*map)[info->map_info.max_width + 1] = ft_calloc((info->map_info.max_height + 1) * (info->map_info.max_width + 1), 1);
-	check_map(info, map);
+	// check_map(info);
 
 	printf("=== normalized map ===\n");
 	printf("width: %d  height: %d\n", info->map_info.max_width, info->map_info.max_height);
 	for (int i = 0; i < info->map_info.max_height; i++)
-	{
-		for (int j = 0; j < info->map_info.max_width; j++)
-		{
-			printf("%c", map[i][j]);
-		}
-		printf("|\n");
-	}
+		printf("%s|\n", info->map_info.map[i]);
+	printf("player: dir=%c\n", info->player_dir);
 	printf("======================\n");
-
-	for (int i = 0; i < info->map_info.max_height; i++)
-	{
-		printf("%s|\n", map[i]);
-	}
-	printf("%s|\n", map[0]);
-	printf("player: dir=%c\n",
-		   info->player_dir);
-	printf("======================\n");
-	free(map);
 }
 
 void parse_cub_file(char *file, t_info *info)
@@ -283,7 +269,7 @@ void parse_cub_file(char *file, t_info *info)
 	printf("==============\n");
 	printf("パース成功\n");
 	for (int i = 0; i < info->map_info.max_height; i++)
-		printf("map : %s\n", info->map_info.map[i]);
+		printf("map : %s|\n", info->map_info.map[i]);
 	printf("max width: %d max height: %d\n", info->map_info.max_width, info->map_info.max_height);
 	printf("==============\n");
 
@@ -297,6 +283,7 @@ int main(int ac, char *av[])
 	if (ac != 2)
 		return (printf("acないよ\n"), 1);
 	t_info info;
+	info.player_dir = 0;
 
 	parse_cub_file(av[1], &info);
 
