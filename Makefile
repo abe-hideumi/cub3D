@@ -2,13 +2,17 @@ NAME = cub3D
 
 SRCS =	main.c
 
-OBJS = $(SRCS:.c=.o)
+DISPLAY_SRCS =	display/init.c \
+				display/hooks.c \
+				display/render.c \
+				display/utils.c
+
+OBJS = $(SRCS:.c=.o) $(DISPLAY_SRCS:.c=.o)
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 LIBFT = libft/libft.a
-DISPLAY_A = display/display.a
 
 # detect OS
 UNAME = $(shell uname -s)
@@ -16,15 +20,13 @@ ifeq ($(UNAME), Linux)
 	MINILIBX_DIR = minilibx-linux
 	MINILIBX_A = $(MINILIBX_DIR)/libmlx.a
 	MLX_FLAGS = -L$(MINILIBX_DIR) -lmlx -lX11 -lXext -lm
-	DISPLAY_FLAG = -Ldisplay -l:display.a
 else
 	MINILIBX_DIR = minilibx_mms_20200219
 	MINILIBX_A = $(MINILIBX_DIR)/libmlx.a
 	MLX_FLAGS = -L$(MINILIBX_DIR) -lmlx -framework OpenGL -framework AppKit
-	DISPLAY_FLAG = display/display.a
 endif
 
-INCLUDES = -I. -Ilibft -I$(MINILIBX_DIR)
+INCLUDES = -I. -Idisplay -Ilibft -I$(MINILIBX_DIR)
 
 # colors for output
 YELLOW = \033[1;33m
@@ -35,9 +37,9 @@ RESET = \033[0m
 # rules
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT) $(DISPLAY_A) $(MINILIBX_A)
+$(NAME): $(OBJS) $(LIBFT) $(MINILIBX_A)
 	@echo "$(GREEN)Linking cub3D executable...$(RESET)"
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(DISPLAY_FLAG) -Llibft -lft $(MLX_FLAGS)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -Llibft -lft $(MLX_FLAGS)
 
 %.o: %.c
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
@@ -45,14 +47,11 @@ $(NAME): $(OBJS) $(LIBFT) $(DISPLAY_A) $(MINILIBX_A)
 $(LIBFT):
 	$(MAKE) -C libft all
 
-$(DISPLAY_A):
-	$(MAKE) -C display all
-
 $(MINILIBX_A):
 	$(MAKE) -C $(MINILIBX_DIR)
 
 norm:
-	@output=$$(norminette $(SRCS) display/*.c display/*.h libft/*.c cub3D.h map.h parse_map.c); \
+	@output=$$(norminette $(SRCS) $(DISPLAY_SRCS) display/*.h libft/*.c cub3D.h map.h parse_map.c); \
 	if echo "$$output" | grep -q "Error"; then \
 		echo "$$output" | grep "Error"; \
 	else \
@@ -63,14 +62,12 @@ clean:
 	@echo "$(YELLOW)Removing cub3D object files...$(RESET)"
 	@rm -f $(OBJS)
 	@$(MAKE) -C libft clean
-	@$(MAKE) -C display clean
 	@$(MAKE) -C $(MINILIBX_DIR) clean
 
 fclean:
 	@echo "$(RED)Removing cub3D executable...$(RESET)"
 	@rm -f $(OBJS) $(NAME)
 	@$(MAKE) -C libft fclean
-	@$(MAKE) -C display fclean
 	@$(MAKE) -C $(MINILIBX_DIR) clean
 
 re: fclean all
