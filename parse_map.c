@@ -205,7 +205,7 @@ int is_valid_map_char(char c)
 	return (0);
 }
 
-void check_map(t_info *info, char (*map)[info->map_info.max_width])
+void check_map(t_info *info, char (*map)[info->map_info.max_width + 1])
 {
 	char **raw_map = info->map_info.map;
 	int i = 0;
@@ -233,12 +233,11 @@ void check_map(t_info *info, char (*map)[info->map_info.max_width])
 		}
 		i++;
 	}
-	map[i][j] = '\0';
 }
 
 void parse_map(t_info *info)
 {
-	char (*map)[info->map_info.max_width] = ft_calloc((info->map_info.max_height + 1) * (info->map_info.max_width), 0);
+	char (*map)[info->map_info.max_width + 1] = ft_calloc((info->map_info.max_height + 1) * (info->map_info.max_width + 1), 1);
 	check_map(info, map);
 
 	printf("=== normalized map ===\n");
