@@ -1,19 +1,17 @@
-
-#ifndef HABE_H
-# define HABE_H
+#ifndef DISPLAY_H
+# define DISPLAY_H
 
 # include "../cub3D.h"
 # include "../map.h"
 # include "../libft/libft.h"
 
-// colors (後で消す)
+// colors
 # define RED 0xFF0000
 # define BLUE 0x0000FF
 # define GREEN 0x008000
 # define YELLOW 0xFFFF00
 # define BLACK 0x000000
 # define WHITE 0xFFFFFF
-# define FOV 90
 
 // display size
 # define WIDTH 1600
@@ -28,13 +26,13 @@
 
 // keycode
 # ifdef __APPLE__
-# define KEY_ESC 53
-# define KEY_LEFT 123
-# define KEY_RIGHT 124
-# define KEY_W 25
-# define KEY_A 38
-# define KEY_S 39
-# define KEY_D 40
+#  define KEY_ESC 53
+#  define KEY_LEFT 123
+#  define KEY_RIGHT 124
+#  define KEY_W 25
+#  define KEY_A 38
+#  define KEY_S 39
+#  define KEY_D 40
 # else
 #  define KEY_ESC 65307
 #  define KEY_LEFT 65361
@@ -84,5 +82,14 @@ int		key_hook(int keycode, void *param);
 int		close_hook(t_game *game);
 void	game_render(t_game *game);
 double	multiply(double a, double b);
+void	put_pixel(t_img *img, int x, int y, int color);
+void	set_ray_step(t_ray *ray, double dir_x, double dir_y);
+void	init_side_dist(t_player *player, t_ray *ray, \
+			double dir_x, double dir_y);
+
+// mock config
+void	player_init(t_player *player);
+int		map_init(t_map *map);
+int		game_init(t_game *game);
 
 #endif

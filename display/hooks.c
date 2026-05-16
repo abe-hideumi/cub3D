@@ -1,4 +1,3 @@
-
 #include "display.h"
 
 int	handle_move(int keycode, t_game *game)
@@ -32,33 +31,41 @@ int	handle_move(int keycode, t_game *game)
 
 static void	dir_right(t_game *game)
 {
-	double old_dir_x;
-	double old_plane_x;
+	double	old_dir_x;
+	double	old_plane_x;
 
 	old_dir_x = game->player.dir_x;
 	old_plane_x = game->player.plane_x;
-	game->player.dir_x = multiply(game->player.dir_x, cos(-ROT_SPEED)) - multiply(game->player.dir_y, sin(-ROT_SPEED));
-	game->player.dir_y = multiply(old_dir_x, sin(-ROT_SPEED)) + multiply(game->player.dir_y, cos(-ROT_SPEED));
-	game->player.plane_x = multiply(game->player.plane_x, cos(-ROT_SPEED)) - multiply(game->player.plane_y, sin(-ROT_SPEED));
-	game->player.plane_y = multiply(old_plane_x, sin(-ROT_SPEED)) + multiply(game->player.plane_y, cos(-ROT_SPEED));
+	game->player.dir_x = multiply(game->player.dir_x, \
+		cos(-ROT_SPEED)) - multiply(game->player.dir_y, sin(-ROT_SPEED));
+	game->player.dir_y = multiply(old_dir_x, \
+		sin(-ROT_SPEED)) + multiply(game->player.dir_y, cos(-ROT_SPEED));
+	game->player.plane_x = multiply(game->player.plane_x, \
+		cos(-ROT_SPEED)) - multiply(game->player.plane_y, sin(-ROT_SPEED));
+	game->player.plane_y = multiply(old_plane_x, \
+		sin(-ROT_SPEED)) + multiply(game->player.plane_y, cos(-ROT_SPEED));
 }
 
 static void	dir_left(t_game *game)
 {
-	double old_dir_x;
-	double old_plane_x;
+	double	old_dir_x;
+	double	old_plane_x;
 
 	old_dir_x = game->player.dir_x;
 	old_plane_x = game->player.plane_x;
-	game->player.dir_x = multiply(game->player.dir_x, cos(ROT_SPEED)) - multiply(game->player.dir_y, sin(ROT_SPEED));
-	game->player.dir_y = multiply(old_dir_x, sin(ROT_SPEED)) + multiply(game->player.dir_y, cos(ROT_SPEED));
-	game->player.plane_x = multiply(game->player.plane_x, cos(ROT_SPEED)) - multiply(game->player.plane_y, sin(ROT_SPEED));
-	game->player.plane_y = multiply(old_plane_x, sin(ROT_SPEED)) + multiply(game->player.plane_y, cos(ROT_SPEED));
+	game->player.dir_x = multiply(game->player.dir_x, \
+		cos(ROT_SPEED)) - multiply(game->player.dir_y, sin(ROT_SPEED));
+	game->player.dir_y = multiply(old_dir_x, \
+		sin(ROT_SPEED)) + multiply(game->player.dir_y, cos(ROT_SPEED));
+	game->player.plane_x = multiply(game->player.plane_x, \
+		cos(ROT_SPEED)) - multiply(game->player.plane_y, sin(ROT_SPEED));
+	game->player.plane_y = multiply(old_plane_x, \
+		sin(ROT_SPEED)) + multiply(game->player.plane_y, cos(ROT_SPEED));
 }
 
 int	key_hook(int keycode, void *param)
 {
-	t_game *game;
+	t_game	*game;
 
 	game = (t_game *)param;
 	if (keycode == KEY_ESC)
@@ -76,19 +83,6 @@ int	key_hook(int keycode, void *param)
 		return (printf("Right\n"), 0);
 	}
 	return (0);
-}
-
-void	free_map(t_map *map)
-{
-	int	i;
-
-	i = 0;
-	while (i < map->max_height)
-	{
-		free(map->map[i]);
-		i++;
-	}
-	free(map->map);
 }
 
 int	close_hook(t_game *game)

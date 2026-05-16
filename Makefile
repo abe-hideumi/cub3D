@@ -1,11 +1,14 @@
 NAME = cub3D
 
-SRCS =	main.c
+SRCS =	main.c\
+		srcs/free.c\
 
 DISPLAY_SRCS =	display/init.c \
 				display/hooks.c \
 				display/render.c \
-				display/utils.c
+				display/calculation.c\
+				display/render_utils.c \
+				display/mock_config.c
 
 OBJS = $(SRCS:.c=.o) $(DISPLAY_SRCS:.c=.o)
 
