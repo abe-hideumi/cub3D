@@ -232,7 +232,7 @@ static void check_map_char(t_info *info, char *c, int i, int j)
 		info->player_dir = *c;
 		info->player.pos_x = j;
 		info->player.pos_y = i;
-		// player を初期化
+		// player を初期化　初期化関数を作る
 		*c = 'P';
 	}
 	else if (ret == CHAR_INVALID)
@@ -263,33 +263,50 @@ void check_map(t_info *info)
 		put_error("No Player");
 }
 
-static int is_movable_char(char c)
+int check_single_direction(char **map, int x, int y)
 {
-	if (c == 'N' || c == 'S' || c == 'E' || c == 'W' || c == '0')
-		return (1);
-	return (0);
+	if (x < 0 || y < 0 || !map[y] || x >= ft_strlen(map[y]) || map[y][x] == ' ')
+		return 1;
+	return 0;
 }
 
-// void check_map_wall(t_info *info)
-// {
-// 	char **map = info->map_info.map;
-// 	int i;
-// 	int j;
+bool check_all_direction(char **map, int x, int y)
+{
+	int ret;
 
-// 	i = 0;
-// 	while (i < info->map_info.max_height)
-// 	{
-// 		int len = ft_strlen(map[i]);
-// 		while (j < len)
-// 		{
-// 			if (is_movable_char(map[i][j]))
-// 			{
+	ret = check_single_direction(map, x + 1, y);
+	ret += check_single_direction(map, x - 1, y);
+	ret += check_single_direction(map, x, y + 1);
+	ret += check_single_direction(map, x, y - 1);
+	
+	printf("%d", ret);
+	return ret;
+}
 
-// 			}
-// 		}
-// 	}
+void check_map_wall(t_info *info)
+{
+	char **map = info->map_info.map;
+	int x;
+	int y;
 
-// }
+	y = 0;
+	while (y < info->map_info.max_height)
+	{
+		x = 0;
+		printf("check\n");
+		int len = ft_strlen(map[y]);
+		while (x < len)
+		{
+			printf("x:%d y:%d\n", x, y);
+			if (map[y][x] == 'P' || map[y][x] == '0')
+				if (check_all_direction(map, x, y))
+					put_error("gomi");
+			x++;
+		}
+		y++;
+	}
+
+}
 
 void parse_cub_file(char *file, t_info *info)
 {
@@ -302,7 +319,7 @@ void parse_cub_file(char *file, t_info *info)
 		put_error("malloc failed");
 	read_file(file, info);
 	check_map(info);
-	// check_map_wall(info);
+	check_map_wall(info);
 
 	printf("=== config ===\n");
 	printf("NO: %s|\n", info->config.no ? info->config.no : "(null)");
