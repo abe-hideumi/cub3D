@@ -2,6 +2,7 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdbool.h>
 #include "map.h"
 #include "libft/libft.h"
 #include "get_next_line/get_next_line.h"
@@ -101,7 +102,7 @@ int ft_atoi_rgb(char **s)
 int parse_rgb_to_int(char *line)
 {
 	int rgb[3];
-	
+
 	if (validate_rgb_format(line))
 		put_error("Invalid color format");
 	rgb[0] = ft_atoi_rgb(&line);
@@ -129,6 +130,12 @@ void parse_texture_color(int *field, char *line)
 	printf("2回目:%s|\n", line);
 }
 
+bool is_config_complete(t_config config)
+{
+	return (config.no && config.so && config.we && config.ea
+		&& config.f != -1 && config.c != -1);
+}
+
 int parse_config(char *line, t_info *info)
 {
 	while (ft_is_space(*line))
@@ -150,9 +157,9 @@ int parse_config(char *line, t_info *info)
 	else
 	{
 		printf("mapcheck 突入\n");
-		// if (is_config_complete(info->config))
-		// return 1 する前にconfig の必要データがすべて揃っているか確認
-		// もし揃っていなかったら not enough config  check input（要検討）のエラーを出力した後 exitする
+		if (!is_config_complete(info->config))
+			put_error("INVALID OR MISSING CONFIG: CHECK IDENTIFIERS (NO/SO/WE/EA/F/C)"); 
+		// 上のエラー　incomplete config の可能性もあるし　識別子が間違ってる可能性もあるからerrmsg を両方の場合に入るやつ考えて
 		return 1;
 	}
 }
