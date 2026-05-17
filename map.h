@@ -1,6 +1,12 @@
 # ifndef MAP_H
 #define MAP_H
 
+typedef enum e_char_type {
+	CHAR_INVALID,
+	CHAR_PLAYER,
+	CHAR_MAP
+} t_char_type;
+
 typedef struct s_map
 {
 	char **map;
