@@ -11,19 +11,19 @@ static void	mlx_img_init(t_game *game)
 						&game->img.endian);
 }
 
-int	game_init(t_game *game)
+static bool	game_init(t_game *game)
 {
 	player_init(&game->player);
-	if (map_init(&game->map) == 1)
-		return (1);
+	if (map_init(&game->map) == true)
+		return (true);
 	game->config.c = WHITE;
 	game->config.f = BLACK;
-	return (0);
+	return (false);
 }
 
 int	display_init(t_game *game)
 {
-	if (game_init(game) == 1)
+	if (game_init(game) == true)
 		return (write(2, "Error\n", 6), 1);
 	mlx_img_init(game);
 	return (0);

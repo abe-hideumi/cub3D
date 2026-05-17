@@ -2,8 +2,6 @@
 # define DISPLAY_H
 
 # include "../cub3D.h"
-# include "../map.h"
-# include "../libft/libft.h"
 
 // colors
 # define RED 0xFF0000
@@ -26,27 +24,29 @@
 
 // keycode
 # ifdef __APPLE__
-	typedef enum e_keycode
-	{
-		KEY_ESC = 53,
-		KEY_LEFT = 123,
-		KEY_RIGHT = 124,
-		KEY_W = 13,
-		KEY_A = 0,
-		KEY_S = 1,
-		KEY_D = 2
-	}	t_keycode;
+
+typedef enum e_keycode
+{
+	KEY_ESC = 53,
+	KEY_LEFT = 123,
+	KEY_RIGHT = 124,
+	KEY_W = 13,
+	KEY_A = 0,
+	KEY_S = 1,
+	KEY_D = 2
+}	t_keycode;
 # else
-	typedef enum e_keycode
-	{
-		KEY_ESC = 65307,
-		KEY_LEFT = 65361,
-		KEY_RIGHT = 65363,
-		KEY_W = 119,
-		KEY_A = 97,
-		KEY_S = 115,
-		KEY_D = 100
-	}	t_keycode;
+
+typedef enum e_keycode
+{
+	KEY_ESC = 65307,
+	KEY_LEFT = 65361,
+	KEY_RIGHT = 65363,
+	KEY_W = 119,
+	KEY_A = 97,
+	KEY_S = 115,
+	KEY_D = 100
+}	t_keycode;
 # endif
 
 typedef struct s_img
@@ -66,7 +66,6 @@ typedef struct s_game
 	t_player	player;
 	t_map		map;
 	t_config	config;
-	// t_img		tex[4];
 }	t_game;
 
 typedef struct s_ray
@@ -89,9 +88,9 @@ double	multiply(double a, double b);
 void	put_pixel(t_img *img, int x, int y, int color);
 void	set_ray_step(t_ray *ray, double dir_x, double dir_y);
 void	init_side_dist(t_player *player, t_ray *ray, \
-double	dir_x, double dir_y);
+double dir_x, double dir_y);
 
-	// hooks
+// hooks
 int		key_press(t_keycode keycode, void *param);
 int		close_hook(t_keycode keycode, void *param);
 

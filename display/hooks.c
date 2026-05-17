@@ -1,32 +1,32 @@
 #include "display.h"
 
-int	handle_move(t_keycode keycode, t_game *game)
+static bool	handle_move(t_keycode keycode, t_game *game)
 {
 	if (keycode == KEY_A)
 	{
 		game->player.pos_x -= game->player.plane_x * MOVE_SPEED;
 		game->player.pos_y += game->player.plane_y * MOVE_SPEED;
-		return (printf("Key A\n"), 1);
+		return (printf("Key A\n"), true);
 	}
 	if (keycode == KEY_D)
 	{
 		game->player.pos_x += game->player.plane_x * MOVE_SPEED;
 		game->player.pos_y -= game->player.plane_y * MOVE_SPEED;
-		return (printf("Key D\n"), 1);
+		return (printf("Key D\n"), true);
 	}
 	if (keycode == KEY_W)
 	{
 		game->player.pos_x += game->player.dir_x * MOVE_SPEED;
 		game->player.pos_y += game->player.dir_y * MOVE_SPEED;
-		return (printf("Key W\n"), 1);
+		return (printf("Key W\n"), true);
 	}
 	if (keycode == KEY_S)
 	{
 		game->player.pos_x -= game->player.dir_x * MOVE_SPEED;
 		game->player.pos_y -= game->player.dir_y * MOVE_SPEED;
-		return (printf("Key S\n"), 1);
+		return (printf("Key S\n"), true);
 	}
-	return (0);
+	return (false);
 }
 
 static void	dir_right(t_game *game)
@@ -70,7 +70,7 @@ int	key_press(t_keycode keycode, void *param)
 	t_game	*game;
 
 	game = (t_game *)param;
-	if (handle_move(keycode, game) != 0)
+	if (handle_move(keycode, game) == true)
 		game_render(game);
 	if (keycode == KEY_LEFT)
 	{
