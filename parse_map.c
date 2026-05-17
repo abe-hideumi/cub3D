@@ -7,11 +7,19 @@
 #include "libft/libft.h"
 #include "get_next_line/get_next_line.h"
 
-int ft_is_space(char c)
+void    *ft_realloc(void *ptr, size_t new_size)
+{
+	(void)ptr;
+	(void)new_size;
+
+	return NULL;
+}
+
+bool ft_is_space(char c)
 {
 	if (c == ' ' || c == '\t')
-		return 1;
-	return 0;
+		return true;
+	return false;
 }
 
 void put_error(char *msg)
@@ -130,7 +138,7 @@ void parse_texture_color(int *field, char *line)
 	printf("2回目:%s|\n", line);
 }
 
-bool is_config_complete(t_config config)
+static bool is_config_complete(t_config config)
 {
 	return (config.no && config.so && config.we && config.ea
 		&& config.f != -1 && config.c != -1);
@@ -166,13 +174,20 @@ int parse_config(char *line, t_info *info)
 
 void read_map(char *line, t_info *info)
 {
-	printf("line check: %s\n", line);
-	ssize_t len = ft_strlen(line);
+	size_t len;
+
+	printf("line check: %s height:%d\n", line, info->map_info.max_height);
+	char **tmp = realloc(info->map_info.map, sizeof(char *) * (info->map_info.max_height + 2));
+	if (tmp == NULL)
+		put_error("Realloc Failed");
+	info->map_info.map = tmp;
+	len = ft_strlen(line);
 	if (len > 0 && line[len - 1] == '\n')
 		line[--len] = '\0';
 	if (info->map_info.max_width < len)
 		info->map_info.max_width = len;
 	info->map_info.map[info->map_info.max_height] = ft_strdup(line);
+	// NULL チェック
 	info->map_info.max_height++;
 	info->map_info.map[info->map_info.max_height] = NULL;
 }
@@ -245,16 +260,48 @@ void check_map(t_info *info)
 		put_error("No Player");
 }
 
+static int is_movable_char(char c)
+{
+	if (c == 'N' || c == 'S' || c == 'E' || c == 'W' ||  c == '0')
+		return (1);
+	return (0);
+}
+
+void check_map_wall(t_info *info)
+{
+	char **map = info->map_info.map;
+	int i;
+	int j;
+
+	i = 0;
+	while (i < info->map_info.max_height)
+	{
+		int len = ft_strlen(map[i]);
+		while (j < len)
+		{
+			if (is_movable_char(map[i][j]))
+			{
+				
+			}
+		}
+	}
+		
+
+
+}
+
 void parse_cub_file(char *file, t_info *info)
 {
 	check_extenstion(file);
+	info->player_dir = 0;
 	info->config = (t_config){NULL, NULL, NULL, NULL, -1, -1};
 	info->map_info = (t_map){0};
-	info->map_info.map = malloc(sizeof(char *) * 1000);
+	info->map_info.map = malloc(sizeof(char *) * 1);
 	if (info->map_info.map == NULL)
 		put_error("malloc failed");
 	read_file(file, info);
 	check_map(info);
+	check_map_wall(info);
 
 	printf("=== config ===\n");
 	printf("NO: %s|\n", info->config.no ? info->config.no : "(null)");
@@ -275,7 +322,6 @@ void parse_cub_file(char *file, t_info *info)
 		printf("%s|\n", info->map_info.map[i]);
 	printf("player: dir=%c\n", info->player_dir);
 	printf("======================\n");
-
 }
 
 // 仮置きメインファイル
@@ -284,7 +330,6 @@ int main(int ac, char *av[])
 	if (ac != 2)
 		return (printf("acないよ\n"), 1);
 	t_info info;
-	info.player_dir = 0;
 
 	parse_cub_file(av[1], &info);
 
