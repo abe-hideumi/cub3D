@@ -26,21 +26,27 @@
 
 // keycode
 # ifdef __APPLE__
-#  define KEY_ESC 53
-#  define KEY_LEFT 123
-#  define KEY_RIGHT 124
-#  define KEY_W 25
-#  define KEY_A 38
-#  define KEY_S 39
-#  define KEY_D 40
+	typedef enum e_keycode
+	{
+		KEY_ESC = 53,
+		KEY_LEFT = 123,
+		KEY_RIGHT = 124,
+		KEY_W = 13,
+		KEY_A = 0,
+		KEY_S = 1,
+		KEY_D = 2
+	}	t_keycode;
 # else
-#  define KEY_ESC 65307
-#  define KEY_LEFT 65361
-#  define KEY_RIGHT 65363
-#  define KEY_W 119
-#  define KEY_A 97
-#  define KEY_S 115
-#  define KEY_D 100
+	typedef enum e_keycode
+	{
+		KEY_ESC = 65307,
+		KEY_LEFT = 65361,
+		KEY_RIGHT = 65363,
+		KEY_W = 119,
+		KEY_A = 97,
+		KEY_S = 115,
+		KEY_D = 100
+	}	t_keycode;
 # endif
 
 typedef struct s_img
@@ -78,7 +84,7 @@ typedef struct s_ray
 }	t_ray;
 
 int		display_init(t_game *game);
-int		key_hook(int keycode, void *param);
+int		key_hook(t_keycode keycode, void *param);
 int		close_hook(t_game *game);
 void	game_render(t_game *game);
 double	multiply(double a, double b);
@@ -86,6 +92,12 @@ void	put_pixel(t_img *img, int x, int y, int color);
 void	set_ray_step(t_ray *ray, double dir_x, double dir_y);
 void	init_side_dist(t_player *player, t_ray *ray, \
 			double dir_x, double dir_y);
+
+// calulation
+double	rotate_right_x(double dir_x, double dir_y);
+double	rotate_right_y(double dir_x, double dir_y);
+double	rotate_left_x(double dir_x, double dir_y);
+double	rotate_left_y(double dir_x, double dir_y);
 
 // mock config
 void	player_init(t_player *player);
