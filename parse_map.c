@@ -7,7 +7,7 @@
 #include "libft/libft.h"
 #include "get_next_line/get_next_line.h"
 
-void    *ft_realloc(void *ptr, size_t new_size)
+void *ft_realloc(void *ptr, size_t new_size)
 {
 	(void)ptr;
 	(void)new_size;
@@ -140,8 +140,7 @@ void parse_texture_color(int *field, char *line)
 
 static bool is_config_complete(t_config config)
 {
-	return (config.no && config.so && config.we && config.ea
-		&& config.f != -1 && config.c != -1);
+	return (config.no && config.so && config.we && config.ea && config.f != -1 && config.c != -1);
 }
 
 int parse_config(char *line, t_info *info)
@@ -166,7 +165,7 @@ int parse_config(char *line, t_info *info)
 	{
 		printf("mapcheck 突入\n");
 		if (!is_config_complete(info->config))
-			put_error("INVALID OR MISSING CONFIG: CHECK IDENTIFIERS (NO/SO/WE/EA/F/C)"); 
+			put_error("INVALID OR MISSING CONFIG: CHECK IDENTIFIERS (NO/SO/WE/EA/F/C)");
 		// 上のエラー　incomplete config の可能性もあるし　識別子が間違ってる可能性もあるからerrmsg を両方の場合に入るやつ考えて
 		return 1;
 	}
@@ -221,16 +220,20 @@ static t_char_type is_valid_map_char(char c)
 	return (CHAR_INVALID);
 }
 
-static void check_map_char(t_info *info, char c)
+static void check_map_char(t_info *info, char *c, int i, int j)
 {
 	int ret;
 
-	ret = is_valid_map_char(c);
+	ret = is_valid_map_char(*c);
 	if (ret == CHAR_PLAYER)
 	{
 		if (info->player_dir)
 			put_error("More than 2 player");
-		info->player_dir = c;
+		info->player_dir = *c;
+		info->player.pos_x = j;
+		info->player.pos_y = i;
+		// player を初期化
+		*c = 'P';
 	}
 	else if (ret == CHAR_INVALID)
 		put_error("Unallowed char in map");
@@ -238,10 +241,10 @@ static void check_map_char(t_info *info, char c)
 
 void check_map(t_info *info)
 {
-	char	**map;
-	int		len;
-	int		i;
-	int		j;
+	char **map;
+	int len;
+	int i;
+	int j;
 
 	map = info->map_info.map;
 	i = 0;
@@ -251,7 +254,7 @@ void check_map(t_info *info)
 		len = ft_strlen(map[i]);
 		while (j < len)
 		{
-			check_map_char(info, map[i][j]);
+			check_map_char(info, &map[i][j], i, j);
 			j++;
 		}
 		i++;
@@ -262,33 +265,31 @@ void check_map(t_info *info)
 
 static int is_movable_char(char c)
 {
-	if (c == 'N' || c == 'S' || c == 'E' || c == 'W' ||  c == '0')
+	if (c == 'N' || c == 'S' || c == 'E' || c == 'W' || c == '0')
 		return (1);
 	return (0);
 }
 
-void check_map_wall(t_info *info)
-{
-	char **map = info->map_info.map;
-	int i;
-	int j;
+// void check_map_wall(t_info *info)
+// {
+// 	char **map = info->map_info.map;
+// 	int i;
+// 	int j;
 
-	i = 0;
-	while (i < info->map_info.max_height)
-	{
-		int len = ft_strlen(map[i]);
-		while (j < len)
-		{
-			if (is_movable_char(map[i][j]))
-			{
-				
-			}
-		}
-	}
-		
+// 	i = 0;
+// 	while (i < info->map_info.max_height)
+// 	{
+// 		int len = ft_strlen(map[i]);
+// 		while (j < len)
+// 		{
+// 			if (is_movable_char(map[i][j]))
+// 			{
 
+// 			}
+// 		}
+// 	}
 
-}
+// }
 
 void parse_cub_file(char *file, t_info *info)
 {
@@ -301,7 +302,7 @@ void parse_cub_file(char *file, t_info *info)
 		put_error("malloc failed");
 	read_file(file, info);
 	check_map(info);
-	check_map_wall(info);
+	// check_map_wall(info);
 
 	printf("=== config ===\n");
 	printf("NO: %s|\n", info->config.no ? info->config.no : "(null)");
