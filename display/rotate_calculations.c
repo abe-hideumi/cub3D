@@ -1,10 +1,5 @@
 #include "display.h"
 
-double	multiply(double a, double b)
-{
-	return (a * b);
-}
-
 double	rotate_right_x(double dir_x, double dir_y)
 {
 	return (dir_x * cos(ROT_SPEED) - dir_y * sin(ROT_SPEED));

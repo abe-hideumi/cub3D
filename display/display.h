@@ -84,14 +84,16 @@ typedef struct s_ray
 }	t_ray;
 
 int		display_init(t_game *game);
-int		key_hook(t_keycode keycode, void *param);
-int		close_hook(t_game *game);
 void	game_render(t_game *game);
 double	multiply(double a, double b);
 void	put_pixel(t_img *img, int x, int y, int color);
 void	set_ray_step(t_ray *ray, double dir_x, double dir_y);
 void	init_side_dist(t_player *player, t_ray *ray, \
-			double dir_x, double dir_y);
+double	dir_x, double dir_y);
+
+	// hooks
+int		key_press(t_keycode keycode, void *param);
+int		close_hook(t_keycode keycode, void *param);
 
 // calulation
 double	rotate_right_x(double dir_x, double dir_y);

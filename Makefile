@@ -6,7 +6,7 @@ SRCS =	main.c\
 DISPLAY_SRCS =	display/init.c \
 				display/hooks.c \
 				display/render.c \
-				display/calculation.c\
+				display/rotate_calculations.c\
 				display/render_utils.c \
 				display/mock_config.c
 
