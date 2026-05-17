@@ -192,7 +192,6 @@ void read_file(char *file, t_info *info)
 			in_map = parse_config(line, info);
 		if (in_map)
 			read_map(line, info);
-		//  使用不可な文字列が存在します。
 		free(line);
 	}
 	close(fd);
@@ -246,18 +245,6 @@ void check_map(t_info *info)
 		put_error("No Player");
 }
 
-void parse_map(t_info *info)
-{
-	check_map(info);
-
-	printf("=== normalized map ===\n");
-	printf("width: %d  height: %d\n", info->map_info.max_width, info->map_info.max_height);
-	for (int i = 0; i < info->map_info.max_height; i++)
-		printf("%s|\n", info->map_info.map[i]);
-	printf("player: dir=%c\n", info->player_dir);
-	printf("======================\n");
-}
-
 void parse_cub_file(char *file, t_info *info)
 {
 	check_extenstion(file);
@@ -267,6 +254,7 @@ void parse_cub_file(char *file, t_info *info)
 	if (info->map_info.map == NULL)
 		put_error("malloc failed");
 	read_file(file, info);
+	check_map(info);
 
 	printf("=== config ===\n");
 	printf("NO: %s|\n", info->config.no ? info->config.no : "(null)");
@@ -281,9 +269,13 @@ void parse_cub_file(char *file, t_info *info)
 		printf("map : %s|\n", info->map_info.map[i]);
 	printf("max width: %d max height: %d\n", info->map_info.max_width, info->map_info.max_height);
 	printf("==============\n");
+	printf("=== normalized map ===\n");
+	printf("width: %d  height: %d\n", info->map_info.max_width, info->map_info.max_height);
+	for (int i = 0; i < info->map_info.max_height; i++)
+		printf("%s|\n", info->map_info.map[i]);
+	printf("player: dir=%c\n", info->player_dir);
+	printf("======================\n");
 
-	// これからマップのパースを行う
-	parse_map(info);
 }
 
 // 仮置きメインファイル
