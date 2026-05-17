@@ -37,23 +37,23 @@ void parse_texture_img(char **field, char *line)
 
 	printf("1回目:%s|\n", line);
 	if (*field != NULL)
-		put_error("invalid config: duplicate identifier");
+		put_error("Invalid config: duplicate identifier");
 	line += 3;
 	while (ft_is_space(*line))
 		line++;
 	if (*line == '\0' || *line == '\n')
-		put_error("texture path is empty");
+		put_error("Texture path is empty");
 	len = ft_strlen(line);
 	while (len > 0 && (line[len - 1] == '\n' || ft_is_space(line[len - 1])))
 		len--;
 	if (len == 0)
-		put_error("texture path is empty");
+		put_error("Texture path is empty");
 	*field = ft_substr(line, 0, len);
 	if (*field == NULL)
-		put_error("malloc failed");
+		put_error("Malloc failed");
 	fd = open(*field, O_RDONLY);
 	if (fd < 0)
-		put_error("texture file not found");
+		put_error("Texture file not found");
 	close(fd);
 	printf("2回目:%s|\n", line);
 }
@@ -94,21 +94,19 @@ int ft_atoi_rgb(char **s)
 	if (**s == ',')
 		(*s)++;
 	if (n < 0 || n > 255)
-		put_error("color code invalid 0 ~ 255");
+		put_error("Color code invalid 0 ~ 255");
 	return n;
 }
 
 int parse_rgb_to_int(char *line)
 {
 	int rgb[3];
+	
 	if (validate_rgb_format(line))
-		put_error("invalid color format");
+		put_error("Invalid color format");
 	rgb[0] = ft_atoi_rgb(&line);
 	rgb[1] = ft_atoi_rgb(&line);
 	rgb[2] = ft_atoi_rgb(&line);
-
-	// color code invalid   value 0 ~ 255 22,22,
-
 	return (rgb[0] << 16 | rgb[1] << 8 | rgb[2]);
 }
 
@@ -118,7 +116,7 @@ void parse_texture_color(int *field, char *line)
 
 	printf("1回目:%s|\n", line);
 	if (*field != -1)
-		put_error("invalid config: duplicate identifier");
+		put_error("Invalid config: duplicate identifier");
 	line += 2;
 	while (ft_is_space(*line))
 		line++;
@@ -126,7 +124,7 @@ void parse_texture_color(int *field, char *line)
 	while (len > 0 && (line[len - 1] == '\n' || ft_is_space(line[len - 1])))
 		line[--len] = '\0';
 	if (len == 0)
-		put_error("color value is empty");
+		put_error("Color value is empty");
 	*field = parse_rgb_to_int(line);
 	printf("2回目:%s|\n", line);
 }
@@ -180,7 +178,7 @@ void read_file(char *file, t_info *info)
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		put_error("cannot open file");
+		put_error("Cannot open file");
 	while ((line = get_next_line(fd)))
 	{
 		if (!in_map)
@@ -193,53 +191,57 @@ void read_file(char *file, t_info *info)
 	close(fd);
 }
 
-int is_valid_map_char(char c)
+static t_char_type is_valid_map_char(char c)
 {
-	static int player_count = 0;
 	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
-	{
-		return (2);
-	}
+		return (CHAR_PLAYER);
 	if (c == '0' || c == '1' || c == ' ')
-		return (1);
-	return (0);
+		return (CHAR_MAP);
+	return (CHAR_INVALID);
 }
 
-// void check_map(t_info *info)
-// {
-// 	char **raw_map = info->map_info.map;
-// 	int i = 0;
-// 	int j;
+static void check_map_char(t_info *info, char c)
+{
+	int ret;
 
-// 	while (i < info->map_info.max_height)
-// 	{
-// 		j = 0;
-// 		while (j < info->map_info.max_width)
-// 		{
-// 			if (!raw_map[i][j])
-// 				map[i][j] = ' ';
-// 			else if (is_valid_map_char(raw_map[i][j]) == -1)
-// 				put_error("two Player");
-// 			else if (is_valid_map_char(raw_map[i][j]) == 0)
-// 				put_error("unallowed char");
-// 			else if (is_valid_map_char(raw_map[i][j]) == 1)
-// 				map[i][j] = raw_map[i][j];
-// 			else if (is_valid_map_char(raw_map[i][j]) == 2)
-// 			{
-// 				if (info->player_dir)
-// 					put_error("more than 2 player");
-// 				info->player_dir = raw_map[i][j];
-// 				map[i][j] = raw_map[i][j];
-// 			}
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// }
+	ret = is_valid_map_char(c);
+	if (ret == CHAR_PLAYER)
+	{
+		if (info->player_dir)
+			put_error("More than 2 player");
+		info->player_dir = c;
+	}
+	else if (ret == CHAR_INVALID)
+		put_error("Unallowed char in map");
+}
+
+void check_map(t_info *info)
+{
+	char	**map;
+	int		len;
+	int		i;
+	int		j;
+
+	map = info->map_info.map;
+	i = 0;
+	while (i < info->map_info.max_height)
+	{
+		j = 0;
+		len = ft_strlen(map[i]);
+		while (j < len)
+		{
+			check_map_char(info, map[i][j]);
+			j++;
+		}
+		i++;
+	}
+	if (!info->player_dir)
+		put_error("No Player");
+}
 
 void parse_map(t_info *info)
 {
-	// check_map(info);
+	check_map(info);
 
 	printf("=== normalized map ===\n");
 	printf("width: %d  height: %d\n", info->map_info.max_width, info->map_info.max_height);
