@@ -12,6 +12,8 @@ void *ft_realloc(void *ptr, size_t new_size)
 	(void)ptr;
 	(void)new_size;
 
+	//  実装してください。
+
 	return NULL;
 }
 
@@ -180,7 +182,7 @@ void read_map(char *line, t_info *info)
 	if (info->map_info.max_width < len)
 		info->map_info.max_width = len;
 	info->map_info.map[info->map_info.max_height] = ft_strdup(line);
-	// NULL チェック
+	// NULL チェック後で追加　クリーンアップ関数も作る
 	info->map_info.max_height++;
 	info->map_info.map[info->map_info.max_height] = NULL;
 }
@@ -270,13 +272,13 @@ int check_single_direction(char **map, int x, int y)
 bool check_all_direction(char **map, int x, int y)
 {
 	int err;
-	
+
 	err = 0;
 	err = check_single_direction(map, x + 1, y);
 	err += check_single_direction(map, x - 1, y);
 	err += check_single_direction(map, x, y + 1);
 	err += check_single_direction(map, x, y - 1);
-	
+
 	return err;
 }
 
@@ -300,7 +302,6 @@ void check_map_wall(t_info *info)
 		}
 		y++;
 	}
-
 }
 
 void parse_cub_file(char *file, t_info *info)
@@ -315,26 +316,6 @@ void parse_cub_file(char *file, t_info *info)
 	read_file(file, info);
 	check_map(info);
 	check_map_wall(info);
-
-	printf("=== config ===\n");
-	printf("NO: %s|\n", info->config.no ? info->config.no : "(null)");
-	printf("SO: %s|\n", info->config.so ? info->config.so : "(null)");
-	printf("WE: %s|\n", info->config.we ? info->config.we : "(null)");
-	printf("EA: %s|\n", info->config.ea ? info->config.ea : "(null)");
-	printf("F:  %x|\n", info->config.f);
-	printf("C:  %x|\n", info->config.c);
-	printf("==============\n");
-	printf("パース成功\n");
-	for (int i = 0; i < info->map_info.max_height; i++)
-		printf("map : %s|\n", info->map_info.map[i]);
-	printf("max width: %d max height: %d\n", info->map_info.max_width, info->map_info.max_height);
-	printf("==============\n");
-	printf("=== normalized map ===\n");
-	printf("width: %d  height: %d\n", info->map_info.max_width, info->map_info.max_height);
-	for (int i = 0; i < info->map_info.max_height; i++)
-		printf("%s|\n", info->map_info.map[i]);
-	printf("player: dir=%c\n", info->player_dir);
-	printf("======================\n");
 }
 
 // 仮置きメインファイル
@@ -345,6 +326,26 @@ int main(int ac, char *av[])
 	t_info info;
 
 	parse_cub_file(av[1], &info);
+
+	printf("=== config ===\n");
+	printf("NO: %s|\n", info.config.no ? info.config.no : "(null)");
+	printf("SO: %s|\n", info.config.so ? info.config.so : "(null)");
+	printf("WE: %s|\n", info.config.we ? info.config.we : "(null)");
+	printf("EA: %s|\n", info.config.ea ? info.config.ea : "(null)");
+	printf("F:  %x|\n", info.config.f);
+	printf("C:  %x|\n", info.config.c);
+	printf("==============\n");
+	printf("パース成功\n");
+	for (int i = 0; i < info.map_info.max_height; i++)
+		printf("map : %s|\n", info.map_info.map[i]);
+	printf("max width: %d max height: %d\n", info.map_info.max_width, info.map_info.max_height);
+	printf("==============\n");
+	printf("=== normalized map ===\n");
+	printf("width: %d  height: %d\n", info.map_info.max_width, info.map_info.max_height);
+	for (int i = 0; i < info.map_info.max_height; i++)
+		printf("%s|\n", info.map_info.map[i]);
+	printf("player: dir=%c\n", info.player_dir);
+	printf("======================\n");
 
 	free(info.config.no);
 	free(info.config.so);
