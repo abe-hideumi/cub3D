@@ -1,25 +1,26 @@
 # ifndef MAP_H
 #define MAP_H
 
-#include <stdio.h>
-#include <fcntl.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdbool.h>
-#include "libft/libft.h"
-#include "get_next_line/get_next_line.h"
+# include <stdio.h>
+# include <fcntl.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <stdbool.h>
+# include "libft/libft.h"
+# include "get_next_line/get_next_line.h"
 
-typedef enum e_char_type {
+typedef enum e_char_type
+{
 	CHAR_INVALID,
 	CHAR_PLAYER,
 	CHAR_MAP
-} t_char_type;
+}	t_char_type;
 
 typedef struct s_map
 {
-	char **map;
-	int max_width;
-	int max_height;
+	char	**map;
+	int		max_width;
+	int		max_height;
 }		t_map;
 
 typedef struct s_config
@@ -46,9 +47,9 @@ typedef struct s_player
 typedef struct s_info
 {
 	t_map		map_info;
-	t_config 	config;
+	t_config	config;
 	char		player_dir;
-	t_player    player;
+	t_player	player;
 }		t_info;
 
 // parse_cub_utils.c
