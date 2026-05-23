@@ -7,7 +7,7 @@ int	main(int ac, char *av[])
 	(void)ac;
 	(void)av;
 	ft_memset(&game, 0, sizeof(t_game));
-	if (display_init(&game) == 1)
+	if (display_init(&game) == false)
 		return (1);
 	game_render(&game);
 	mlx_hook(game.win, 2, 1L << 0, key_press, &game);

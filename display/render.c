@@ -69,7 +69,8 @@ static t_col	draw_column(t_game *game, t_ray *ray)
 		wall_x = game->player.pos_x + ray->perp_wall_dist * ray->dir_x;
 	wall_x -= floor(wall_x);
 	col.tex_x = (int)(wall_x * TEX_WIDTH);
-	if ((ray->side == 0 && ray->dir_x > 0) || (ray->side == 1 && ray->dir_y < 0))
+	if ((ray->side == 0 && ray->dir_x > 0) || \
+			(ray->side == 1 && ray->dir_y < 0))
 		col.tex_x = TEX_WIDTH - col.tex_x - 1;
 	col.tex = get_texture(&game->texture, ray);
 	col.tex_step = (double)TEX_HEIGHT / wall_h;

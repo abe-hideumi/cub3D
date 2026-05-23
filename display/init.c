@@ -1,14 +1,21 @@
 #include "display.h"
 
-static void	mlx_img_init(t_game *game)
+static bool	mlx_img_init(t_game *game)
 {
 	game->mlx = mlx_init();
+	if (game->mlx == NULL)
+		return (false);
 	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "cub3D");
+	if (game->win == NULL)
+		return (false);
 	game->img.img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
+	if (game->img.img == NULL)
+		return (false);
 	game->img.addr = mlx_get_data_addr(game->img.img, \
 						&game->img.bpp, \
 						&game->img.line_len, \
 						&game->img.endian);
+	return (true);
 }
 
 static bool	xpm_init(t_game *game, t_img *dst, char *path)
@@ -38,12 +45,22 @@ static bool	texture_load(t_game *game)
 	return (true);
 }
 
-int	display_init(t_game *game)
+bool	display_init(t_game *game)
 {
 	if (game_init(game) == false)
-		return (write(2, "Error\n", 6), 1);
-	mlx_img_init(game);
+	{
+		ft_putstr_fd("Error\nFailed to initialize game data\n", 2);
+		return (false);
+	}
+	if (mlx_img_init(game) == false)
+	{
+		ft_putstr_fd("Error\nFailed to initialize mlx image\n", 2);
+		return (false);
+	}
 	if (texture_load(game) == false)
-		return (write(2, "Error\n", 6), 1);
-	return (0);
+	{
+		ft_putstr_fd("Error\nFailed to load textures\n", 2);
+		return (false);
+	}
+	return (true);
 }
