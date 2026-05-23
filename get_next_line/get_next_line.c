@@ -6,7 +6,7 @@
 /*   By: knomura <knomura@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 01:16:00 by knomura           #+#    #+#             */
-/*   Updated: 2026/02/07 18:45:55 by knomura          ###   ########.fr       */
+/*   Updated: 2026/05/09 19:36:56 by knomura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,28 +114,28 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int	main(void)
-{
-	int		fd;
-	char	*line;
-	int		i;
+// int	main(void)
+// {
+// 	int		fd;
+// 	char	*line;
+// 	int		i;
 
-	fd = 0;
-	// fd = open("sample.txt", O_RDONLY);
-	if (fd == -1)
-	{
-		perror("open");
-		return (1);
-	}
-	i = 0;
-	printf("%d\n",fd);
-	while (i < 3)
-	{
-		line = get_next_line(fd);
-		printf("%s", line);
-		free(line);
-		i++;
-	}
-	close(fd);
-	return (0);
-}
+// 	fd = 0;
+// 	// fd = open("sample.txt", O_RDONLY);
+// 	if (fd == -1)
+// 	{
+// 		perror("open");
+// 		return (1);
+// 	}
+// 	i = 0;
+// 	printf("%d\n",fd);
+// 	while (i < 3)
+// 	{
+// 		line = get_next_line(fd);
+// 		printf("%s", line);
+// 		free(line);
+// 		i++;
+// 	}
+// 	close(fd);
+// 	return (0);
+// }
