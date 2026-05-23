@@ -15,28 +15,21 @@
 # define WIDTH 1600
 # define HEIGHT 1200
 
+// texture size
+# define TEX_WIDTH 64
+# define TEX_HEIGHT 64
+
 // player movement
 # define MOVE_SPEED 0.1
-# define ROT_SPEED 0.05
+# define ROTATE_SPEED 0.05
 
 // event
 # define DESTROY_NOTIFY 17
 
+// hit
+# define HIT_WALL 1
+
 // keycode
-# ifdef __APPLE__
-
-typedef enum e_keycode
-{
-	KEY_ESC = 53,
-	KEY_LEFT = 123,
-	KEY_RIGHT = 124,
-	KEY_W = 13,
-	KEY_A = 0,
-	KEY_S = 1,
-	KEY_D = 2
-}	t_keycode;
-# else
-
 typedef enum e_keycode
 {
 	KEY_ESC = 65307,
@@ -47,7 +40,6 @@ typedef enum e_keycode
 	KEY_S = 115,
 	KEY_D = 100
 }	t_keycode;
-# endif
 
 typedef struct s_img
 {
@@ -58,6 +50,16 @@ typedef struct s_img
 	int		endian;
 }	t_img;
 
+typedef struct s_texture
+{
+	t_img	no;
+	t_img	so;
+	t_img	we;
+	t_img	ea;
+	int		f;
+	int		c;
+}	t_texture;
+
 typedef struct s_game
 {
 	void		*mlx;
@@ -65,13 +67,25 @@ typedef struct s_game
 	t_img		img;
 	t_player	player;
 	t_map		map;
-	t_config	config;
+	t_texture	texture;
 }	t_game;
+
+typedef struct s_col
+{
+	int		draw_start;
+	int		draw_end;
+	int		tex_x;
+	double	tex_pos;
+	double	tex_step;
+	t_img	*tex;
+}	t_col;
 
 typedef struct s_ray
 {
 	int		map_x;
 	int		map_y;
+	double	dir_x;
+	double	dir_y;
 	double	side_dist_x;
 	double	side_dist_y;
 	double	delta_dist_x;
@@ -84,6 +98,7 @@ typedef struct s_ray
 
 int		display_init(t_game *game);
 void	game_render(t_game *game);
+void	draw_stripe(t_game *game, t_col *col, int x);
 double	multiply(double a, double b);
 void	put_pixel(t_img *img, int x, int y, int color);
 void	set_ray_step(t_ray *ray, double dir_x, double dir_y);
@@ -92,7 +107,7 @@ double dir_x, double dir_y);
 
 // hooks
 int		key_press(t_keycode keycode, void *param);
-int		close_hook(t_keycode keycode, void *param);
+int		close_hook(void *param);
 
 // calulation
 double	rotate_right_x(double dir_x, double dir_y);
@@ -101,8 +116,6 @@ double	rotate_left_x(double dir_x, double dir_y);
 double	rotate_left_y(double dir_x, double dir_y);
 
 // mock config
-void	player_init(t_player *player);
-int		map_init(t_map *map);
-int		game_init(t_game *game);
+bool	game_init(t_game *game);
 
 #endif
