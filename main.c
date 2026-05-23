@@ -3,9 +3,11 @@
 int	main(int ac, char *av[])
 {
 	t_game	game;
+	t_info	info;
 
-	(void)ac;
-	(void)av;
+	if (ac != 2)
+		return (printf("acないよ\n"), 1);
+	parse_cub_file(av[1], &info);
 	ft_memset(&game, 0, sizeof(t_game));
 	if (display_init(&game) == false)
 		return (1);
