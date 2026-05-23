@@ -9,7 +9,7 @@
 
 static int check_single_direction(char **map, int x, int y)
 {
-	if (x < 0 || y < 0 || !map[y] || x >= ft_strlen(map[y]) || map[y][x] == ' ')
+	if (x < 0 || y < 0 || !map[y] || x >= (int)ft_strlen(map[y]) || map[y][x] == ' ')
 		return 1;
 	return 0;
 }
