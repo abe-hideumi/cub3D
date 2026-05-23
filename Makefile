@@ -7,7 +7,8 @@ DISPLAY_SRCS =	display/init.c \
 				display/hooks.c \
 				display/render.c \
 				display/rotate_calculations.c\
-				display/render_utils.c \
+				display/put_color.c \
+				display/ray_utils.c \
 				display/mock_config.c
 
 OBJS = $(SRCS:.c=.o) $(DISPLAY_SRCS:.c=.o)

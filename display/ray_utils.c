@@ -1,13 +1,5 @@
 #include "display.h"
 
-void	put_pixel(t_img *img, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = img->addr + (y * img->line_len + x * (img->bpp / 8));
-	*(unsigned int *)dst = color;
-}
-
 void	set_ray_step(t_ray *ray, double dir_x, double dir_y)
 {
 	if (dir_x < 0)
