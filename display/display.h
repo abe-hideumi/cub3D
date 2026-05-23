@@ -1,42 +1,45 @@
-
-#ifndef HABE_H
-# define HABE_H
+#ifndef DISPLAY_H
+# define DISPLAY_H
 
 # include "../cub3D.h"
-# include "../map.h"
-# include "../libft/libft.h"
 
+// colors
 # define RED 0xFF0000
 # define BLUE 0x0000FF
 # define GREEN 0x008000
-# define YELLO 0xFFFF00
+# define YELLOW 0xFFFF00
 # define BLACK 0x000000
 # define WHITE 0xFFFFFF
-# define FOV 90
 
-# define WIDTH 800
-# define HEIGHT 600
+// display size
+# define WIDTH 1600
+# define HEIGHT 1200
 
+// texture size
+# define TEX_WIDTH 64
+# define TEX_HEIGHT 64
+
+// player movement
+# define MOVE_SPEED 0.1
+# define ROTATE_SPEED 0.05
+
+// event
 # define DESTROY_NOTIFY 17
 
+// hit
+# define HIT_WALL 1
+
 // keycode
-# ifdef __APPLE__
-# define KEY_ESC 53
-# define KEY_LEFT 123
-# define KEY_RIGHT 124
-# define KEY_W 25
-# define KEY_A 38
-# define KEY_S 39
-# define KEY_D 40
-# else
-#  define KEY_ESC 65307
-#  define KEY_LEFT 65361
-#  define KEY_RIGHT 65363
-#  define KEY_W 119
-#  define KEY_A 97
-#  define KEY_S 115
-#  define KEY_D 100
-# endif
+typedef enum e_keycode
+{
+	KEY_ESC = 65307,
+	KEY_LEFT = 65361,
+	KEY_RIGHT = 65363,
+	KEY_W = 119,
+	KEY_A = 97,
+	KEY_S = 115,
+	KEY_D = 100
+}	t_keycode;
 
 typedef struct s_img
 {
@@ -47,6 +50,16 @@ typedef struct s_img
 	int		endian;
 }	t_img;
 
+typedef struct s_texture
+{
+	t_img	no;
+	t_img	so;
+	t_img	we;
+	t_img	ea;
+	int		f;
+	int		c;
+}	t_texture;
+
 typedef struct s_game
 {
 	void		*mlx;
@@ -54,13 +67,55 @@ typedef struct s_game
 	t_img		img;
 	t_player	player;
 	t_map		map;
-	t_config	config;
-	// t_img		tex[4];
+	t_texture	texture;
 }	t_game;
 
-int		display_init(t_game *game);
-int		key_hook(int keycode, void *param);
-int		close_hook(t_game *game);
+typedef struct s_col
+{
+	int		draw_start;
+	int		draw_end;
+	int		tex_x;
+	double	tex_pos;
+	double	tex_step;
+	t_img	*tex;
+}	t_col;
+
+typedef struct s_ray
+{
+	int		map_x;
+	int		map_y;
+	double	dir_x;
+	double	dir_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	int		step_x;
+	int		step_y;
+	int		side;
+	double	perp_wall_dist;
+}	t_ray;
+
+bool	display_init(t_game *game);
 void	game_render(t_game *game);
+void	draw_stripe(t_game *game, t_col *col, int x);
+double	multiply(double a, double b);
+void	put_pixel(t_img *img, int x, int y, int color);
+void	set_ray_step(t_ray *ray, double dir_x, double dir_y);
+void	init_side_dist(t_player *player, t_ray *ray, \
+			double dir_x, double dir_y);
+
+// hooks
+int		key_press(t_keycode keycode, void *param);
+int		close_hook(void *param);
+
+// calulation
+double	rotate_right_x(double dir_x, double dir_y);
+double	rotate_right_y(double dir_x, double dir_y);
+double	rotate_left_x(double dir_x, double dir_y);
+double	rotate_left_y(double dir_x, double dir_y);
+
+// mock config
+bool	game_init(t_game *game);
 
 #endif

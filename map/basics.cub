@@ -8,6 +8,9 @@ SO      ./texture/path_to_the_south_texture
 
    EA ./texture/path_to_the_east_texture   
 
+F 220,100,0
+C               225,30,0
+EA ./texture/path_to_the_east_texture
 
 1111111
 10N0001  11111

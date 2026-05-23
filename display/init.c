@@ -1,67 +1,66 @@
-
 #include "display.h"
 
-static void	player_init(t_player *player)
-{
-	player->pos_x = 4;
-	player->pos_y = 3;
-	player->dir_x = 0;
-	player->dir_y = -1;
-	player->plane_x = 1;
-	player->plane_y = 0;
-}
-
-static int	map_init(t_map *map)
-{
-	map->map = malloc(sizeof(char **) * 6);
-	if (map->map == NULL)
-		return (1);
-	map->map[0] = ft_strdup("111111");
-	if (map->map[0] == NULL)
-		return (free(map->map), 1);
-	map->map[1] = ft_strdup("100101");
-	if (map->map[1] == NULL)
-		return (free(map->map[0]), free(map->map), 1);
-	map->map[2] = ft_strdup("101001");
-	if (map->map[2] == NULL)
-		return (free(map->map[0]), free(map->map[1]), free(map->map), 1);
-	map->map[3] = ft_strdup("1100N1");
-	if (map->map[3] == NULL)
-		return (free(map->map[0]), free(map->map[1]), free(map->map[2]), free(map->map), 1);
-	map->map[4] = ft_strdup("111111");
-	if (map->map[4] == NULL)
-		return (free(map->map[0]), free(map->map[1]), free(map->map[2]), free(map->map[3]), free(map->map), 1);
-	map->map[5] = NULL;
-	map->max_width = 6;
-	map->max_height = 5;
-	return (0);
-}
-
-static int	game_init(t_game *game)
-{
-	player_init(&game->player);
-	if (map_init(&game->map) == 1)
-		return (1);
-	game->config.c = WHITE;
-	game->config.f = BLACK;
-	return (0);
-}
-
-static void	mlx_img_init(t_game *game)
+static bool	mlx_img_init(t_game *game)
 {
 	game->mlx = mlx_init();
+	if (game->mlx == NULL)
+		return (false);
 	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "cub3D");
+	if (game->win == NULL)
+		return (false);
 	game->img.img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
+	if (game->img.img == NULL)
+		return (false);
 	game->img.addr = mlx_get_data_addr(game->img.img, \
 						&game->img.bpp, \
 						&game->img.line_len, \
 						&game->img.endian);
+	return (true);
 }
 
-int	display_init(t_game *game)
+static bool	xpm_init(t_game *game, t_img *dst, char *path)
 {
-	if (game_init(game) == 1)
-		return (write(2, "Error\n", 6), 1);
-	mlx_img_init(game);
-	return (0);
+	int	width;
+	int	height;
+
+	dst->img = mlx_xpm_file_to_image(game->mlx, path, &width, &height);
+	if (dst->img == NULL)
+		return (false);
+	dst->addr = mlx_get_data_addr(dst->img,
+			&dst->bpp, &dst->line_len, &dst->endian);
+	return (true);
+}
+
+static bool	texture_load(t_game *game)
+{
+	// TODO: configを受取るようにして、xpm_initの引数を変更する
+	if (!xpm_init(game, &game->texture.no, "mock_textures/mock_north.xpm"))
+		return (false);
+	if (!xpm_init(game, &game->texture.so, "mock_textures/mock_south.xpm"))
+		return (false);
+	if (!xpm_init(game, &game->texture.we, "mock_textures/mock_west.xpm"))
+		return (false);
+	if (!xpm_init(game, &game->texture.ea, "mock_textures/mock_east.xpm"))
+		return (false);
+	return (true);
+}
+
+bool	display_init(t_game *game)
+{
+	if (game_init(game) == false)
+	{
+		ft_putstr_fd("Error\nFailed to initialize game data\n", 2);
+		return (false);
+	}
+	if (mlx_img_init(game) == false)
+	{
+		ft_putstr_fd("Error\nFailed to initialize mlx image\n", 2);
+		return (false);
+	}
+	if (texture_load(game) == false)
+	{
+		ft_putstr_fd("Error\nFailed to load textures\n", 2);
+		return (false);
+	}
+	return (true);
 }
