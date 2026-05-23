@@ -11,10 +11,8 @@ int	main(int ac, char *av[])
 		return (1);
 	game_render(&game);
 	mlx_hook(game.win, 2, 1L << 0, key_press, &game);
-	mlx_hook(game.win, 3, 1L << 1, close_hook, &game);
 	mlx_hook(game.win, DESTROY_NOTIFY, 0, close_hook, &game);
 	mlx_loop_hook(game.mlx, key_press, &game);
-	mlx_key_hook(game.win, close_hook, &game);
 	mlx_loop(game.mlx);
 	return (0);
 }

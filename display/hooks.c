@@ -5,13 +5,13 @@ static bool	handle_move(t_keycode keycode, t_game *game)
 	if (keycode == KEY_A)
 	{
 		game->player.pos_x -= game->player.plane_x * MOVE_SPEED;
-		game->player.pos_y += game->player.plane_y * MOVE_SPEED;
+		game->player.pos_y -= game->player.plane_y * MOVE_SPEED;
 		return (printf("Key A\n"), true);
 	}
 	if (keycode == KEY_D)
 	{
 		game->player.pos_x += game->player.plane_x * MOVE_SPEED;
-		game->player.pos_y -= game->player.plane_y * MOVE_SPEED;
+		game->player.pos_y += game->player.plane_y * MOVE_SPEED;
 		return (printf("Key D\n"), true);
 	}
 	if (keycode == KEY_W)
@@ -65,11 +65,24 @@ static void	dir_left(t_game *game)
 	printf("Left\n");
 }
 
+int	close_hook(void *param)
+{
+	t_game	*game;
+
+	game = (t_game *)param;
+	mlx_destroy_image(game->mlx, game->img.img);
+	mlx_destroy_window(game->mlx, game->win);
+	free_map(&game->map);
+	exit(0);
+}
+
 int	key_press(t_keycode keycode, void *param)
 {
 	t_game	*game;
 
 	game = (t_game *)param;
+	if (keycode == KEY_ESC)
+		close_hook(game);
 	if (handle_move(keycode, game) == true)
 		game_render(game);
 	if (keycode == KEY_LEFT)
@@ -83,17 +96,4 @@ int	key_press(t_keycode keycode, void *param)
 		game_render(game);
 	}
 	return (0);
-}
-
-int	close_hook(t_keycode keycode, void *param)
-{
-	t_game	*game;
-
-	if (keycode != KEY_ESC)
-		return (0);
-	game = (t_game *)param;
-	mlx_destroy_image(game->mlx, game->img.img);
-	mlx_destroy_window(game->mlx, game->win);
-	free_map(&game->map);
-	exit(0);
 }
