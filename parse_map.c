@@ -44,7 +44,6 @@ void parse_texture_img(char **field, char *line)
 	size_t len;
 	int fd;
 
-	printf("1回目:%s|\n", line);
 	if (*field != NULL)
 		put_error("Invalid config: duplicate identifier");
 	line += 3;
@@ -64,7 +63,6 @@ void parse_texture_img(char **field, char *line)
 	if (fd < 0)
 		put_error("Texture file not found");
 	close(fd);
-	printf("2回目:%s|\n", line);
 }
 
 int validate_rgb_format(char *line)
@@ -123,7 +121,6 @@ void parse_texture_color(int *field, char *line)
 {
 	size_t len;
 
-	printf("1回目:%s|\n", line);
 	if (*field != -1)
 		put_error("Invalid config: duplicate identifier");
 	line += 2;
@@ -135,7 +132,6 @@ void parse_texture_color(int *field, char *line)
 	if (len == 0)
 		put_error("Color value is empty");
 	*field = parse_rgb_to_int(line);
-	printf("2回目:%s|\n", line);
 }
 
 static bool is_config_complete(t_config config)
@@ -163,7 +159,6 @@ int parse_config(char *line, t_info *info)
 		return (parse_texture_color(&info->config.c, line), 0);
 	else
 	{
-		printf("mapcheck 突入\n");
 		if (!is_config_complete(info->config))
 			put_error("INVALID OR MISSING CONFIG: CHECK IDENTIFIERS (NO/SO/WE/EA/F/C)");
 		// 上のエラー　incomplete config の可能性もあるし　識別子が間違ってる可能性もあるからerrmsg を両方の場合に入るやつ考えて
@@ -175,7 +170,6 @@ void read_map(char *line, t_info *info)
 {
 	size_t len;
 
-	printf("line check: %s height:%d\n", line, info->map_info.max_height);
 	char **tmp = realloc(info->map_info.map, sizeof(char *) * (info->map_info.max_height + 2));
 	if (tmp == NULL)
 		put_error("Realloc Failed");
@@ -232,7 +226,10 @@ static void check_map_char(t_info *info, char *c, int i, int j)
 		info->player_dir = *c;
 		info->player.pos_x = j;
 		info->player.pos_y = i;
-		// player を初期化　初期化関数を作る
+		info->player.dir_x = 1;
+		info->player.dir_y = 1;
+		info->player.plane_x = 1;
+		info->player.plane_y = 1;
 		*c = 'P';
 	}
 	else if (ret == CHAR_INVALID)
@@ -272,15 +269,15 @@ int check_single_direction(char **map, int x, int y)
 
 bool check_all_direction(char **map, int x, int y)
 {
-	int ret;
-
-	ret = check_single_direction(map, x + 1, y);
-	ret += check_single_direction(map, x - 1, y);
-	ret += check_single_direction(map, x, y + 1);
-	ret += check_single_direction(map, x, y - 1);
+	int err;
 	
-	printf("%d", ret);
-	return ret;
+	err = 0;
+	err = check_single_direction(map, x + 1, y);
+	err += check_single_direction(map, x - 1, y);
+	err += check_single_direction(map, x, y + 1);
+	err += check_single_direction(map, x, y - 1);
+	
+	return err;
 }
 
 void check_map_wall(t_info *info)
@@ -293,11 +290,9 @@ void check_map_wall(t_info *info)
 	while (y < info->map_info.max_height)
 	{
 		x = 0;
-		printf("check\n");
 		int len = ft_strlen(map[y]);
 		while (x < len)
 		{
-			printf("x:%d y:%d\n", x, y);
 			if (map[y][x] == 'P' || map[y][x] == '0')
 				if (check_all_direction(map, x, y))
 					put_error("gomi");
