@@ -10,51 +10,51 @@ static void	player_init(t_player *player)
 	player->plane_y = 0;
 }
 
-static bool	map_init(t_map *map)
-{
-	map->map = malloc(sizeof(char **) * 6);
-	if (map->map == NULL)
-		return (false);
-	map->map[0] = ft_strdup("111111");
-	if (map->map[0] == NULL)
-		return (free(map->map), false);
-	map->map[1] = ft_strdup("100101");
-	if (map->map[1] == NULL)
-		return (free(map->map[0]), free(map->map), false);
-	map->map[2] = ft_strdup("101001");
-	if (map->map[2] == NULL)
-		return (free(map->map[0]), free(map->map[1]), free(map->map), false);
-	map->map[3] = ft_strdup("1100N1");
-	if (map->map[3] == NULL)
-		return (free(map->map[0]), free(map->map[1]), \
-			free(map->map[2]), free(map->map), false);
-	map->map[4] = ft_strdup("111111");
-	if (map->map[4] == NULL)
-		return (free(map->map[0]), free(map->map[1]), \
-			free(map->map[2]), free(map->map[3]), free(map->map), false);
-	map->map[5] = NULL;
-	map->max_width = 6;
-	map->max_height = 5;
-	return (true);
-}
+// static bool	map_init(t_map *map)
+// {
+// 	map->map = malloc(sizeof(char **) * 6);
+// 	if (map->map == NULL)
+// 		return (false);
+// 	map->map[0] = ft_strdup("111111");
+// 	if (map->map[0] == NULL)
+// 		return (free(map->map), false);
+// 	map->map[1] = ft_strdup("100101");
+// 	if (map->map[1] == NULL)
+// 		return (free(map->map[0]), free(map->map), false);
+// 	map->map[2] = ft_strdup("101001");
+// 	if (map->map[2] == NULL)
+// 		return (free(map->map[0]), free(map->map[1]), free(map->map), false);
+// 	map->map[3] = ft_strdup("1100N1");
+// 	if (map->map[3] == NULL)
+// 		return (free(map->map[0]), free(map->map[1]), 
+// 			free(map->map[2]), free(map->map), false);
+// 	map->map[4] = ft_strdup("111111");
+// 	if (map->map[4] == NULL)
+// 		return (free(map->map[0]), free(map->map[1]), 
+// 			free(map->map[2]), free(map->map[3]), free(map->map), false);
+// 	map->map[5] = NULL;
+// 	map->max_width = 6;
+// 	map->max_height = 5;
+// 	return (true);
+// }
 
-static bool	texture_init(t_texture *texture)
-{
-	texture->no.img = NULL;
-	texture->so.img = NULL;
-	texture->we.img = NULL;
-	texture->ea.img = NULL;
-	texture->f = WHITE;
-	texture->c = BLACK;
-	return (true);
-}
+// static bool	texture_init(t_texture *texture)
+// {
+// 	texture->no.img = NULL;
+// 	texture->so.img = NULL;
+// 	texture->we.img = NULL;
+// 	texture->ea.img = NULL;
+// 	texture->f = WHITE;
+// 	texture->c = BLACK;
+// 	return (true);
+// }
 
 bool	game_init(t_game *game)
 {
 	player_init(&game->player);
-	if (map_init(&game->map) == false)
-		return (false);
-	if (texture_init(&game->texture) == false)
-		return (false);
+	// if (map_init(&game->map) == false)
+	// 	return (false);
+	// if (texture_init(&game->texture) == false)
+	// 	return (false);
 	return (true);
 }

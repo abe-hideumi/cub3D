@@ -1,0 +1,16 @@
+NO ./texture/northwall.xpm
+SO ./texture/southwall.xpm
+WE ./texture/westwall.xpm
+EA ./texture/eastwall.xpm
+
+F 0,0,0
+C 255,255,255
+
+111111111111
+100000000001
+100000000001
+1000N0000001
+100000000001
+100000000001
+100000000001
+111111111111

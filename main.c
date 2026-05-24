@@ -9,7 +9,7 @@ int	main(int ac, char *av[])
 		return (printf("acないよ\n"), 1);
 	parse_cub_file(av[1], &info);
 	ft_memset(&game, 0, sizeof(t_game));
-	if (display_init(&game) == false)
+	if (display_init(&game, &info) == false)
 		return (1);
 	game_render(&game);
 	mlx_hook(game.win, 2, 1L << 0, key_press, &game);

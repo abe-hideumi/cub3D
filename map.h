@@ -33,7 +33,6 @@ typedef struct s_config
 	int		c;
 }		t_config;
 
-// 初期化御願いします
 typedef struct s_player
 {
 	double	pos_x;
