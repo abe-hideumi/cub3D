@@ -44,6 +44,8 @@ static void	read_map(char *line, t_info *info)
 	if (info->map_info.max_width < (int)len)
 		info->map_info.max_width = (int)len;
 	info->map_info.map[info->map_info.max_height] = ft_strdup(line);
+	if (!info->map_info.map[info->map_info.max_height])
+		put_error("Malloc failed");
 	// NULL チェック後で追加　クリーンアップ関数も作る
 	info->map_info.max_height++;
 	info->map_info.map[info->map_info.max_height] = NULL;
