@@ -1,0 +1,11 @@
+NO ./texture/northwall.xpm
+SO ./texture/southwall.xpm
+WE ./texture/westwall.xpm
+EA ./texture/eastwall.xpm
+
+F 220,100,0
+C 225,30,0
+
+000000
+0N0000
+000000
