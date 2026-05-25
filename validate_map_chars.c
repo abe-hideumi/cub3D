@@ -13,31 +13,23 @@ static void init_player_dir(t_player *player,char c)
 {
 	if (c == 'N')
 	{
-		player->dir_x = 0;
 		player->dir_y = -1;
 		player->plane_x = 1;
-		player->plane_y = 0;
 	}
 	else if (c == 'W')
 	{
 		player->dir_x = -1;
-		player->dir_y = 0;
-		player->plane_x = 0;
 		player->plane_y = -1;
 	}
 	else if (c == 'E')
 	{
 		player->dir_x = 1;
-		player->dir_y = 0;
-		player->plane_x = 0;
 		player->plane_y = 1;
 	}
 	else if (c == 'S')
 	{
-		player->dir_x = 0;
 		player->dir_y = 1;
 		player->plane_x = -1;
-		player->plane_y = 0;
 	}
 }
 
