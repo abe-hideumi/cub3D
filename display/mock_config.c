@@ -1,14 +1,14 @@
 #include "display.h"
 
-static void	player_init(t_player *player)
-{
-	player->pos_x = 4;
-	player->pos_y = 3;
-	player->dir_x = 0;
-	player->dir_y = -1;
-	player->plane_x = 1;
-	player->plane_y = 0;
-}
+// static void	player_init(t_player *player)
+// {
+// 	player->pos_x = 4;
+// 	player->pos_y = 3;
+// 	player->dir_x = 0;
+// 	player->dir_y = -1;
+// 	player->plane_x = 1;
+// 	player->plane_y = 0;
+// }
 
 // static bool	map_init(t_map *map)
 // {
@@ -49,12 +49,12 @@ static void	player_init(t_player *player)
 // 	return (true);
 // }
 
-bool	game_init(t_game *game)
-{
-	player_init(&game->player);
-	// if (map_init(&game->map) == false)
-	// 	return (false);
-	// if (texture_init(&game->texture) == false)
-	// 	return (false);
-	return (true);
-}
+// bool	game_init(t_game *game)
+// {
+// 	player_init(&game->player);
+// 	// if (map_init(&game->map) == false)
+// 	// 	return (false);
+// 	// if (texture_init(&game->texture) == false)
+// 	// 	return (false);
+// 	return (true);
+// }
