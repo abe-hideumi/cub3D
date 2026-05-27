@@ -1,16 +1,16 @@
-NO    ./texture/path_to_the_north_texture
-SO      ./texture/path_to_the_south_texture
- WE         ./texture/path_to_the_west_texture
-    
-	 
-    F 220,100,0      
+NO    ./texture/northwall.xpm
+SO      ./texture/southwall.xpm
+ WE         ./texture/westwall.xpm
+
+
+    F 220,100,0
   		C              255,127,0
 
-   EA ./texture/path_to_the_east_texture   
+   EA ./texture/eastwall.xpm
 
 F 220,100,0
 C               225,30,0
-EA ./texture/path_to_the_east_texture
+EA ./texture/eastwall.xpm
 
 1111111
 10N0001  11111

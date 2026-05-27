@@ -1,4 +1,4 @@
-NO ./texture/no_such_file
+NO ./texture/northwall.xpm
 SO ./texture/southwall.xpm
 WE ./texture/westwall.xpm
 EA ./texture/eastwall.xpm
@@ -6,8 +6,6 @@ EA ./texture/eastwall.xpm
 F 220,100,0
 C 225,30,0
 
-111111
-100101
-101001
-1100N1
-111111
+000000
+0N0000
+000000

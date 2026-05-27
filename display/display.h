@@ -16,8 +16,8 @@
 # define HEIGHT 1200
 
 // texture size
-# define TEX_WIDTH 64
-# define TEX_HEIGHT 64
+# define TEX_WIDTH 128
+# define TEX_HEIGHT 128
 
 // player movement
 # define MOVE_SPEED 0.1
@@ -96,7 +96,7 @@ typedef struct s_ray
 	double	perp_wall_dist;
 }	t_ray;
 
-bool	display_init(t_game *game);
+bool	display_init(t_game *game, t_info *info);
 void	game_render(t_game *game);
 void	draw_stripe(t_game *game, t_col *col, int x);
 double	multiply(double a, double b);
