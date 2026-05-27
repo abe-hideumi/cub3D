@@ -33,7 +33,6 @@ static bool	xpm_init(t_game *game, t_img *dst, char *path)
 
 static bool	texture_load(t_game *game, t_config *config)
 {
-	// TODO: configを受取るようにして、xpm_initの引数を変更する
 	if (!xpm_init(game, &game->texture.no, config->no))
 		return (false);
 	if (!xpm_init(game, &game->texture.so, config->so))
@@ -47,17 +46,10 @@ static bool	texture_load(t_game *game, t_config *config)
 
 bool	display_init(t_game *game, t_info *info)
 {
-	game->map = info->map_info; // max width height 必要ならすべて渡す不要ならdisplayがわのmap の型はchar **mapにする
+	game->map = info->map_info;
 	game->player = info->player;
 	game->texture.f = info->config.f;
 	game->texture.c = info->config.c;
-
-	// game_init は多分失敗しないようにできるから不要になる
-	// if (game_init(game) == false)
-	// {
-	// 	ft_putstr_fd("Error\nFailed to initialize game data\n", 2);
-	// 	return (false);
-	// }
 	if (mlx_img_init(game) == false)
 	{
 		ft_putstr_fd("Error\nFailed to initialize mlx image\n", 2);
