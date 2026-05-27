@@ -7,7 +7,6 @@ PARSE_SRCS =	parse_cub_file.c \
 				validate_map_chars.c \
 				validate_map_enclosed.c
 
-# 後修正するlibftも？ gnlはこのままでいいかも？
 GNL_SRCS =	get_next_line/get_next_line.c \
 			get_next_line/get_next_line_utils.c
 

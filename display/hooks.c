@@ -2,29 +2,29 @@
 
 static bool	handle_move(t_keycode keycode, t_game *game)
 {
-	if (keycode == KEY_A)
-	{
-		game->player.pos_x -= game->player.plane_x * MOVE_SPEED;
-		game->player.pos_y -= game->player.plane_y * MOVE_SPEED;
-		return (printf("Key A\n"), true);
-	}
-	if (keycode == KEY_D)
-	{
-		game->player.pos_x += game->player.plane_x * MOVE_SPEED;
-		game->player.pos_y += game->player.plane_y * MOVE_SPEED;
-		return (printf("Key D\n"), true);
-	}
 	if (keycode == KEY_W)
 	{
 		game->player.pos_x += game->player.dir_x * MOVE_SPEED;
 		game->player.pos_y += game->player.dir_y * MOVE_SPEED;
 		return (printf("Key W\n"), true);
 	}
+	if (keycode == KEY_A)
+	{
+		game->player.pos_x -= game->player.plane_x * MOVE_SPEED;
+		game->player.pos_y -= game->player.plane_y * MOVE_SPEED;
+		return (printf("Key A\n"), true);
+	}
 	if (keycode == KEY_S)
 	{
 		game->player.pos_x -= game->player.dir_x * MOVE_SPEED;
 		game->player.pos_y -= game->player.dir_y * MOVE_SPEED;
 		return (printf("Key S\n"), true);
+	}
+	if (keycode == KEY_D)
+	{
+		game->player.pos_x += game->player.plane_x * MOVE_SPEED;
+		game->player.pos_y += game->player.plane_y * MOVE_SPEED;
+		return (printf("Key D\n"), true);
 	}
 	return (false);
 }
