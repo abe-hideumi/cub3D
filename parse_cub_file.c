@@ -17,7 +17,7 @@ void	parse_cub_file(char *file, t_info *info)
 	info->map_info = (t_map){0};
 	info->map_info.map = malloc(sizeof(char *) * 1);
 	if (info->map_info.map == NULL)
-		put_error("malloc failed");
+		put_error_free("malloc failed", info, NULL);
 	read_file(file, info);
 	validate_map_chars(info);
 	validate_map_enclosed(info);

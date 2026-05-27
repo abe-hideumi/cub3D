@@ -41,17 +41,15 @@ static void validate_map_char(t_info *info, char *c, int i, int j)
 	if (ret == CHAR_PLAYER)
 	{
 		if (info->player_dir)
-			put_error("More than 2 player");
+			put_error_free("More than 2 player", info, NULL);
 		info->player_dir = *c;
 		info->player.pos_x = j;
 		info->player.pos_y = i;
 		init_player_dir(&info->player, *c);
-		printf("dir == %f %f %f %f", info->player.dir_x, info->player.dir_y, info->player.plane_x, info->player.plane_y);
-
 		*c = 'P';
 	}
 	else if (ret == CHAR_INVALID)
-		put_error("Unallowed char in map");
+		put_error_free("Unallowed char in map", info, NULL);
 }
 
 void validate_map_chars(t_info *info)
@@ -75,5 +73,5 @@ void validate_map_chars(t_info *info)
 		i++;
 	}
 	if (!info->player_dir)
-		put_error("No Player");
+		put_error_free("No Player", info, NULL);
 }

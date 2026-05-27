@@ -42,7 +42,7 @@ void validate_map_enclosed(t_info *info)
 		{
 			if (map[y][x] == 'P' || map[y][x] == '0')
 				if (check_all_direction(map, x, y))
-					put_error("Map not closed");
+					put_error_free("Map not closed", info, NULL);
 			x++;
 		}
 		y++;
