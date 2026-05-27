@@ -1,5 +1,8 @@
 NAME = cub3D
 
+SRCS =	main.c\
+		srcs/free.c\
+
 PARSE_SRCS =	parse_cub_file.c \
 				parse_texture.c \
 				parse_cub_utils.c \
@@ -7,18 +10,15 @@ PARSE_SRCS =	parse_cub_file.c \
 				validate_map_chars.c \
 				validate_map_enclosed.c
 
-GNL_SRCS =	get_next_line/get_next_line.c \
-			get_next_line/get_next_line_utils.c
-
-SRCS =	main.c\
-		srcs/free.c\
-
 DISPLAY_SRCS =	display/init.c \
 				display/hooks.c \
-				display/render.c \
 				display/rotate_calculations.c\
 				display/put_color.c \
 				display/ray_utils.c 
+
+GNL_SRCS =	get_next_line/get_next_line.c \
+			get_next_line/get_next_line_utils.c
+				display/render.c \
 
 OBJS = $(SRCS:.c=.o) $(DISPLAY_SRCS:.c=.o) $(PARSE_SRCS:.c=.o) $(GNL_SRCS:.c=.o)
 
@@ -39,7 +39,7 @@ else
 	MLX_FLAGS = -L$(MINILIBX_DIR) -lmlx -framework OpenGL -framework AppKit
 endif
 
-INCLUDES = -I. -Idisplay -Ilibft -I$(MINILIBX_DIR)
+INCLUDES = -Ilibft -I$(MINILIBX_DIR)
 
 # colors for output
 YELLOW = \033[1;33m
@@ -64,7 +64,7 @@ $(MINILIBX_A):
 	$(MAKE) -C $(MINILIBX_DIR)
 
 norm:
-	@output=$$(norminette $(SRCS) $(DISPLAY_SRCS) display/*.h libft/*.c cub3D.h map.h parse_map.c); \
+	@output=$$(norminette $(SRCS) $(DISPLAY_SRCS) $(PARSE_SRCS) display/*.h libft/*.c cub3D.h map.h parse_map.c); \
 	if echo "$$output" | grep -q "Error"; then \
 		echo "$$output" | grep "Error"; \
 	else \
