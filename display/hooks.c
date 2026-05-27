@@ -1,11 +1,25 @@
 #include "display.h"
 
+bool check_wall(t_game *game, double x, double y)
+{
+	if (x % 1 <= 0.1 || x % 1 >= 0.9)
+		return false;
+	if (y % 1 <= 0.1 || y % 1 >= 0.9)
+		return false;
+	return true;
+}
+
 static bool	handle_move(t_keycode keycode, t_game *game)
 {
 	if (keycode == KEY_W)
 	{
 		game->player.pos_x += game->player.dir_x * MOVE_SPEED;
 		game->player.pos_y += game->player.dir_y * MOVE_SPEED;
+		if (check_wall(game, game->player.pos_x, game->player.pos_y))
+		{
+			game->player.pos_x -= game->player.dir_x * MOVE_SPEED;
+			game->player.pos_y -= game->player.dir_y * MOVE_SPEED;
+		}
 		return (printf("Key W\n"), true);
 	}
 	if (keycode == KEY_A)
