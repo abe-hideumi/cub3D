@@ -43,8 +43,8 @@ static void validate_map_char(t_info *info, char *c, int i, int j)
 		if (info->player_dir)
 			put_error_free("More than 2 player", info, NULL);
 		info->player_dir = *c;
-		info->player.pos_x = j;
-		info->player.pos_y = i;
+		info->player.pos_x = j + 0.5;
+		info->player.pos_y = i + 0.5;
 		init_player_dir(&info->player, *c);
 		*c = 'P';
 	}
