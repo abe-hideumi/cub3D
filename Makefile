@@ -18,8 +18,7 @@ DISPLAY_SRCS =	display/init.c \
 				display/render.c \
 				display/rotate_calculations.c\
 				display/put_color.c \
-				display/ray_utils.c \
-				display/mock_config.c
+				display/ray_utils.c 
 
 OBJS = $(SRCS:.c=.o) $(DISPLAY_SRCS:.c=.o) $(PARSE_SRCS:.c=.o) $(GNL_SRCS:.c=.o)
 
