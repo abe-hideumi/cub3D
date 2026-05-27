@@ -47,6 +47,7 @@ void free_parse_info(t_info *info, char *str)
 	free_config(info->config);
 	free_parse_map(&info->map_info);
 	get_next_line(-1);
+	exit(1);
 }
 
 void	put_error_free(char *msg, t_info *info, char *str)
@@ -55,7 +56,6 @@ void	put_error_free(char *msg, t_info *info, char *str)
 	ft_putstr_fd(msg, 2);
 	ft_putstr_fd("\n", 2);
 	free_parse_info(info, str);
-	exit(1);
 }
 
 void	put_error(char *msg)
@@ -63,5 +63,4 @@ void	put_error(char *msg)
 	ft_putstr_fd("Error\n", 2);
 	ft_putstr_fd(msg, 2);
 	ft_putstr_fd("\n", 2);
-	exit(1);
 }

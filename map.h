@@ -56,13 +56,14 @@ void	*ft_realloc(void *ptr, size_t new_size);
 bool	ft_is_space(char c);
 void	put_error(char *msg);
 void	put_error_free(char *msg, t_info *info, char *str);
+void	free_parse_info(t_info *info, char *str);
 
 // parse_cub_file.c
 void	parse_cub_file(char *file, t_info *info);
 
 // parse_texture.c
-void	parse_texture_img(char **field, char *line);
-void	parse_texture_color(int *field, char *line);
+int		parse_texture_img(char **field, char *line);
+int		parse_texture_color(int *field, char *line);
 
 // read_file.c
 void	read_file(char *file, t_info *info);

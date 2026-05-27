@@ -60,6 +60,6 @@ bool	display_init(t_game *game, t_info *info)
 		ft_putstr_fd("Error\nFailed to load textures\n", 2);
 		return (false);
 	}
-	free_config(info->config);
+	// free_config(info->config);
 	return (true);
 }
