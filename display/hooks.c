@@ -1,12 +1,31 @@
 #include "display.h"
 
-bool check_wall(t_game *game, double x, double y)
+bool is_wall_in_map(t_map *map, int x, int y)
 {
-	if (x % 1 <= 0.1 || x % 1 >= 0.9)
-		return false;
-	if (y % 1 <= 0.1 || y % 1 >= 0.9)
-		return false;
-	return true;
+	printf("向かってる先のマップ %c\n", map->map[y][x]);
+	if (map->map[y][x] == '1')
+		return true;
+	return false;
+}
+
+bool check_wall(t_game *game, double pos_x, double pos_y)
+{
+	double x, y;
+	(void)game;
+	printf("x:%f y:%f", game->player.pos_x, game->player.pos_y);
+
+
+	x = fmod(pos_x, 1.0);
+	y = fmod(pos_y, 1.0);
+	if (x <= 0.1 && is_wall_in_map(&game->map, (int)pos_x - 1 , (int)pos_y))
+		return true;
+	if (x >= 0.9 && is_wall_in_map(&game->map, (int)pos_x + 1 , (int)pos_y))
+		return true;
+	if (y <= 0.1 && is_wall_in_map(&game->map, (int)pos_x, (int)pos_y - 1))
+		return true;
+	if (y >= 0.9 && is_wall_in_map(&game->map, (int)pos_x, (int)pos_y + 1 ))
+		return true;
+	return false;
 }
 
 static bool	handle_move(t_keycode keycode, t_game *game)
@@ -20,24 +39,39 @@ static bool	handle_move(t_keycode keycode, t_game *game)
 			game->player.pos_x -= game->player.dir_x * MOVE_SPEED;
 			game->player.pos_y -= game->player.dir_y * MOVE_SPEED;
 		}
-		return (printf("Key W\n"), true);
+		return (printf("  Key W\n"), true);
 	}
 	if (keycode == KEY_A)
 	{
 		game->player.pos_x -= game->player.plane_x * MOVE_SPEED;
 		game->player.pos_y -= game->player.plane_y * MOVE_SPEED;
+		if (check_wall(game, game->player.pos_x, game->player.pos_y))
+		{
+			game->player.pos_x += game->player.plane_x * MOVE_SPEED;
+			game->player.pos_y += game->player.plane_y * MOVE_SPEED;
+		}
 		return (printf("Key A\n"), true);
 	}
 	if (keycode == KEY_S)
 	{
 		game->player.pos_x -= game->player.dir_x * MOVE_SPEED;
 		game->player.pos_y -= game->player.dir_y * MOVE_SPEED;
+		if (check_wall(game, game->player.pos_x, game->player.pos_y))
+		{
+			game->player.pos_x += game->player.dir_x * MOVE_SPEED;
+			game->player.pos_y += game->player.dir_y * MOVE_SPEED;
+		}
 		return (printf("Key S\n"), true);
 	}
 	if (keycode == KEY_D)
 	{
 		game->player.pos_x += game->player.plane_x * MOVE_SPEED;
 		game->player.pos_y += game->player.plane_y * MOVE_SPEED;
+		if (check_wall(game, game->player.pos_x, game->player.pos_y))
+		{
+			game->player.pos_x -= game->player.plane_x * MOVE_SPEED;
+			game->player.pos_y -= game->player.plane_y * MOVE_SPEED;
+		}
 		return (printf("Key D\n"), true);
 	}
 	return (false);
