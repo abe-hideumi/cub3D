@@ -33,7 +33,6 @@ typedef struct s_config
 	int		c;
 }		t_config;
 
-// 初期化御願いします
 typedef struct s_player
 {
 	double	pos_x;
@@ -56,6 +55,7 @@ typedef struct s_info
 void	*ft_realloc(void *ptr, size_t new_size);
 bool	ft_is_space(char c);
 void	put_error(char *msg);
+void	put_error_free(char *msg, t_info *info, char *str);
 
 // parse_cub_file.c
 void	parse_cub_file(char *file, t_info *info);

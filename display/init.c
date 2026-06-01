@@ -31,36 +31,35 @@ static bool	xpm_init(t_game *game, t_img *dst, char *path)
 	return (true);
 }
 
-static bool	texture_load(t_game *game)
+static bool	texture_load(t_game *game, t_config *config)
 {
-	// TODO: configを受取るようにして、xpm_initの引数を変更する
-	if (!xpm_init(game, &game->texture.no, "mock_textures/mock_north.xpm"))
+	if (!xpm_init(game, &game->texture.no, config->no))
 		return (false);
-	if (!xpm_init(game, &game->texture.so, "mock_textures/mock_south.xpm"))
+	if (!xpm_init(game, &game->texture.so, config->so))
 		return (false);
-	if (!xpm_init(game, &game->texture.we, "mock_textures/mock_west.xpm"))
+	if (!xpm_init(game, &game->texture.we, config->we))
 		return (false);
-	if (!xpm_init(game, &game->texture.ea, "mock_textures/mock_east.xpm"))
+	if (!xpm_init(game, &game->texture.ea, config->ea))
 		return (false);
 	return (true);
 }
 
-bool	display_init(t_game *game)
+bool	display_init(t_game *game, t_info *info)
 {
-	if (game_init(game) == false)
-	{
-		ft_putstr_fd("Error\nFailed to initialize game data\n", 2);
-		return (false);
-	}
+	game->map = info->map_info;
+	game->player = info->player;
+	game->texture.f = info->config.f;
+	game->texture.c = info->config.c;
 	if (mlx_img_init(game) == false)
 	{
 		ft_putstr_fd("Error\nFailed to initialize mlx image\n", 2);
 		return (false);
 	}
-	if (texture_load(game) == false)
+	if (texture_load(game, &info->config) == false)
 	{
 		ft_putstr_fd("Error\nFailed to load textures\n", 2);
 		return (false);
 	}
+	free_config(info->config);
 	return (true);
 }

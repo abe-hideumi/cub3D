@@ -1,5 +1,16 @@
 NAME = cub3D
 
+PARSE_SRCS =	parse_cub_file.c \
+				parse_texture.c \
+				parse_cub_utils.c \
+				read_file.c \
+				validate_map_chars.c \
+				validate_map_enclosed.c
+
+# 後修正するlibftも？ gnlはこのままでいいかも？
+GNL_SRCS =	get_next_line/get_next_line.c \
+			get_next_line/get_next_line_utils.c
+
 SRCS =	main.c\
 		srcs/free.c\
 
@@ -11,7 +22,7 @@ DISPLAY_SRCS =	display/init.c \
 				display/ray_utils.c \
 				display/mock_config.c
 
-OBJS = $(SRCS:.c=.o) $(DISPLAY_SRCS:.c=.o)
+OBJS = $(SRCS:.c=.o) $(DISPLAY_SRCS:.c=.o) $(PARSE_SRCS:.c=.o) $(GNL_SRCS:.c=.o)
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
