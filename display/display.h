@@ -108,6 +108,7 @@ void	init_side_dist(t_player *player, t_ray *ray, \
 // hooks
 int		key_press(t_keycode keycode, void *param);
 int		close_hook(void *param);
+bool	handle_move(t_keycode keycode, t_game *game);
 
 // calulation
 double	rotate_right_x(double dir_x, double dir_y);
