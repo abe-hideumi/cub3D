@@ -4,13 +4,8 @@ _This project has been created as part of the 42 curriculum by knomura, habe._
 
 cub3D is a 3D raycasting engine built from scratch in C using the Minilibx library.
 
-This project reads a custom .cub file which defines wall textures per direction and floor/ceiling 
-
-
-This project is about remaking a simplified version of a Unix shell similar to Bash.
-The goal is to understand how a Unix shell works by implementing core features such as
-command parsing, process creation, pipes, redirections, and environment variable handling.
-
+This project reads a custom .cub file which defines wall textures per direction (N,S,E,W) and floor/ceiling colors and the map.
+then renders the scene in real time using the DDA (Digital Differential Analysis) raycasting algorithm. The player can move and rotate freely within the walled maze.
 
 ## Instructions
 
