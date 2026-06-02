@@ -2,12 +2,15 @@ _This project has been created as part of the 42 curriculum by knomura, habe._
 
 ## Description
 
+cub3D is a 3D raycasting engine built from scratch in C using the Minilibx library.
+
+This project reads a custom .cub file which defines wall textures per direction and floor/ceiling 
+
+
 This project is about remaking a simplified version of a Unix shell similar to Bash.
 The goal is to understand how a Unix shell works by implementing core features such as
 command parsing, process creation, pipes, redirections, and environment variable handling.
 
-By recreating a shell from scratch, this project provides hands-on experience with
-system calls, process management, and memory handling in C.
 
 ## Instructions
 
@@ -32,10 +35,6 @@ Compile the project using:
 
 ### References
 
-- bash manual: ex. `man bash`
-- Introduction to Computer Systems: https://www.momoyama-usagi.com/entry/info-calc-sys11
-- minishell implementation notes (Zenn): https://zenn.dev/grigri_grin/articles/54152e7b9e11f8
-- Writing a C Compiler: https://www.sigbus.info/compilerbook
 
 ### AI Usage
 
