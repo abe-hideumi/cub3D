@@ -6,7 +6,7 @@
 #    By: habe <habe@student.42tokyo.jp>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 16:21:00 by habe              #+#    #+#              #
-#    Updated: 2026/05/12 18:27:50 by habe             ###   ########.fr        #
+#    Updated: 2026/06/02 17:29:51 by habe             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,9 @@ SRC_FILES = atoi\
 			tolower\
 			toupper
 
+GNL_SRC_FILES = get_next_line/get_next_line\
+				get_next_line/get_next_line_utils
+
 BONUS_SRC_FILES = lstnew\
 			lstadd_front\
 			lstsize\
@@ -55,13 +58,18 @@ BONUS_SRC_FILES = lstnew\
 			lstdelone\
 			lstclear\
 			lstiter\
-			lstmap
+			lstmap\
+
+GNL_BONUS_SRCS = get_next_line/get_next_line_bonus\
+				 get_next_line/get_next_line_utils_bonus
 
 SRC = $(addprefix ft_, $(addsuffix .c, $(SRC_FILES)))
-OBJ = $(SRC:.c=.o)
+GNL_SRCS = $(addsuffix .c, $(GNL_SRC_FILES))
+OBJ = $(SRC:.c=.o) $(GNL_SRCS:.c=.o)
 
 BONUS_SRC = $(addprefix ft_, $(addsuffix _bonus.c, $(BONUS_SRC_FILES)))
-BONUS_OBJ = $(BONUS_SRC:.c=.o)
+GNL_BONUS_OBJ = $(addsuffix .c, $(GNL_BONUS_SRCS))
+BONUS_OBJ = $(BONUS_SRC:.c=.o) $(GNL_BONUS_OBJ:.c=.o)
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror

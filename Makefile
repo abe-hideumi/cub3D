@@ -3,22 +3,22 @@ NAME = cub3D
 SRCS =	main.c\
 		free.c\
 
-PARSE_SRCS =	parse_cub_file.c \
-				parse_texture.c \
-				parse_cub_utils.c \
-				read_file.c \
-				validate_map_chars.c \
-				validate_map_enclosed.c
+PARSE_SRCS =	parse_srcs/parse_cub_file.c \
+				parse_srcs/parse_texture.c \
+				parse_srcs/parse_cub_utils.c \
+				parse_srcs/read_file.c \
+				parse_srcs/validate_map_chars.c \
+				parse_srcs/validate_map_enclosed.c
 
 DISPLAY_SRCS =	display/init.c \
 				display/hooks.c \
 				display/handle_move_utils.c \
 				display/rotate_calculations.c\
 				display/put_color.c \
-				display/init_ray.c \
-				display/mock_config.c
+				display/render.c \
+				display/init_ray.c
 
-OBJS = $(SRCS:.c=.o) $(DISPLAY_SRCS:.c=.o) $(PARSE_SRCS:.c=.o) $(GNL_SRCS:.c=.o)
+OBJS = $(SRCS:.c=.o) $(DISPLAY_SRCS:.c=.o) $(PARSE_SRCS:.c=.o)
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
@@ -37,7 +37,7 @@ else
 	MLX_FLAGS = -L$(MINILIBX_DIR) -lmlx -framework OpenGL -framework AppKit
 endif
 
-INCLUDES = -Ilibft -I$(MINILIBX_DIR)
+INCLUDES = -Ilibft -Ilibft/get_next_line -I$(MINILIBX_DIR)
 
 # colors for output
 YELLOW = \033[1;33m
@@ -48,7 +48,7 @@ RESET = \033[0m
 # rules
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT) $(MINILIBX_A)
+$(NAME): $(LIBFT) $(MINILIBX_A) $(OBJS)
 	@echo "$(GREEN)Linking cub3D executable...$(RESET)"
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -Llibft -lft $(MLX_FLAGS)
 
