@@ -14,11 +14,11 @@ DISPLAY_SRCS =	display/init.c \
 				display/hooks.c \
 				display/rotate_calculations.c\
 				display/put_color.c \
+				display/render.c \
 				display/ray_utils.c 
 
 GNL_SRCS =	get_next_line/get_next_line.c \
 			get_next_line/get_next_line_utils.c
-				display/render.c \
 
 OBJS = $(SRCS:.c=.o) $(DISPLAY_SRCS:.c=.o) $(PARSE_SRCS:.c=.o) $(GNL_SRCS:.c=.o)
 

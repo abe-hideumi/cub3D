@@ -2,7 +2,6 @@
 
 bool is_wall_in_map(t_map *map, int x, int y)
 {
-	printf("向かってる先のマップ %c\n", map->map[y][x]);
 	if (map->map[y][x] == '1')
 		return true;
 	return false;
@@ -11,9 +10,6 @@ bool is_wall_in_map(t_map *map, int x, int y)
 bool check_wall(t_game *game, double pos_x, double pos_y)
 {
 	double x, y;
-	(void)game;
-	printf("x:%f y:%f", game->player.pos_x, game->player.pos_y);
-
 
 	x = fmod(pos_x, 1.0);
 	y = fmod(pos_y, 1.0);
