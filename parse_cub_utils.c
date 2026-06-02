@@ -1,15 +1,5 @@
 #include "map.h"
 
-void	*ft_realloc(void *ptr, size_t new_size)
-{
-	(void)ptr;
-	(void)new_size;
-
-	//  実装してください。
-
-	return (NULL);
-}
-
 bool	ft_is_space(char c)
 {
 	if (c == ' ' || c == '\t')

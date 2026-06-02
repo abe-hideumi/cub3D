@@ -52,7 +52,7 @@ typedef struct s_info
 }		t_info;
 
 // parse_cub_utils.c
-void	*ft_realloc(void *ptr, size_t new_size);
+char	**ft_realloc(char **ptr, size_t new_size);
 bool	ft_is_space(char c);
 void	put_error(char *msg);
 void	put_error_free(char *msg, t_info *info, char *str);

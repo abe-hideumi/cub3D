@@ -13,6 +13,7 @@ GNL_SRCS =	get_next_line/get_next_line.c \
 
 SRCS =	main.c\
 		srcs/free.c\
+		srcs/ft_realloc.c
 
 DISPLAY_SRCS =	display/init.c \
 				display/hooks.c \

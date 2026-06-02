@@ -34,9 +34,9 @@ static void	read_map(char *line, t_info *info)
 	char	**tmp;
 	size_t	len;
 
-	tmp = realloc(info->map_info.map, sizeof(char *) * (info->map_info.max_height + 2));
+	tmp = ft_realloc(info->map_info.map, sizeof(char *) * (info->map_info.max_height + 2));
 	if (tmp == NULL)
-		put_error_free("Realloc Failed", info, line);
+		put_error_free("ft_realloc Failed", info, line);
 	info->map_info.map = tmp;
 	len = ft_strlen(line);
 	if (len > 0 && line[len - 1] == '\n')
