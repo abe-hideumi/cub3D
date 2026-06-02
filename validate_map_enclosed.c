@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   validate_map_enclosed.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: knomura <knomura@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/02 13:39:55 by knomura           #+#    #+#             */
+/*   Updated: 2026/06/02 13:43:45 by knomura          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <fcntl.h>
 #include <stdlib.h>
@@ -7,37 +19,39 @@
 #include "libft/libft.h"
 #include "get_next_line/get_next_line.h"
 
-static int check_single_direction(char **map, int x, int y)
+static int	check_single_direction(char **map, int x, int y)
 {
-	if (x < 0 || y < 0 || !map[y] || x >= (int)ft_strlen(map[y]) || map[y][x] == ' ')
-		return 1;
-	return 0;
+	if (x < 0 || y < 0 || !map[y]
+		|| x >= (int)ft_strlen(map[y]) || map[y][x] == ' ')
+		return (1);
+	return (0);
 }
 
-static bool check_all_direction(char **map, int x, int y)
+static bool	check_all_direction(char **map, int x, int y)
 {
-	int err;
+	int	err;
 
 	err = 0;
 	err = check_single_direction(map, x + 1, y);
 	err += check_single_direction(map, x - 1, y);
 	err += check_single_direction(map, x, y + 1);
 	err += check_single_direction(map, x, y - 1);
-
-	return err;
+	return (err);
 }
 
-void validate_map_enclosed(t_info *info)
+void	validate_map_enclosed(t_info *info)
 {
-	char **map = info->map_info.map;
-	int x;
-	int y;
+	char	**map;
+	int		x;
+	int		y;
+	int		len;
 
+	map = info->map_info.map;
 	y = 0;
 	while (y < info->map_info.max_height)
 	{
 		x = 0;
-		int len = ft_strlen(map[y]);
+		len = ft_strlen(map[y]);
 		while (x < len)
 		{
 			if (map[y][x] == 'P' || map[y][x] == '0')

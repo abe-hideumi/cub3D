@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_texture.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: knomura <knomura@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/02 13:39:40 by knomura           #+#    #+#             */
+/*   Updated: 2026/06/02 13:53:50 by knomura          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "map.h"
 
 int	parse_texture_img(char **field, char *line)
@@ -103,5 +115,3 @@ int	parse_texture_color(int *field, char *line)
 	*field = result;
 	return (0);
 }
-
-

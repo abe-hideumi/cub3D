@@ -1,4 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: knomura <knomura@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/02 13:38:33 by knomura           #+#    #+#             */
+/*   Updated: 2026/06/02 14:13:37 by knomura          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "display.h"
+#include "../map.h"
 
 static bool	mlx_img_init(t_game *game)
 {
@@ -60,6 +73,6 @@ bool	display_init(t_game *game, t_info *info)
 		ft_putstr_fd("Error\nFailed to load textures\n", 2);
 		return (false);
 	}
-	// free_config(info->config);
+	free_config(info->config);
 	return (true);
 }

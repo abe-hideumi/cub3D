@@ -12,10 +12,11 @@ PARSE_SRCS =	parse_cub_file.c \
 
 DISPLAY_SRCS =	display/init.c \
 				display/hooks.c \
+				display/handle_move_utils.c \
 				display/rotate_calculations.c\
 				display/put_color.c \
 				display/render.c \
-				display/ray_utils.c 
+				display/ray_utils.c
 
 GNL_SRCS =	get_next_line/get_next_line.c \
 			get_next_line/get_next_line_utils.c

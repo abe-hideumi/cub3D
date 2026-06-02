@@ -1,12 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_cub_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: knomura <knomura@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/02 13:39:37 by knomura           #+#    #+#             */
+/*   Updated: 2026/06/02 13:49:20 by knomura          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "map.h"
 
 void	*ft_realloc(void *ptr, size_t new_size)
 {
 	(void)ptr;
 	(void)new_size;
-
-	//  実装してください。
-
 	return (NULL);
 }
 
@@ -17,7 +26,7 @@ bool	ft_is_space(char c)
 	return (false);
 }
 
-void free_config(t_config config)
+void	free_config(t_config config)
 {
 	if (config.no)
 		free(config.no);
@@ -29,10 +38,11 @@ void free_config(t_config config)
 		free(config.we);
 }
 
-void free_parse_map(t_map *map)
+void	free_parse_map(t_map *map)
 {
-	int i = 0;
+	int	i;
 
+	i = 0;
 	while (i < map->max_height)
 		free(map->map[i++]);
 	if (map->map[i])
@@ -40,7 +50,7 @@ void free_parse_map(t_map *map)
 	free(map->map);
 }
 
-void free_parse_info(t_info *info, char *str)
+void	free_parse_info(t_info *info, char *str)
 {
 	if (str)
 		free(str);

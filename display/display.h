@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   display.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: knomura <knomura@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/02 13:38:20 by knomura           #+#    #+#             */
+/*   Updated: 2026/06/02 13:38:21 by knomura          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef DISPLAY_H
 # define DISPLAY_H
 
@@ -108,7 +120,12 @@ void	init_side_dist(t_player *player, t_ray *ray, \
 // hooks
 int		key_press(t_keycode keycode, void *param);
 int		close_hook(void *param);
-bool	handle_move(t_keycode keycode, t_game *game);
+
+// move utils
+void	move_forward(t_game *game);
+void	move_back(t_game *game);
+void	move_left(t_game *game);
+void	move_right(t_game *game);
 
 // calulation
 double	rotate_right_x(double dir_x, double dir_y);

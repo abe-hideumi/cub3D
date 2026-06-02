@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   validate_map_chars.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: knomura <knomura@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/02 13:39:51 by knomura           #+#    #+#             */
+/*   Updated: 2026/06/02 13:45:38 by knomura          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "map.h"
 
-static t_char_type is_valid_map_char(char c)
+static t_char_type	is_valid_map_char(char c)
 {
 	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 		return (CHAR_PLAYER);
@@ -9,7 +21,7 @@ static t_char_type is_valid_map_char(char c)
 	return (CHAR_INVALID);
 }
 
-static void init_player_dir(t_player *player,char c)
+static void	init_player_dir(t_player *player, char c)
 {
 	if (c == 'N')
 	{
@@ -33,9 +45,9 @@ static void init_player_dir(t_player *player,char c)
 	}
 }
 
-static void validate_map_char(t_info *info, char *c, int i, int j)
+static void	validate_map_char(t_info *info, char *c, int i, int j)
 {
-	int ret;
+	int	ret;
 
 	ret = is_valid_map_char(*c);
 	if (ret == CHAR_PLAYER)
@@ -52,12 +64,12 @@ static void validate_map_char(t_info *info, char *c, int i, int j)
 		put_error_free("Unallowed char in map", info, NULL);
 }
 
-void validate_map_chars(t_info *info)
+void	validate_map_chars(t_info *info)
 {
-	char **map;
-	int len;
-	int i;
-	int j;
+	char	**map;
+	int		len;
+	int		i;
+	int		j;
 
 	map = info->map_info.map;
 	i = 0;
