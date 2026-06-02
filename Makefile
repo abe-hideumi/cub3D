@@ -18,10 +18,7 @@ DISPLAY_SRCS =	display/init.c \
 				display/render.c \
 				display/init_ray.c
 
-GNL_SRCS =	get_next_line/get_next_line.c \
-			get_next_line/get_next_line_utils.c
-
-OBJS = $(SRCS:.c=.o) $(DISPLAY_SRCS:.c=.o) $(PARSE_SRCS:.c=.o) $(GNL_SRCS:.c=.o)
+OBJS = $(SRCS:.c=.o) $(DISPLAY_SRCS:.c=.o) $(PARSE_SRCS:.c=.o)
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
