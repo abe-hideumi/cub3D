@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knomura <knomura@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: habe <habe@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 13:38:20 by knomura           #+#    #+#             */
-/*   Updated: 2026/06/02 13:38:21 by knomura          ###   ########.fr       */
+/*   Updated: 2026/06/02 18:14:17 by habe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define DISPLAY_H
 
 # include <math.h>
-# include "../map.h"
+# include "../parse_srcs/map.h"
 # ifdef __linux__
 #  include "../minilibx-linux/mlx.h"
 # else
@@ -44,8 +44,9 @@
 // event
 # define DESTROY_NOTIFY 17
 
-// hit
-# define HIT_WALL 1
+// ray side
+# define X_SIDE 0
+# define Y_SIDE 1
 
 // keycode
 typedef enum e_keycode
@@ -117,11 +118,7 @@ typedef struct s_ray
 bool	display_init(t_game *game, t_info *info);
 void	game_render(t_game *game);
 void	draw_stripe(t_game *game, t_col *col, int x);
-double	multiply(double a, double b);
 void	put_pixel(t_img *img, int x, int y, int color);
-void	set_ray_step(t_ray *ray, double dir_x, double dir_y);
-void	init_side_dist(t_player *player, t_ray *ray, \
-			double dir_x, double dir_y);
 
 // hooks
 int		key_press(t_keycode keycode, void *param);
@@ -139,7 +136,8 @@ double	rotate_right_y(double dir_x, double dir_y);
 double	rotate_left_x(double dir_x, double dir_y);
 double	rotate_left_y(double dir_x, double dir_y);
 
-// mock config
-bool	game_init(t_game *game);
+// raycasting
+void	init_ray(t_game *game, t_ray *ray, int x);
+
 
 #endif

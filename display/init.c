@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knomura <knomura@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: habe <habe@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 13:38:33 by knomura           #+#    #+#             */
-/*   Updated: 2026/06/02 14:13:37 by knomura          ###   ########.fr       */
+/*   Updated: 2026/06/02 18:16:33 by habe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "display.h"
-#include "../map.h"
+// #include "../parse_srcs/map.h"
 
 static bool	mlx_img_init(t_game *game)
 {

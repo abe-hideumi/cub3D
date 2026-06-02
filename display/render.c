@@ -3,29 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knomura <knomura@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: habe <habe@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 13:38:49 by knomura           #+#    #+#             */
-/*   Updated: 2026/06/02 13:38:50 by knomura          ###   ########.fr       */
+/*   Updated: 2026/06/02 18:00:46 by habe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "display.h"
-
-static void	init_ray(t_game *game, t_ray *ray, int x)
-{
-	double	camera_x;
-
-	camera_x = 2.0 * x / WIDTH - 1.0;
-	ray->dir_x = game->player.dir_x + game->player.plane_x * camera_x;
-	ray->dir_y = game->player.dir_y + game->player.plane_y * camera_x;
-	ray->map_x = (int)game->player.pos_x;
-	ray->map_y = (int)game->player.pos_y;
-	ray->delta_dist_x = fabs(1.0 / ray->dir_x);
-	ray->delta_dist_y = fabs(1.0 / ray->dir_y);
-	set_ray_step(ray, ray->dir_x, ray->dir_y);
-	init_side_dist(&game->player, ray, ray->dir_x, ray->dir_y);
-}
 
 static void	perform_dda(t_game *game, t_ray *ray)
 {
@@ -38,18 +23,18 @@ static void	perform_dda(t_game *game, t_ray *ray)
 		{
 			ray->side_dist_x += ray->delta_dist_x;
 			ray->map_x += ray->step_x;
-			ray->side = 0;
+			ray->side = X_SIDE;
 		}
 		else
 		{
 			ray->side_dist_y += ray->delta_dist_y;
 			ray->map_y += ray->step_y;
-			ray->side = 1;
+			ray->side = Y_SIDE;
 		}
 		if (game->map.map[ray->map_y][ray->map_x] == '1')
 			hit = true;
 	}
-	if (ray->side == 0)
+	if (ray->side == X_SIDE)
 		ray->perp_wall_dist = ray->side_dist_x - ray->delta_dist_x;
 	else
 		ray->perp_wall_dist = ray->side_dist_y - ray->delta_dist_y;
@@ -57,9 +42,9 @@ static void	perform_dda(t_game *game, t_ray *ray)
 
 static t_img	*get_texture(t_texture *tex, t_ray *ray)
 {
-	if (ray->side == 0 && ray->step_x > 0)
+	if (ray->side == X_SIDE && ray->step_x > 0)
 		return (&tex->we);
-	if (ray->side == 0)
+	if (ray->side == X_SIDE)
 		return (&tex->ea);
 	if (ray->step_y > 0)
 		return (&tex->no);
@@ -75,14 +60,14 @@ static t_col	draw_column(t_game *game, t_ray *ray)
 	wall_h = (int)(HEIGHT / ray->perp_wall_dist);
 	col.draw_start = HEIGHT / 2 - wall_h / 2;
 	col.draw_end = HEIGHT / 2 + wall_h / 2;
-	if (ray->side == 0)
+	if (ray->side == X_SIDE)
 		wall_x = game->player.pos_y + ray->perp_wall_dist * ray->dir_y;
 	else
 		wall_x = game->player.pos_x + ray->perp_wall_dist * ray->dir_x;
 	wall_x -= floor(wall_x);
 	col.tex_x = (int)(wall_x * TEX_WIDTH);
-	if ((ray->side == 0 && ray->dir_x > 0) || \
-			(ray->side == 1 && ray->dir_y < 0))
+	if ((ray->side == X_SIDE && ray->dir_x > 0) || \
+			(ray->side == Y_SIDE && ray->dir_y < 0))
 		col.tex_x = TEX_WIDTH - col.tex_x - 1;
 	col.tex = get_texture(&game->texture, ray);
 	col.tex_step = (double)TEX_HEIGHT / wall_h;

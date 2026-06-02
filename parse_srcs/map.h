@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knomura <knomura@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: habe <habe@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 13:39:29 by knomura           #+#    #+#             */
-/*   Updated: 2026/06/02 13:44:21 by knomura          ###   ########.fr       */
+/*   Updated: 2026/06/02 18:15:06 by habe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdbool.h>
-# include "libft/libft.h"
-# include "get_next_line/get_next_line.h"
+# include "libft.h"
+# include "get_next_line.h"
 
 typedef enum e_char_type
 {
@@ -64,7 +64,7 @@ typedef struct s_info
 }		t_info;
 
 // parse_cub_utils.c
-void	*ft_realloc(void *ptr, size_t new_size);
+char	**ft_realloc(char **ptr, size_t new_size);
 bool	ft_is_space(char c);
 void	put_error(char *msg);
 void	put_error_free(char *msg, t_info *info, char *str);
