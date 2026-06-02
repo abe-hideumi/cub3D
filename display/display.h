@@ -1,7 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   display.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: knomura <knomura@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/02 13:38:20 by knomura           #+#    #+#             */
+/*   Updated: 2026/06/02 13:38:21 by knomura          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef DISPLAY_H
 # define DISPLAY_H
 
-# include "../cub3D.h"
+# include <math.h>
+# include "../map.h"
+# ifdef __linux__
+#  include "../minilibx-linux/mlx.h"
+# else
+#  include "../minilibx_mms_20200219/mlx.h"
+# endif
 
 // colors
 # define RED 0xFF0000
@@ -105,6 +123,12 @@ void	put_pixel(t_img *img, int x, int y, int color);
 // hooks
 int		key_press(t_keycode keycode, void *param);
 int		close_hook(void *param);
+
+// move utils
+void	move_forward(t_game *game);
+void	move_back(t_game *game);
+void	move_left(t_game *game);
+void	move_right(t_game *game);
 
 // calulation
 double	rotate_right_x(double dir_x, double dir_y);
