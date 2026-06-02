@@ -68,8 +68,11 @@ void	*ft_realloc(void *ptr, size_t new_size);
 bool	ft_is_space(char c);
 void	put_error(char *msg);
 void	put_error_free(char *msg, t_info *info, char *str);
-void	free_parse_info(t_info *info, char *str);
+
+// free.c
 void	free_config(t_config config);
+void	free_map(t_map *map);
+void	free_parse_info(t_info *info, char *str);
 
 // parse_cub_file.c
 void	parse_cub_file(char *file, t_info *info);

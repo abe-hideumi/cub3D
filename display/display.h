@@ -13,7 +13,13 @@
 #ifndef DISPLAY_H
 # define DISPLAY_H
 
-# include "../cub3D.h"
+# include <math.h>
+# include "../map.h"
+# ifdef __linux__
+#  include "../minilibx-linux/mlx.h"
+# else
+#  include "../minilibx_mms_20200219/mlx.h"
+# endif
 
 // colors
 # define RED 0xFF0000

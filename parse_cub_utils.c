@@ -6,7 +6,7 @@
 /*   By: knomura <knomura@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 13:39:37 by knomura           #+#    #+#             */
-/*   Updated: 2026/06/02 13:49:20 by knomura          ###   ########.fr       */
+/*   Updated: 2026/06/02 14:46:40 by knomura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,40 +24,6 @@ bool	ft_is_space(char c)
 	if (c == ' ' || c == '\t')
 		return (true);
 	return (false);
-}
-
-void	free_config(t_config config)
-{
-	if (config.no)
-		free(config.no);
-	if (config.ea)
-		free(config.ea);
-	if (config.so)
-		free(config.so);
-	if (config.we)
-		free(config.we);
-}
-
-void	free_parse_map(t_map *map)
-{
-	int	i;
-
-	i = 0;
-	while (i < map->max_height)
-		free(map->map[i++]);
-	if (map->map[i])
-		free(map->map[i]);
-	free(map->map);
-}
-
-void	free_parse_info(t_info *info, char *str)
-{
-	if (str)
-		free(str);
-	free_config(info->config);
-	free_parse_map(&info->map_info);
-	get_next_line(-1);
-	exit(1);
 }
 
 void	put_error_free(char *msg, t_info *info, char *str)

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "display/display.h"
 
 int	main(int ac, char *av[])
 {

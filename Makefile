@@ -1,7 +1,7 @@
 NAME = cub3D
 
 SRCS =	main.c\
-		srcs/free.c\
+		free.c\
 
 PARSE_SRCS =	parse_cub_file.c \
 				parse_texture.c \
