@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse_srcs/map.h"
+#include "parse/map.h"
 
 void	free_config(t_config config)
 {

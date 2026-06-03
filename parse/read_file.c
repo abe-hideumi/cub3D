@@ -6,7 +6,7 @@
 /*   By: knomura <knomura@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 13:39:44 by knomura           #+#    #+#             */
-/*   Updated: 2026/06/02 18:40:24 by knomura          ###   ########.fr       */
+/*   Updated: 2026/06/03 16:40:48 by knomura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	parse_config(char *line, t_info *info)
 	if (!ft_strncmp("C ", line, 2))
 		return (parse_texture_color(&info->config.c, line), 0);
 	if (!is_config_complete(info->config))
-		put_error_free("INVALID OR MISSING CONFIG: CHECK IDENTIFIERS (NO/SO/WE/EA/F/C)", info, NULL);
+		put_error_free("INVALID OR MISSING CONFIG", info, NULL);
 	return (1);
 }
 
@@ -46,7 +46,8 @@ static void	read_map(char *line, t_info *info)
 	char	**tmp;
 	size_t	len;
 
-	tmp = ft_realloc(info->map_info.map, sizeof(char *) * (info->map_info.max_height + 2));
+	tmp = ft_realloc(info->map_info.map, sizeof(char *)
+			* (info->map_info.max_height + 2));
 	if (tmp == NULL)
 		put_error_free("ft_realloc Failed", info, line);
 	info->map_info.map = tmp;
@@ -72,7 +73,8 @@ void	read_file(char *file, t_info *info)
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		put_error_free("Cannot open file", info, NULL);
-	while ((line = get_next_line(fd)))
+	line = get_next_line(fd);
+	while (line)
 	{
 		if (!in_map)
 			in_map = parse_config(line, info);

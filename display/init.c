@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "display.h"
-// #include "../parse_srcs/map.h"
+// #include "../parse/map.h"
 
 static bool	mlx_img_init(t_game *game)
 {
@@ -24,10 +24,9 @@ static bool	mlx_img_init(t_game *game)
 	game->img.img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	if (game->img.img == NULL)
 		return (false);
-	game->img.addr = mlx_get_data_addr(game->img.img, \
-						&game->img.bpp, \
-						&game->img.line_len, \
-						&game->img.endian);
+	game->img.addr = mlx_get_data_addr(game->img.img,
+			&game->img.bpp, &game->img.line_len,
+			&game->img.endian);
 	return (true);
 }
 
