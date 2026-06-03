@@ -9,34 +9,53 @@ then renders the scene in real time using the DDA (Digital Differential Analysis
 
 ## Instructions
 
-### Compilation
+### Requirements
 
-To compile and run this project, you need:
-
-- A Unix-based operating system (Linux or macOS)
 - GCC or Clang compiler
 - GNU Make
-- GNU Readline library
+- MinilibX (must be downloaded separately and placed in the project root)
 
-Compile the project using:
+### Compilation
 
-- make
+```bash
+make
+```
 
 ### Execution
 
-./cub3D `PATH_TO_CUBFILE`
+```bash
+./cub3D map/valid.cub
+```
+
+Pass any `.cub` file as the argument. The file must define wall textures (NO/SO/WE/EA), floor and ceiling colors (F/C), and a valid map.
+
+### Controls
+
+| Key | Action |
+|-----|--------|
+| W / A / S / D | Move forward / left / backward / right |
+| ← / → | Rotate camera left / right |
+| ESC | Quit |
 
 ## Resources
 
 ### References
+
+https://lodev.org/cgtutor/raycasting.html
+https://docs.google.com/presentation/d/1dQrnEUmDkodlIC366O_YdLbO2-MBsuzEkgC8F2xjxOY/edit?slide=id.p#slide=id.p
+https://ja.manpages.org/fabs/3
+https://w3e.kanazawa-it.ac.jp/math/category/kika/heimenkika/henkan-tex.cgi?target=/math/category/kika/heimenkika/souzi.html
+
 
 
 ### AI Usage
 
 AI tools (ChatGPT, Gemini, Claude Code) were used to:
 
-- clarify Bash behavior and edge cases
-- understand Unix system calls such as `fork`, `execve`, `pipe`, `dup2` and related functions.
-- review logic and suggest improvements in parsing strategies
+- understand the DDA raycasting algorithm and how to apply it to 2D map grids
+- clarify MinilibX library functions (image creation, pixel writing, event hooks)
+- understand trigonometric calculations for player movement and camera rotation
+- review `.cub` file parsing logic and edge case handling
+- debug rendering artifacts and texture mapping issues
 
 All final implementation choices and code were written and validated by the authors.

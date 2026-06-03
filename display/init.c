@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "display.h"
-// #include "../parse/map.h"
 
 static bool	mlx_img_init(t_game *game)
 {
