@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_ray.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: habe <habe@student.42tokyo.jp>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/03 18:54:20 by habe              #+#    #+#             */
+/*   Updated: 2026/06/03 18:56:37 by habe             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "display.h"
 
 static void	init_dda(t_game *game, t_ray *ray)
@@ -8,7 +20,8 @@ static void	init_dda(t_game *game, t_ray *ray)
 	ray->delta_dist_y = fabs(1.0 / ray->dir_y);
 }
 
-static void	set_ray_step(t_player *player, t_ray *ray, double dir_x, double dir_y)
+static void	set_ray_step(t_player *player, \
+				t_ray *ray, double dir_x, double dir_y)
 {
 	if (dir_x < 0)
 	{

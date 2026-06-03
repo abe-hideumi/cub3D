@@ -63,7 +63,7 @@ $(MINILIBX_A):
 	$(MAKE) -C $(MINILIBX_DIR)
 
 norm:
-	@output=$$(norminette $(SRCS) $(DISPLAY_SRCS) $(PARSE_SRCS) display/*.h libft/*.c cub3D.h map.h parse_map.c); \
+	@output=$$(norminette $(SRCS) $(DISPLAY_SRCS) $(PARSE_SRCS) display/*.h libft/*.c free.c main.c); \
 	if echo "$$output" | grep -q "Error"; then \
 		echo "$$output" | grep "Error"; \
 	else \
