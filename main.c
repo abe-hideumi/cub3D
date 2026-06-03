@@ -6,7 +6,7 @@
 /*   By: habe <habe@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 13:39:21 by knomura           #+#    #+#             */
-/*   Updated: 2026/06/02 17:43:12 by habe             ###   ########.fr       */
+/*   Updated: 2026/06/03 18:33:53 by habe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ int	main(int ac, char *av[])
 		return (printf("acないよ\n"), 1);
 	parse_cub_file(av[1], &info);
 	ft_memset(&game, 0, sizeof(t_game));
-	if (display_init(&game, &info) == false)
-		return (1);
+	display_init(&game, &info);
 	game_render(&game);
 	mlx_hook(game.win, 2, 1L << 0, key_press, &game);
 	mlx_hook(game.win, DESTROY_NOTIFY, 0, close_hook, &game);

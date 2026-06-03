@@ -6,7 +6,7 @@
 /*   By: habe <habe@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 13:38:33 by knomura           #+#    #+#             */
-/*   Updated: 2026/06/02 18:16:33 by habe             ###   ########.fr       */
+/*   Updated: 2026/06/03 18:38:55 by habe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static bool	mlx_img_init(t_game *game)
 						&game->img.bpp, \
 						&game->img.line_len, \
 						&game->img.endian);
+	if (game->img.addr == NULL)
+		return (false);
 	return (true);
 }
 
@@ -41,6 +43,8 @@ static bool	xpm_init(t_game *game, t_img *dst, char *path)
 		return (false);
 	dst->addr = mlx_get_data_addr(dst->img,
 			&dst->bpp, &dst->line_len, &dst->endian);
+	if (dst->addr == NULL)
+		return (false);
 	return (true);
 }
 
@@ -57,7 +61,7 @@ static bool	texture_load(t_game *game, t_config *config)
 	return (true);
 }
 
-bool	display_init(t_game *game, t_info *info)
+void	display_init(t_game *game, t_info *info)
 {
 	game->map = info->map_info;
 	game->player = info->player;
@@ -66,13 +70,16 @@ bool	display_init(t_game *game, t_info *info)
 	if (mlx_img_init(game) == false)
 	{
 		ft_putstr_fd("Error\nFailed to initialize mlx image\n", 2);
-		return (false);
+		free_config(info->config);
+		cleanup(game);
+		exit(1);
 	}
 	if (texture_load(game, &info->config) == false)
 	{
 		ft_putstr_fd("Error\nFailed to load textures\n", 2);
-		return (false);
+		free_config(info->config);
+		cleanup(game);
+		exit(1);
 	}
 	free_config(info->config);
-	return (true);
 }
