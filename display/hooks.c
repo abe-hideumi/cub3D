@@ -1,33 +1,16 @@
-#include "display.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hooks.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: knomura <knomura@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/02 13:38:26 by knomura           #+#    #+#             */
+/*   Updated: 2026/06/02 15:32:31 by knomura          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-static bool	handle_move(t_keycode keycode, t_game *game)
-{
-	if (keycode == KEY_A)
-	{
-		game->player.pos_x -= game->player.plane_x * MOVE_SPEED;
-		game->player.pos_y -= game->player.plane_y * MOVE_SPEED;
-		return (printf("Key A\n"), true);
-	}
-	if (keycode == KEY_D)
-	{
-		game->player.pos_x += game->player.plane_x * MOVE_SPEED;
-		game->player.pos_y += game->player.plane_y * MOVE_SPEED;
-		return (printf("Key D\n"), true);
-	}
-	if (keycode == KEY_W)
-	{
-		game->player.pos_x += game->player.dir_x * MOVE_SPEED;
-		game->player.pos_y += game->player.dir_y * MOVE_SPEED;
-		return (printf("Key W\n"), true);
-	}
-	if (keycode == KEY_S)
-	{
-		game->player.pos_x -= game->player.dir_x * MOVE_SPEED;
-		game->player.pos_y -= game->player.dir_y * MOVE_SPEED;
-		return (printf("Key S\n"), true);
-	}
-	return (false);
-}
+#include "display.h"
 
 static void	dir_right(t_game *game)
 {
@@ -44,7 +27,6 @@ static void	dir_right(t_game *game)
 	game->player.dir_y = rotate_right_y(old_dir_x, old_dir_y);
 	game->player.plane_x = rotate_right_x(old_plane_x, old_plane_y);
 	game->player.plane_y = rotate_right_y(old_plane_x, old_plane_y);
-	printf("Right\n");
 }
 
 static void	dir_left(t_game *game)
@@ -62,7 +44,19 @@ static void	dir_left(t_game *game)
 	game->player.dir_y = rotate_left_y(old_dir_x, old_dir_y);
 	game->player.plane_x = rotate_left_x(old_plane_x, old_plane_y);
 	game->player.plane_y = rotate_left_y(old_plane_x, old_plane_y);
-	printf("Left\n");
+}
+
+static bool	handle_move(t_keycode keycode, t_game *game)
+{
+	if (keycode == KEY_W)
+		return (move_forward(game), true);
+	if (keycode == KEY_A)
+		return (move_left(game), true);
+	if (keycode == KEY_S)
+		return (move_back(game), true);
+	if (keycode == KEY_D)
+		return (move_right(game), true);
+	return (false);
 }
 
 int	close_hook(void *param)
@@ -71,8 +65,14 @@ int	close_hook(void *param)
 
 	game = (t_game *)param;
 	mlx_destroy_image(game->mlx, game->img.img);
+	mlx_destroy_image(game->mlx, game->texture.ea.img);
+	mlx_destroy_image(game->mlx, game->texture.so.img);
+	mlx_destroy_image(game->mlx, game->texture.no.img);
+	mlx_destroy_image(game->mlx, game->texture.we.img);
 	mlx_destroy_window(game->mlx, game->win);
+	mlx_destroy_display(game->mlx);
 	free_map(&game->map);
+	free(game->mlx);
 	exit(0);
 }
 

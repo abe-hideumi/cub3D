@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_file.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: habe <habe@student.42tokyo.jp>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/02 18:13:53 by habe              #+#    #+#             */
+/*   Updated: 2026/06/02 18:13:54 by habe             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "map.h"
 
 static bool	is_config_complete(t_config config)
@@ -34,9 +46,9 @@ static void	read_map(char *line, t_info *info)
 	char	**tmp;
 	size_t	len;
 
-	tmp = realloc(info->map_info.map, sizeof(char *) * (info->map_info.max_height + 2));
+	tmp = ft_realloc(info->map_info.map, sizeof(char *) * (info->map_info.max_height + 2));
 	if (tmp == NULL)
-		put_error_free("Realloc Failed", info, line);
+		put_error_free("ft_realloc Failed", info, line);
 	info->map_info.map = tmp;
 	len = ft_strlen(line);
 	if (len > 0 && line[len - 1] == '\n')
