@@ -6,7 +6,7 @@
 /*   By: habe <habe@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 13:39:21 by knomura           #+#    #+#             */
-/*   Updated: 2026/06/03 18:33:53 by habe             ###   ########.fr       */
+/*   Updated: 2026/06/03 19:27:49 by habe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,8 @@ int	main(int ac, char *av[])
 	ft_memset(&game, 0, sizeof(t_game));
 	display_init(&game, &info);
 	game_render(&game);
-	mlx_hook(game.win, 2, 1L << 0, key_press, &game);
+	mlx_hook(game.win, KEY_PRESS, 1L << 0, key_press, &game);
 	mlx_hook(game.win, DESTROY_NOTIFY, 0, close_hook, &game);
-	mlx_loop_hook(game.mlx, key_press, &game);
 	mlx_loop(game.mlx);
 	return (0);
 }
