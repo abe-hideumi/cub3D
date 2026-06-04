@@ -6,7 +6,7 @@
 /*   By: habe <habe@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 13:38:20 by knomura           #+#    #+#             */
-/*   Updated: 2026/06/04 12:42:39 by habe             ###   ########.fr       */
+/*   Updated: 2026/06/04 12:59:00 by habe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,8 @@ void	move_forward(t_game *game);
 void	move_back(t_game *game);
 void	move_left(t_game *game);
 void	move_right(t_game *game);
+void	dir_right(t_game *game);
+void	dir_left(t_game *game);
 
 // calulation
 double	rotate_right_x(double dir_x, double dir_y);
