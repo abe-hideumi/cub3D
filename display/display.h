@@ -6,7 +6,7 @@
 /*   By: habe <habe@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 13:38:20 by knomura           #+#    #+#             */
-/*   Updated: 2026/06/03 18:42:29 by habe             ###   ########.fr       */
+/*   Updated: 2026/06/04 12:32:44 by habe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define DISPLAY_H
 
 # include <math.h>
-# include "../parse_srcs/map.h"
+# include "../parse/map.h"
 # ifdef __linux__
 #  include "../minilibx-linux/mlx.h"
 # else

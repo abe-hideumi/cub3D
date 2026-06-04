@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: habe <habe@student.42tokyo.jp>             +#+  +:+       +#+        */
+/*   By: knomura <knomura@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 13:39:11 by knomura           #+#    #+#             */
-/*   Updated: 2026/06/02 18:16:05 by habe             ###   ########.fr       */
+/*   Updated: 2026/06/04 12:04:09 by knomura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse_srcs/map.h"
+#include "parse/map.h"
 
 void	free_config(t_config config)
 {
@@ -28,6 +28,8 @@ void	free_map(t_map *map)
 {
 	int	i;
 
+	if (!map->map)
+		return ;
 	i = 0;
 	while (i < map->max_height)
 		free(map->map[i++]);
@@ -38,6 +40,8 @@ void	free_parse_info(t_info *info, char *str)
 {
 	if (str)
 		free(str);
+	if (info->parse_fd >= 0)
+		close(info->parse_fd);
 	free_config(info->config);
 	free_map(&info->map_info);
 	get_next_line(-1);

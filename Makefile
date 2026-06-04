@@ -1,14 +1,14 @@
 NAME = cub3D
 
-SRCS =	main.c\
-		free.c\
+SRCS =	main.c \
+		free.c
 
-PARSE_SRCS =	parse_srcs/parse_cub_file.c \
-				parse_srcs/parse_texture.c \
-				parse_srcs/parse_cub_utils.c \
-				parse_srcs/read_file.c \
-				parse_srcs/validate_map_chars.c \
-				parse_srcs/validate_map_enclosed.c
+PARSE_SRCS =	parse/parse_cub_file.c \
+				parse/parse_texture.c \
+				parse/parse_cub_utils.c \
+				parse/read_file.c \
+				parse/validate_map_chars.c \
+				parse/validate_map_enclosed.c
 
 DISPLAY_SRCS =	display/init.c \
 				display/hooks.c \
@@ -21,8 +21,10 @@ DISPLAY_SRCS =	display/init.c \
 
 OBJS = $(SRCS:.c=.o) $(DISPLAY_SRCS:.c=.o) $(PARSE_SRCS:.c=.o)
 
+HEADERS = display/display.h parse/map.h
+
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -g -Wall -Wextra -Werror
 
 LIBFT = libft/libft.a
 
@@ -53,7 +55,7 @@ $(NAME): $(LIBFT) $(MINILIBX_A) $(OBJS)
 	@echo "$(GREEN)Linking cub3D executable...$(RESET)"
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -Llibft -lft $(MLX_FLAGS)
 
-%.o: %.c
+%.o: %.c $(HEADERS)
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(LIBFT):
@@ -63,7 +65,7 @@ $(MINILIBX_A):
 	$(MAKE) -C $(MINILIBX_DIR)
 
 norm:
-	@output=$$(norminette $(SRCS) $(DISPLAY_SRCS) $(PARSE_SRCS) display/*.h libft/*.c free.c main.c); \
+	@output=$$(norminette $(SRCS) $(DISPLAY_SRCS) $(PARSE_SRCS) $(HEADERS)); \
 	if echo "$$output" | grep -q "Error"; then \
 		echo "$$output" | grep "Error"; \
 	else \
