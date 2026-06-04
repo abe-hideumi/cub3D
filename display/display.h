@@ -6,7 +6,7 @@
 /*   By: habe <habe@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 13:38:20 by knomura           #+#    #+#             */
-/*   Updated: 2026/06/04 12:32:44 by habe             ###   ########.fr       */
+/*   Updated: 2026/06/04 12:35:26 by habe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@
 
 // event
 # define DESTROY_NOTIFY 17
+# define KEY_PRESS 2
+# define KEY_RELEASE 3
 
 // ray side
 # define X_SIDE 0
@@ -87,6 +89,7 @@ typedef struct s_game
 	t_player	player;
 	t_map		map;
 	t_texture	texture;
+	bool		key_state[256];
 }	t_game;
 
 typedef struct s_col
@@ -121,7 +124,9 @@ void	draw_stripe(t_game *game, t_col *col, int x);
 void	put_pixel(t_img *img, int x, int y, int color);
 
 // hooks
-int		key_press(t_keycode keycode, void *param);
+int		key_down(int keycode, void *param);
+int		key_up(int keycode, void *param);
+int		game_loop(void *param);
 int		close_hook(void *param);
 
 // move utils

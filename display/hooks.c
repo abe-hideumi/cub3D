@@ -46,17 +46,24 @@ static void	dir_left(t_game *game)
 	game->player.plane_y = rotate_left_y(old_plane_x, old_plane_y);
 }
 
-static bool	handle_move(t_keycode keycode, t_game *game)
+static bool	apply_keys(t_game *game)
 {
-	if (keycode == KEY_W)
-		return (move_forward(game), true);
-	if (keycode == KEY_A)
-		return (move_left(game), true);
-	if (keycode == KEY_S)
-		return (move_back(game), true);
-	if (keycode == KEY_D)
-		return (move_right(game), true);
-	return (false);
+	bool	moved;
+
+	moved = false;
+	if (game->key_state[KEY_W])
+		moved = (move_forward(game), true);
+	if (game->key_state[KEY_A])
+		moved = (move_left(game), true);
+	if (game->key_state[KEY_S])
+		moved = (move_back(game), true);
+	if (game->key_state[KEY_D])
+		moved = (move_right(game), true);
+	if (game->key_state[KEY_LEFT])
+		moved = (dir_left(game), true);
+	if (game->key_state[KEY_RIGHT])
+		moved = (dir_right(game), true);
+	return (moved);
 }
 
 int	close_hook(void *param)
@@ -68,24 +75,34 @@ int	close_hook(void *param)
 	exit(0);
 }
 
-int	key_press(t_keycode keycode, void *param)
+int	key_down(int keycode, void *param)
 {
 	t_game	*game;
 
 	game = (t_game *)param;
 	if (keycode == KEY_ESC)
 		close_hook(game);
-	if (handle_move(keycode, game) == true)
+	if (keycode >= 0 && keycode < 256)
+		game->key_state[keycode] = true;
+	return (0);
+}
+
+int	key_up(int keycode, void *param)
+{
+	t_game	*game;
+
+	game = (t_game *)param;
+	if (keycode >= 0 && keycode < 256)
+		game->key_state[keycode] = false;
+	return (0);
+}
+
+int	game_loop(void *param)
+{
+	t_game	*game;
+
+	game = (t_game *)param;
+	if (apply_keys(game))
 		game_render(game);
-	if (keycode == KEY_LEFT)
-	{
-		dir_left(game);
-		game_render(game);
-	}
-	if (keycode == KEY_RIGHT)
-	{
-		dir_right(game);
-		game_render(game);
-	}
 	return (0);
 }
