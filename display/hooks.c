@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knomura <knomura@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: habe <habe@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 13:38:26 by knomura           #+#    #+#             */
-/*   Updated: 2026/06/02 15:32:31 by knomura          ###   ########.fr       */
+/*   Updated: 2026/06/03 18:39:18 by habe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,7 @@ int	close_hook(void *param)
 	t_game	*game;
 
 	game = (t_game *)param;
-	mlx_destroy_image(game->mlx, game->img.img);
-	mlx_destroy_image(game->mlx, game->texture.ea.img);
-	mlx_destroy_image(game->mlx, game->texture.so.img);
-	mlx_destroy_image(game->mlx, game->texture.no.img);
-	mlx_destroy_image(game->mlx, game->texture.we.img);
-	mlx_destroy_window(game->mlx, game->win);
-	mlx_destroy_display(game->mlx);
-	free_map(&game->map);
-	free(game->mlx);
+	cleanup(game);
 	exit(0);
 }
 

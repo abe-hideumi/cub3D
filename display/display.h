@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knomura <knomura@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: habe <habe@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 13:38:20 by knomura           #+#    #+#             */
-/*   Updated: 2026/06/03 16:38:13 by knomura          ###   ########.fr       */
+/*   Updated: 2026/06/04 12:32:44 by habe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # ifdef __linux__
 #  include "../minilibx-linux/mlx.h"
 # else
-#  include "../minilibx_mms_20200219/mlx.h"
+#  include "../minilibx_opengl_20191021/mlx.h"
 # endif
 
 // colors
@@ -115,7 +115,7 @@ typedef struct s_ray
 	double	perp_wall_dist;
 }	t_ray;
 
-bool	display_init(t_game *game, t_info *info);
+void	display_init(t_game *game, t_info *info);
 void	game_render(t_game *game);
 void	draw_stripe(t_game *game, t_col *col, int x);
 void	put_pixel(t_img *img, int x, int y, int color);
@@ -138,5 +138,8 @@ double	rotate_left_y(double dir_x, double dir_y);
 
 // raycasting
 void	init_ray(t_game *game, t_ray *ray, int x);
+
+// cleanup
+void	cleanup(t_game *game);
 
 #endif

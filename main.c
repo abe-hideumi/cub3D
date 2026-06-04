@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knomura <knomura@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: habe <habe@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 13:39:21 by knomura           #+#    #+#             */
-/*   Updated: 2026/06/02 18:43:42 by knomura          ###   ########.fr       */
+/*   Updated: 2026/06/04 12:31:50 by habe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,10 @@ int	main(int ac, char *av[])
 		return (printf("Usage: ./cub3D <map.cub>\n"), 1);
 	parse_cub_file(av[1], &info);
 	ft_memset(&game, 0, sizeof(t_game));
-	if (display_init(&game, &info) == false)
-		return (1);
+	display_init(&game, &info);
 	game_render(&game);
-	mlx_hook(game.win, 2, 1L << 0, key_press, &game);
+	mlx_hook(game.win, KEY_PRESS, 1L << 0, key_press, &game);
 	mlx_hook(game.win, DESTROY_NOTIFY, 0, close_hook, &game);
-	mlx_loop_hook(game.mlx, key_press, &game);
 	mlx_loop(game.mlx);
 	return (0);
 }

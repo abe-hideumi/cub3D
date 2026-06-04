@@ -16,7 +16,8 @@ DISPLAY_SRCS =	display/init.c \
 				display/rotate_calculations.c\
 				display/put_color.c \
 				display/render.c \
-				display/init_ray.c
+				display/init_ray.c\
+				display/cleanup.c
 
 OBJS = $(SRCS:.c=.o) $(DISPLAY_SRCS:.c=.o) $(PARSE_SRCS:.c=.o)
 
@@ -34,7 +35,7 @@ ifeq ($(UNAME), Linux)
 	MINILIBX_A = $(MINILIBX_DIR)/libmlx.a
 	MLX_FLAGS = -L$(MINILIBX_DIR) -lmlx -lX11 -lXext -lm
 else
-	MINILIBX_DIR = minilibx_mms_20200219
+	MINILIBX_DIR = minilibx_opengl_20191021
 	MINILIBX_A = $(MINILIBX_DIR)/libmlx.a
 	MLX_FLAGS = -L$(MINILIBX_DIR) -lmlx -framework OpenGL -framework AppKit
 endif
