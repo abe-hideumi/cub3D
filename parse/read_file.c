@@ -6,7 +6,7 @@
 /*   By: knomura <knomura@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 13:39:44 by knomura           #+#    #+#             */
-/*   Updated: 2026/06/03 16:40:48 by knomura          ###   ########.fr       */
+/*   Updated: 2026/06/04 11:21:06 by knomura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	read_file(char *file, t_info *info)
 		if (in_map)
 			read_map(line, info);
 		free(line);
+		line = get_next_line(fd);
 	}
 	close(fd);
 }
