@@ -6,7 +6,7 @@
 /*   By: habe <habe@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 18:18:27 by habe              #+#    #+#             */
-/*   Updated: 2026/06/03 18:39:43 by habe             ###   ########.fr       */
+/*   Updated: 2026/06/04 12:25:45 by habe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static void	mlx_cleanup(t_game *game)
 		mlx_destroy_image(game->mlx, game->texture.we.img);
 	if (game->mlx != NULL && game->texture.ea.img != NULL)
 		mlx_destroy_image(game->mlx, game->texture.ea.img);
-	// if (game->mlx != NULL)
-	// 	destroy_display(game->mlx);
+	if (game->mlx != NULL)
+		destroy_display(game->mlx);
 }
 
 void	cleanup(t_game *game)

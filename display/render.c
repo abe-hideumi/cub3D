@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: habe <habe@student.42tokyo.jp>             +#+  +:+       +#+        */
+/*   By: knomura <knomura@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 13:38:49 by knomura           #+#    #+#             */
-/*   Updated: 2026/06/02 18:00:46 by habe             ###   ########.fr       */
+/*   Updated: 2026/06/03 16:47:50 by knomura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ static t_col	draw_column(t_game *game, t_ray *ray)
 		wall_x = game->player.pos_x + ray->perp_wall_dist * ray->dir_x;
 	wall_x -= floor(wall_x);
 	col.tex_x = (int)(wall_x * TEX_WIDTH);
-	if ((ray->side == X_SIDE && ray->dir_x > 0) || \
-			(ray->side == Y_SIDE && ray->dir_y < 0))
+	if ((ray->side == X_SIDE && ray->dir_x > 0)
+		|| (ray->side == Y_SIDE && ray->dir_y < 0))
 		col.tex_x = TEX_WIDTH - col.tex_x - 1;
 	col.tex = get_texture(&game->texture, ray);
 	col.tex_step = (double)TEX_HEIGHT / wall_h;

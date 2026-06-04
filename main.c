@@ -6,7 +6,7 @@
 /*   By: habe <habe@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 13:39:21 by knomura           #+#    #+#             */
-/*   Updated: 2026/06/03 19:50:00 by habe             ###   ########.fr       */
+/*   Updated: 2026/06/04 12:35:23 by habe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int ac, char *av[])
 	t_info	info;
 
 	if (ac != 2)
-		return (printf("acないよ\n"), 1);
+		return (printf("Usage: ./cub3D <map.cub>\n"), 1);
 	parse_cub_file(av[1], &info);
 	ft_memset(&game, 0, sizeof(t_game));
 	display_init(&game, &info);

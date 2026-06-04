@@ -6,12 +6,11 @@
 /*   By: habe <habe@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 13:38:33 by knomura           #+#    #+#             */
-/*   Updated: 2026/06/03 18:38:55 by habe             ###   ########.fr       */
+/*   Updated: 2026/06/04 12:33:20 by habe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "display.h"
-// #include "../parse_srcs/map.h"
 
 static bool	mlx_img_init(t_game *game)
 {
