@@ -6,7 +6,7 @@
 /*   By: knomura <knomura@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 13:39:44 by knomura           #+#    #+#             */
-/*   Updated: 2026/06/04 11:21:06 by knomura          ###   ########.fr       */
+/*   Updated: 2026/06/04 11:49:22 by knomura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,19 @@ static int	parse_config(char *line, t_info *info)
 	if (*line == '\n')
 		return (0);
 	if (!ft_strncmp("NO ", line, 3))
-		return (parse_texture_img(&info->config.no, line), 0);
+		return (parse_texture_img(&info->config.no, line));
 	if (!ft_strncmp("SO ", line, 3))
-		return (parse_texture_img(&info->config.so, line), 0);
+		return (parse_texture_img(&info->config.so, line));
 	if (!ft_strncmp("WE ", line, 3))
-		return (parse_texture_img(&info->config.we, line), 0);
+		return (parse_texture_img(&info->config.we, line));
 	if (!ft_strncmp("EA ", line, 3))
-		return (parse_texture_img(&info->config.ea, line), 0);
+		return (parse_texture_img(&info->config.ea, line));
 	if (!ft_strncmp("F ", line, 2))
-		return (parse_texture_color(&info->config.f, line), 0);
+		return (parse_texture_color(&info->config.f, line));
 	if (!ft_strncmp("C ", line, 2))
-		return (parse_texture_color(&info->config.c, line), 0);
+		return (parse_texture_color(&info->config.c, line));
 	if (!is_config_complete(info->config))
-		put_error_free("INVALID OR MISSING CONFIG", info, NULL);
+		return (put_error("INVALID OR MISSING CONFIG"), -1);
 	return (1);
 }
 
@@ -73,15 +73,21 @@ void	read_file(char *file, t_info *info)
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		put_error_free("Cannot open file", info, NULL);
+	info->parse_fd = fd;
 	line = get_next_line(fd);
 	while (line)
 	{
 		if (!in_map)
+		{
 			in_map = parse_config(line, info);
-		if (in_map)
+			if (in_map == -1)
+				free_parse_info(info, line);
+		}
+		if (in_map == 1)
 			read_map(line, info);
 		free(line);
 		line = get_next_line(fd);
 	}
 	close(fd);
+	info->parse_fd = -1;
 }

@@ -28,6 +28,7 @@ void	parse_cub_file(char *file, t_info *info)
 {
 	check_extension(file);
 	info->player_dir = 0;
+	info->parse_fd = -1;
 	info->config = (t_config){NULL, NULL, NULL, NULL, -1, -1};
 	info->map_info = (t_map){0};
 	info->map_info.map = malloc(sizeof(char *) * 1);

@@ -59,6 +59,7 @@ typedef struct s_info
 {
 	t_map		map_info;
 	t_config	config;
+	int			parse_fd;
 	char		player_dir;
 	t_player	player;
 }		t_info;
