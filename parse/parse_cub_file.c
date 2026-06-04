@@ -3,28 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cub_file.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: habe <habe@student.42tokyo.jp>             +#+  +:+       +#+        */
+/*   By: knomura <knomura@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 13:39:33 by knomura           #+#    #+#             */
-/*   Updated: 2026/06/02 18:13:42 by habe             ###   ########.fr       */
+/*   Updated: 2026/06/02 18:40:14 by knomura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
 
-static void	check_extenstion(char *map_name)
+static void	check_extension(char *map_name)
 {
 	size_t	len;
 
 	len = ft_strlen(map_name);
 	if (len < 5 || ft_strncmp(".cub", map_name + len - 4, 4))
-		printf("Invalid file extension. Must be .cub\n");
+	{
+		put_error("Invalid file extension. Must be .cub");
+		exit(1);
+	}
 }
 
 void	parse_cub_file(char *file, t_info *info)
 {
-	check_extenstion(file);
+	check_extension(file);
 	info->player_dir = 0;
+	info->parse_fd = -1;
 	info->config = (t_config){NULL, NULL, NULL, NULL, -1, -1};
 	info->map_info = (t_map){0};
 	info->map_info.map = malloc(sizeof(char *) * 1);

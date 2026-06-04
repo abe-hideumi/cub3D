@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: habe <habe@student.42tokyo.jp>             +#+  +:+       +#+        */
+/*   By: knomura <knomura@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 13:38:20 by knomura           #+#    #+#             */
-/*   Updated: 2026/06/02 18:14:17 by habe             ###   ########.fr       */
+/*   Updated: 2026/06/03 16:38:13 by knomura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define DISPLAY_H
 
 # include <math.h>
-# include "../parse_srcs/map.h"
+# include "../parse/map.h"
 # ifdef __linux__
 #  include "../minilibx-linux/mlx.h"
 # else
@@ -138,6 +138,5 @@ double	rotate_left_y(double dir_x, double dir_y);
 
 // raycasting
 void	init_ray(t_game *game, t_ray *ray, int x);
-
 
 #endif

@@ -3,21 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   validate_map_enclosed.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: habe <habe@student.42tokyo.jp>             +#+  +:+       +#+        */
+/*   By: knomura <knomura@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 13:39:55 by knomura           #+#    #+#             */
-/*   Updated: 2026/06/02 18:17:02 by habe             ###   ########.fr       */
+/*   Updated: 2026/06/02 18:40:27 by knomura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <fcntl.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdbool.h>
 #include "map.h"
-#include "libft.h"
-#include "get_next_line.h"
 
 static int	check_single_direction(char **map, int x, int y)
 {

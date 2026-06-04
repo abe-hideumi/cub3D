@@ -6,7 +6,7 @@
 /*   By: knomura <knomura@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 13:39:51 by knomura           #+#    #+#             */
-/*   Updated: 2026/06/02 13:45:38 by knomura          ###   ########.fr       */
+/*   Updated: 2026/06/02 17:11:01 by knomura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	validate_map_char(t_info *info, char *c, int i, int j)
 	if (ret == CHAR_PLAYER)
 	{
 		if (info->player_dir)
-			put_error_free("More than 2 player", info, NULL);
+			put_error_free("More than 1 player", info, NULL);
 		info->player_dir = *c;
 		info->player.pos_x = j + 0.5;
 		info->player.pos_y = i + 0.5;

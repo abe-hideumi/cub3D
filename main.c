@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: habe <habe@student.42tokyo.jp>             +#+  +:+       +#+        */
+/*   By: knomura <knomura@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 13:39:21 by knomura           #+#    #+#             */
-/*   Updated: 2026/06/02 17:43:12 by habe             ###   ########.fr       */
+/*   Updated: 2026/06/02 18:43:42 by knomura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int ac, char *av[])
 	t_info	info;
 
 	if (ac != 2)
-		return (printf("acないよ\n"), 1);
+		return (printf("Usage: ./cub3D <map.cub>\n"), 1);
 	parse_cub_file(av[1], &info);
 	ft_memset(&game, 0, sizeof(t_game));
 	if (display_init(&game, &info) == false)

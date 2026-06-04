@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_ray.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: knomura <knomura@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/02 18:43:55 by knomura           #+#    #+#             */
+/*   Updated: 2026/06/03 16:48:42 by knomura          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "display.h"
 
 static void	init_dda(t_game *game, t_ray *ray)
@@ -8,31 +20,32 @@ static void	init_dda(t_game *game, t_ray *ray)
 	ray->delta_dist_y = fabs(1.0 / ray->dir_y);
 }
 
-static void	set_ray_step(t_player *player, t_ray *ray, double dir_x, double dir_y)
+static void	set_ray_step(t_player *player, t_ray *ray
+				, double dir_x, double dir_y)
 {
 	if (dir_x < 0)
 	{
 		ray->step_x = -1;
-		ray->side_dist_x = (player->pos_x - ray->map_x) * \
-			ray->delta_dist_x;
+		ray->side_dist_x = (player->pos_x - ray->map_x)
+			* ray->delta_dist_x;
 	}
 	else
 	{
 		ray->step_x = 1;
-		ray->side_dist_x = (ray->map_x + 1.0 - player->pos_x) * \
-			ray->delta_dist_x;
+		ray->side_dist_x = (ray->map_x + 1.0 - player->pos_x)
+			* ray->delta_dist_x;
 	}
 	if (dir_y < 0)
 	{
 		ray->step_y = -1;
-		ray->side_dist_y = (player->pos_y - ray->map_y) * \
-			ray->delta_dist_y;
+		ray->side_dist_y = (player->pos_y - ray->map_y)
+			* ray->delta_dist_y;
 	}
 	else
 	{
 		ray->step_y = 1;
-		ray->side_dist_y = (ray->map_y + 1.0 - player->pos_y) * \
-			ray->delta_dist_y;
+		ray->side_dist_y = (ray->map_y + 1.0 - player->pos_y)
+			* ray->delta_dist_y;
 	}
 }
 
