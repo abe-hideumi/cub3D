@@ -41,10 +41,10 @@ Pass any `.cub` file as the argument. The file must define wall textures (NO/SO/
 
 ### References
 
-https://lodev.org/cgtutor/raycasting.html
-https://docs.google.com/presentation/d/1dQrnEUmDkodlIC366O_YdLbO2-MBsuzEkgC8F2xjxOY/edit?slide=id.p#slide=id.p
-https://ja.manpages.org/fabs/3
-https://w3e.kanazawa-it.ac.jp/math/category/kika/heimenkika/henkan-tex.cgi?target=/math/category/kika/heimenkika/souzi.html
+Lode's Computer Graphics Tutorial - Raycasting: https://lodev.org/cgtutor/raycasting.html
+cub3D解説スライド: https://docs.google.com/presentation/d/1dQrnEUmDkodlIC366O_YdLbO2-MBsuzEkgC8F2xjxOY/edit?slide=id.p#slide=id.p
+fabs(3) - Linux man page: https://ja.manpages.org/fabs/3
+複素数の概念と三角関数 - 金沢工業大学: https://w3e.kanazawa-it.ac.jp/math/category/kika/heimenkika/henkan-tex.cgi?target=/math/category/kika/heimenkika/souzi.html
 
 
 
