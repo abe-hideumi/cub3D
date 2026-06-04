@@ -6,7 +6,7 @@
 /*   By: habe <habe@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 13:38:26 by knomura           #+#    #+#             */
-/*   Updated: 2026/06/03 18:39:18 by habe             ###   ########.fr       */
+/*   Updated: 2026/06/04 12:42:52 by habe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	key_down(int keycode, void *param)
 	game = (t_game *)param;
 	if (keycode == KEY_ESC)
 		close_hook(game);
-	if (keycode >= 0 && keycode < 256)
+	if (keycode >= 0 && keycode < MAX_KEYCODE)
 		game->key_state[keycode] = true;
 	return (0);
 }
@@ -92,7 +92,7 @@ int	key_up(int keycode, void *param)
 	t_game	*game;
 
 	game = (t_game *)param;
-	if (keycode >= 0 && keycode < 256)
+	if (keycode >= 0 && keycode < MAX_KEYCODE)
 		game->key_state[keycode] = false;
 	return (0);
 }

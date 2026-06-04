@@ -6,7 +6,7 @@
 /*   By: habe <habe@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 13:38:20 by knomura           #+#    #+#             */
-/*   Updated: 2026/06/04 12:35:26 by habe             ###   ########.fr       */
+/*   Updated: 2026/06/04 12:42:39 by habe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ typedef enum e_keycode
 	KEY_W = 119,
 	KEY_A = 97,
 	KEY_S = 115,
-	KEY_D = 100
+	KEY_D = 100,
+	MAX_KEYCODE = 65535
 }	t_keycode;
 
 typedef struct s_img
@@ -89,7 +90,7 @@ typedef struct s_game
 	t_player	player;
 	t_map		map;
 	t_texture	texture;
-	bool		key_state[256];
+	bool		key_state[65536];
 }	t_game;
 
 typedef struct s_col

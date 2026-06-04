@@ -27,7 +27,7 @@ static void	mlx_cleanup(t_game *game)
 	if (game->mlx != NULL && game->texture.ea.img != NULL)
 		mlx_destroy_image(game->mlx, game->texture.ea.img);
 	if (game->mlx != NULL)
-		destroy_display(game->mlx);
+		mlx_destroy_display(game->mlx);
 }
 
 void	cleanup(t_game *game)
